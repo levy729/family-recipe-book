@@ -92,4 +92,4 @@ A minimalist, publicly accessible family recipe book website that preserves and 
 - Most visited recipes tracking
 - Print functionality
 - Recipe images support
-- Analytics integration 
+- Analytics integration

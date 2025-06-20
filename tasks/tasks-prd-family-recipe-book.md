@@ -32,6 +32,7 @@
 ## Tasks
 
 - [ ] 1.0 Project Setup and Configuration
+
   - [ ] 1.1 Initialize Next.js project with TypeScript
   - [ ] 1.2 Install and configure Tailwind CSS
   - [ ] 1.3 Set up shadcn/ui with Zinc theme
@@ -41,6 +42,7 @@
   - [ ] 1.7 Configure RTL support in layout
 
 - [ ] 2.0 Core Infrastructure and Data Layer
+
   - [ ] 2.1 Create recipe markdown file structure and sample recipes
   - [ ] 2.2 Implement recipe parsing utilities (YAML frontmatter + markdown)
   - [ ] 2.3 Create recipe data loading functions
@@ -48,6 +50,7 @@
   - [ ] 2.5 Add TypeScript interfaces for recipe data structure
 
 - [ ] 3.0 UI Components and Layout
+
   - [ ] 3.1 Create root layout with RTL support and Zinc theme
   - [ ] 3.2 Build search bar component with real-time input
   - [ ] 3.3 Create recipe card component for search results
@@ -55,6 +58,7 @@
   - [ ] 3.5 Implement responsive design for mobile, tablet, desktop
 
 - [ ] 4.0 Search Functionality
+
   - [ ] 4.1 Install and configure Fuse.js
   - [ ] 4.2 Implement search logic for Hebrew text
   - [ ] 4.3 Create search results page with card layout
@@ -62,6 +66,7 @@
   - [ ] 4.5 Implement real-time search with debouncing
 
 - [ ] 5.0 Recipe Pages and Content Display
+
   - [ ] 5.1 Create dynamic recipe page with [slug] routing
   - [ ] 5.2 Implement recipe content rendering with RTL support
   - [ ] 5.3 Add ingredient checklist with session storage persistence
@@ -73,4 +78,4 @@
   - [ ] 6.2 Configure GitHub Pages deployment
   - [ ] 6.3 Test responsive design across devices
   - [ ] 6.4 Optimize performance and loading times
-  - [ ] 6.5 Final testing and bug fixes 
+  - [ ] 6.5 Final testing and bug fixes
