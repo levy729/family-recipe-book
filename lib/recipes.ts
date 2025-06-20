@@ -32,4 +32,14 @@ export async function getAllRecipes(): Promise<Recipe[]> {
     });
   }
   return recipes;
+}
+
+export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
+  const recipes = await getAllRecipes();
+  return recipes.find(recipe => recipe.slug === slug) || null;
+}
+
+export async function getRecentRecipes(limit: number = 6): Promise<Recipe[]> {
+  const recipes = await getAllRecipes();
+  return recipes.slice(0, limit);
 } 
