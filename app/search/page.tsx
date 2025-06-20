@@ -4,6 +4,27 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Recipe } from '@/lib/recipes';
 import { RecipeCard } from '@/components/recipe-card';
+import { initializeSearch, searchRecipes } from '@/lib/search';
+
+// Sample recipes data - in a real app, this would be loaded from markdown files
+const sampleRecipes: Recipe[] = [
+  {
+    title: 'עוגת שוקולד קלה',
+    slug: 'easy-chocolate-cake',
+    tags: ['עוגה', 'קינוח', 'שוקולד'],
+    ingredients: ['2 ביצים', '1 כוס סוכר', '1 כוס קקאו', '1 כוס קמח', '1/2 כוס שמן', '1 כוס מים'],
+    instructions: '1. מחממים תנור ל-180 מעלות.\n2. מערבבים את כל החומרים בקערה.\n3. יוצקים לתבנית ואופים כ-30 דקות.',
+    content: 'עוגת שוקולד קלה - מתכון פשוט וטעים'
+  },
+  {
+    title: 'סלט יווני',
+    slug: 'fresh-vegetable-salad',
+    tags: ['סלט', 'ירקות', 'בריא'],
+    ingredients: ['2 עגבניות', '1 מלפפון', '1 בצל אדום', '100 גרם גבינת פטה', 'זיתים', 'שמן זית', 'מיץ לימון'],
+    instructions: '1. חותכים את הירקות לקוביות.\n2. מערבבים בקערה.\n3. מוסיפים גבינת פטה וזיתים.\n4. מתבלים בשמן זית ומיץ לימון.',
+    content: 'סלט יווני טרי ובריא'
+  }
+];
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -12,16 +33,15 @@ export default function SearchPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function performSearch() {
+    function performSearch() {
       setIsLoading(true);
       try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-        if (response.ok) {
-          const searchResults = await response.json();
-          setResults(searchResults);
-        } else {
-          setResults([]);
-        }
+        // Initialize search with sample recipes
+        initializeSearch(sampleRecipes);
+        
+        // Perform search
+        const searchResults = searchRecipes(query);
+        setResults(searchResults);
       } catch (error) {
         console.error('Search error:', error);
         setResults([]);
