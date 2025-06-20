@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { SearchBar } from "@/components/search-bar";
 import { getRecentRecipes } from "@/lib/recipes";
 
 export default async function Home() {
@@ -13,9 +14,10 @@ export default async function Home() {
         <p className="text-xl text-zinc-600 mb-8">
           Family Recipe Book
         </p>
-        <Button variant="default" size="lg" className="mb-12">
-          התחל חיפוש
-        </Button>
+        
+        <div className="flex justify-center mb-12">
+          <SearchBar className="mx-auto" />
+        </div>
         
         <div className="text-right">
           <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
