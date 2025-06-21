@@ -26,6 +26,13 @@ export function RecipeCard({ recipe, className = '' }: RecipeCardProps) {
           <CardTitle className="text-lg font-medium text-zinc-900 text-right">
             {recipe.title}
           </CardTitle>
+          <div className="min-h-[2.5rem] mt-1">
+            {recipe.description && (
+              <p className="text-sm text-zinc-600 text-right line-clamp-2">
+                {recipe.description}
+              </p>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="pt-0">
           <Tags 

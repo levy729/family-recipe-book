@@ -24,19 +24,20 @@ Based on PRD: `tasks/prd-recipe-description.md`
 
 ## Tasks
 
-- [ ] 1.0 Update Recipe Data Structure and Parsing
-  - [ ] 1.1 Add description field to Recipe type in lib/recipes.ts
-  - [ ] 1.2 Update getAllRecipes() to parse description field from YAML
-  - [ ] 1.3 Add validation for description field (optional, max 200 chars)
-  - [ ] 1.4 Update unit tests for recipe parsing with description field
-  - [ ] 1.5 Test backward compatibility with existing recipes
+- [x] 1.0 Update Recipe Data Structure and Parsing
+  - [x] 1.1 Add description field to Recipe type in lib/recipes.ts
+  - [x] 1.2 Update getAllRecipes() to parse description field from YAML
+  - [x] 1.3 Add validation for description field (optional, max 200 chars)
+  - [x] 1.4 Update unit tests for recipe parsing with description field
+  - [x] 1.5 Test backward compatibility with existing recipes
 
-- [ ] 2.0 Update Recipe Card Component
-  - [ ] 2.1 Add description prop to RecipeCard component interface
-  - [ ] 2.2 Display description below title in existing card layout
-  - [ ] 2.3 Handle missing description gracefully (no layout changes)
-  - [ ] 2.4 Test card display with and without descriptions
-  - [ ] 2.5 Verify no style changes to existing card appearance
+- [x] 2.0 Update Recipe Card Component
+  - [x] 2.1 Add description prop to RecipeCard component interface
+  - [x] 2.2 Display description below title in existing card layout
+  - [x] 2.3 Handle missing description gracefully (no layout changes)
+  - [x] 2.4 Test card display with and without descriptions
+  - [x] 2.5 Verify no style changes to existing card appearance
+  - [x] 2.6 Fix card height consistency with min-height container
 
 - [ ] 3.0 Update Recipe Page Component
   - [ ] 3.1 Add description display between title and ingredients
