@@ -3,16 +3,19 @@
 import { useState, useEffect } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
+import { Copy, Check } from 'lucide-react';
 import { saveIngredientState, getIngredientState } from '@/lib/storage';
 
 interface IngredientListProps {
   recipeSlug: string;
   ingredients: string[];
+  recipeTitle?: string;
   className?: string;
 }
 
-export function IngredientList({ recipeSlug, ingredients, className = '' }: IngredientListProps) {
+export function IngredientList({ recipeSlug, ingredients, recipeTitle, className = '' }: IngredientListProps) {
   const [checkedStates, setCheckedStates] = useState<{ [key: string]: boolean }>({});
+  const [copySuccess, setCopySuccess] = useState(false);
 
   // Load initial states from session storage
   useEffect(() => {
@@ -53,18 +56,57 @@ export function IngredientList({ recipeSlug, ingredients, className = '' }: Ingr
     setCheckedStates(newStates);
   };
 
+  const handleCopyToClipboard = async () => {
+    const ingredientText = ingredients.join('\n');
+    
+    try {
+      await navigator.clipboard.writeText(ingredientText);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy to clipboard:', error);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = ingredientText;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+      } catch (fallbackError) {
+        console.error('Fallback copy failed:', fallbackError);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+
   return (
     <div className={`space-y-3 ${className}`}>
-      <h3 className="text-lg font-semibold text-zinc-900 text-right mb-4">
-        מרכיבים
-      </h3>
+      <div className="flex items-center justify-start mb-4">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleCopyToClipboard}
+          className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto"
+        >
+          {copySuccess ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <Copy className="w-4 h-4" />
+          )}
+        </Button>
+        <h3 className="text-lg font-semibold text-zinc-900 mr-2">
+          מרכיבים
+        </h3>
+      </div>
       {ingredients.length > 0 && (
         <div className="flex justify-start mb-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={allChecked ? handleClearAll : handleSelectAll}
-            className="text-xs text-zinc-600 hover:text-zinc-600 hover:bg-transparent"
+            className="text-xs text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto"
           >
             {allChecked ? 'נקה הכל' : 'סמן הכל'}
           </Button>
