@@ -1,5 +1,20 @@
 #!/usr/bin/env sh
 
+echo "🔍 Running linting and formatting checks..."
+npm run lint
+
+if [ $? -ne 0 ]; then
+  echo "❌ Linting failed! Push aborted."
+  exit 1
+fi
+
+npm run format:check
+
+if [ $? -ne 0 ]; then
+  echo "❌ Code formatting issues found! Run 'npm run format' to fix. Push aborted."
+  exit 1
+fi
+
 echo "🔨 Building main project..."
 npm run build
 
