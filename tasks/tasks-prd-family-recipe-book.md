@@ -83,7 +83,7 @@
   - [x] 6.3 Search history/suggestions dropdown
   - [x] 6.4 Add search box to search results page
 
-- [ ] 7.0 Ingredient Management
+- [x] 7.0 Ingredient Management
 
   - [x] 7.1 Add "Clear All" and "Select All" buttons for ingredient checkboxes (interchangeable based on state)
   - [x] 7.2 Copy ingredient list to clipboard or share via Web Share API
@@ -128,11 +128,68 @@
 
 - [ ] 12.0 Deployment and Polish
 
-  - [ ] 12.1 Set up GitHub Actions workflow for auto-deploy
-  - [ ] 12.2 Configure GitHub Pages deployment
-  - [ ] 12.3 Test responsive design across devices
+  - [x] 12.1 Set up GitHub Actions workflow for auto-deploy
+  - [x] 12.2 Configure GitHub Pages deployment
+  - [x] 12.3 Test responsive design across devices
   - [ ] 12.4 Optimize performance and loading times
-  - [ ] 12.5 Final testing and bug fixes
+  - [x] 12.5 Final testing and bug fixes
+
+- [ ] 13.0 Testing Setup and Coverage
+
+  - [ ] 13.1 Testing Infrastructure Setup
+    - [ ] 13.1.1 Install Jest, React Testing Library, and testing dependencies
+    - [ ] 13.1.2 Configure Jest for Next.js and TypeScript
+    - [ ] 13.1.3 Set up test coverage reporting
+    - [ ] 13.1.4 Add test scripts to package.json
+    - [ ] 13.1.5 Configure GitHub Actions to run tests on PRs
+
+  - [ ] 13.2 Critical Functionality Tests
+    - [ ] 13.2.1 Test recipe parsing utilities (lib/recipes.ts)
+      - [ ] 13.2.1.1 Test YAML frontmatter parsing
+      - [ ] 13.2.1.2 Test markdown content extraction
+      - [ ] 13.2.1.3 Test getAllRecipes function
+      - [ ] 13.2.1.4 Test getRecipeBySlug function
+    - [ ] 13.2.2 Test search functionality (lib/search.ts)
+      - [ ] 13.2.2.1 Test Fuse.js initialization
+      - [ ] 13.2.2.2 Test Hebrew text search
+      - [ ] 13.2.2.3 Test search result ranking
+      - [ ] 13.2.2.4 Test empty search handling
+    - [ ] 13.2.3 Test storage utilities (lib/storage.ts)
+      - [ ] 13.2.3.1 Test ingredient checkbox persistence
+      - [ ] 13.2.3.2 Test font size preference storage
+      - [ ] 13.2.3.3 Test data cleanup and error handling
+
+  - [ ] 13.3 Component Tests (High Priority)
+    - [ ] 13.3.1 Test SearchBar component
+      - [ ] 13.3.1.1 Test input handling and search triggering
+      - [ ] 13.3.1.2 Test RTL input behavior
+      - [ ] 13.3.1.3 Test search button functionality
+    - [ ] 13.3.2 Test RecipeCard component
+      - [ ] 13.3.2.1 Test recipe data display
+      - [ ] 13.3.2.2 Test tag rendering and click handling
+      - [ ] 13.3.2.3 Test navigation to recipe page
+    - [ ] 13.3.3 Test IngredientList component
+      - [ ] 13.3.3.1 Test checkbox functionality
+      - [ ] 13.3.3.2 Test clear/select all buttons
+      - [ ] 13.3.3.3 Test copy to clipboard functionality
+      - [ ] 13.3.3.4 Test session storage integration
+
+  - [ ] 13.4 End-to-End Tests (Playwright)
+    - [ ] 13.4.1 Install and configure Playwright
+    - [ ] 13.4.2 Test critical user flows
+      - [ ] 13.4.2.1 Homepage → Search → Recipe navigation
+      - [ ] 13.4.2.2 Hebrew text search functionality
+      - [ ] 13.4.2.3 Recipe page ingredient interactions
+      - [ ] 13.4.2.4 Tag-based navigation
+      - [ ] 13.4.2.5 Responsive design on different screen sizes
+    - [ ] 13.4.3 Test RTL layout and Hebrew content
+    - [ ] 13.4.4 Test accessibility features
+    - [ ] 13.4.5 Add E2E tests to GitHub Actions workflow
+
+  - [ ] 13.5 Test Documentation and Maintenance
+    - [ ] 13.5.1 Document testing patterns and conventions
+    - [ ] 13.5.2 Set up test coverage thresholds
+    - [ ] 13.5.3 Add testing guidelines to project documentation
 
 ## Future Enhancements (TODOs)
 
@@ -158,4 +215,5 @@ Before committing code:
 - [ ] Responsive design tested
 - [ ] No console errors
 - [ ] Build process completes successfully
+- [ ] Tests pass (when implemented)
 - [ ] Ask for approval before committing
