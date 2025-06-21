@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hebrew RTL support */
+html {
+  direction: rtl;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Custom styles for recipe builder */
+.recipe-builder-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #18181b;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.375rem;
+  background-color: white;
+  color: #18181b;
+  direction: rtl;
+  text-align: right;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #71717a;
+  box-shadow: 0 0 0 3px rgba(113, 113, 122, 0.1);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #18181b;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #3f3f46;
+}
+
+.btn-secondary {
+  background-color: #f4f4f5;
+  color: #18181b;
+}
+
+.btn-secondary:hover {
+  background-color: #e4e4e7;
+}
