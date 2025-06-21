@@ -51,11 +51,11 @@ Based on PRD: `tasks/prd-recipe-description.md`
 
 - [ ] 4.0 Update Search Functionality
 
-  - [ ] 4.1 Add description field to search index in lib/search.ts
-  - [ ] 4.2 Update search weights to include description matches
-  - [ ] 4.3 Test search functionality with description content
-  - [ ] 4.4 Verify search performance is not degraded
-  - [ ] 4.5 Update search unit tests
+  - [x] 4.1 Add description field to search index in lib/search.ts
+  - [x] 4.2 Update search weights to include description matches
+  - [x] 4.3 Test search functionality with description content
+  - [x] 4.4 Verify search performance is not degraded
+  - [x] 4.5 Update search unit tests
 
 - [ ] 5.0 Update Documentation and Examples
 
