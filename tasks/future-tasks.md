@@ -114,12 +114,14 @@ These files should be moved to `docs/processes/` but their content should remain
 **Areas to Review**:
 
 1. **NPM Scripts**:
+
    - Main project scripts in `package.json`
    - Recipe builder scripts in `recipe-builder/package.json`
    - Ensure consistent naming and functionality
    - Check for redundant or missing scripts
 
 2. **Git Hooks**:
+
    - Pre-commit hook efficiency
    - Pre-push hook completeness
    - Hook execution order and dependencies
@@ -142,6 +144,7 @@ These files should be moved to `docs/processes/` but their content should remain
 **Priority**: Medium - Should be done when CI issues are resolved
 
 **Benefits**:
+
 - Faster development workflow
 - Consistent CI/CD pipeline
 - Reduced failed builds
