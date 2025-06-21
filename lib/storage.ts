@@ -28,7 +28,7 @@ export function saveIngredientState(recipeSlug: string, ingredient: string, chec
   currentState[recipeSlug][ingredient] = checked;
   
   try {
-    sessionStorage.setItem(INGREDIENTS_STORAGE_KEY, JSON.stringify(currentState));
+    localStorage.setItem(INGREDIENTS_STORAGE_KEY, JSON.stringify(currentState));
   } catch (error) {
     console.error('Failed to save ingredient state:', error);
   }
@@ -45,7 +45,7 @@ export function getRecipeIngredientsState(): RecipeIngredientsState {
   if (typeof window === 'undefined') return {};
   
   try {
-    const stored = sessionStorage.getItem(INGREDIENTS_STORAGE_KEY);
+    const stored = localStorage.getItem(INGREDIENTS_STORAGE_KEY);
     return stored ? JSON.parse(stored) : {};
   } catch (error) {
     console.error('Failed to load ingredient state:', error);
@@ -59,9 +59,9 @@ export function clearRecipeIngredientsState(recipeSlug?: string): void {
   if (recipeSlug) {
     const currentState = getRecipeIngredientsState();
     delete currentState[recipeSlug];
-    sessionStorage.setItem(INGREDIENTS_STORAGE_KEY, JSON.stringify(currentState));
+    localStorage.setItem(INGREDIENTS_STORAGE_KEY, JSON.stringify(currentState));
   } else {
-    sessionStorage.removeItem(INGREDIENTS_STORAGE_KEY);
+    localStorage.removeItem(INGREDIENTS_STORAGE_KEY);
   }
 }
 
