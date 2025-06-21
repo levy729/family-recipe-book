@@ -1,12 +1,37 @@
 #!/usr/bin/env sh
 
-echo "🔨 Building project..."
+echo "🔨 Building main project..."
 npm run build
 
 if [ $? -ne 0 ]; then
-  echo "❌ Build failed! Push aborted."
+  echo "❌ Main project build failed! Push aborted."
   exit 1
 fi
 
+echo "🔨 Building recipe builder..."
+cd recipe-builder && npm run build
+
+if [ $? -ne 0 ]; then
+  echo "❌ Recipe builder build failed! Push aborted."
+  exit 1
+fi
+
+cd ..
+
 echo "✅ Build successful! Running tests..."
-npm run test:ci 
+npm run test:ci
+
+if [ $? -ne 0 ]; then
+  echo "❌ Main project tests failed! Push aborted."
+  exit 1
+fi
+
+echo "🧪 Running recipe builder tests..."
+cd recipe-builder && npm test
+
+if [ $? -ne 0 ]; then
+  echo "❌ Recipe builder tests failed! Push aborted."
+  exit 1
+fi
+
+echo "✅ All checks passed! Ready to push." 

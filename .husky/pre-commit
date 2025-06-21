@@ -1,1 +1,14 @@
+#!/usr/bin/env sh
+
+echo "🔍 Running lint-staged..."
 npx lint-staged
+
+echo "🧪 Running recipe builder tests..."
+cd recipe-builder && npm test
+
+if [ $? -ne 0 ]; then
+  echo "❌ Recipe builder tests failed! Commit aborted."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"
