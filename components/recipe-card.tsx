@@ -21,7 +21,7 @@ export function RecipeCard({ recipe, className = '' }: RecipeCardProps) {
 
   return (
     <Link href={`/recipe/${recipe.slug}`} className="block group">
-      <Card className={`hover:shadow-lg hover:scale-[1.01] transition-all duration-300 ease-out cursor-pointer ${className}`}>
+      <Card className={`hover:shadow-md transition-all duration-300 ease-out cursor-pointer ${className}`}>
         <CardHeader className="pb-3">
           <CardTitle className="text-lg font-medium text-zinc-900 text-right">
             {recipe.title}
