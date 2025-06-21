@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { HEBREW_TEXTS } from '@/lib/constants';
+import { HEBREW_TEXTS, HEBREW_TAGS } from '@/lib/constants';
 import { RecipeFormData } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,29 +30,8 @@ export function RecipeForm({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [newTag, setNewTag] = useState('');
 
-  // Tag suggestions
-  const tagSuggestions = [
-    'בשר',
-    'עיקרי',
-    'תוספת',
-    'קינוח',
-    'ארוחת בוקר',
-    'מסורתי',
-    'צמחוני',
-    'טבעוני',
-    'ללא גלוטן',
-    'קל',
-    'בינוני',
-    'מתקדם',
-    'קציצות',
-    'מרק',
-    'סלט',
-    'עוגה',
-    'לחם',
-    'פסטה',
-    'אורז',
-    'ירקות',
-  ];
+  // Tag suggestions - sorted alphabetically for better UX
+  const tagSuggestions = [...HEBREW_TAGS].sort();
 
   // Auto-generate slug from Hebrew title
   const generateSlug = (title: string) => {
