@@ -14,6 +14,9 @@ export const HEBREW_TEXTS = {
   DESCRIPTION_LABEL: 'תיאור המתכון',
   DESCRIPTION_PLACEHOLDER: 'תיאור קצר של המתכון (אופציונלי)',
   TAGS_LABEL: 'תגיות',
+  TAG_INPUT_PLACEHOLDER: 'הכנס תגית חדשה',
+  TAG_ADD_BUTTON: 'הוסף',
+  TAG_SUGGESTIONS_LABEL: 'הצעות לתגיות:',
   INGREDIENTS_LABEL: 'מרכיבים',
   INGREDIENT_PLACEHOLDER: 'הכנס מרכיב',
   INSTRUCTIONS_LABEL: 'הוראות הכנה',
@@ -28,6 +31,7 @@ export const HEBREW_TEXTS = {
   ADD_INGREDIENT: 'הוסף מרכיב',
   ADD_INSTRUCTION: 'הוסף שלב',
   REMOVE: 'הסר',
+  CANCEL: 'ביטול',
 
   // Messages
   RECIPE_SAVED: 'המתכון נשמר בהצלחה!',

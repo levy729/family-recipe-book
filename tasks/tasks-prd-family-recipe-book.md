@@ -219,6 +219,13 @@
 - Keyboard accessibility improvements
 - Screen reader support
 - PWA capabilities (offline support)
+- Fix desktop recipe page layout
+  - [ ] 13.5.2 Fix desktop recipe page layout
+    - [ ] 13.5.2.1 Review current desktop layout issues
+    - [ ] 13.5.2.2 Improve spacing and typography for desktop screens
+    - [ ] 13.5.2.3 Optimize content width and readability on larger screens
+    - [ ] 13.5.2.4 Test layout on various desktop screen sizes
+    - [ ] 13.5.2.5 Ensure consistent design with mobile/tablet versions
 
 ## Code Review Checklist
 
