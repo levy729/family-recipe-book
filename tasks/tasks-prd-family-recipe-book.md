@@ -116,16 +116,16 @@
     - [x] 9.8.9 Make search box bigger
   - [ ] 9.9 Cooking time display
 
-- [ ] 14.0 Footer and Site Information
+- [x] 14.0 Footer and Site Information
 
-  - [ ] 14.1 Create simple footer component
-    - [ ] 14.1.1 Add copyright information
-    - [ ] 14.1.2 Add GitHub repository link
-    - [ ] 14.1.3 Add LinkedIn profile link (optional)
-    - [ ] 14.1.4 Style footer with minimal design matching site theme
-    - [ ] 14.1.5 Ensure footer appears on all pages
-    - [ ] 14.1.6 Test responsive design for footer
-    - [ ] 14.1.7 Verify RTL layout support for footer
+  - [x] 14.1 Create simple footer component
+    - [x] 14.1.1 Add copyright information
+    - [x] 14.1.2 Add GitHub repository link
+    - [x] 14.1.3 Add LinkedIn profile link (optional)
+    - [x] 14.1.4 Style footer with minimal design matching site theme
+    - [x] 14.1.5 Ensure footer appears on all pages
+    - [x] 14.1.6 Test responsive design for footer
+    - [x] 14.1.7 Verify RTL layout support for footer
 
 - [x] 10.0 Social & Sharing
 

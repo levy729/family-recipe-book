@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { FontSizeControls } from '@/components/font-size-controls';
 import { BackButton } from '@/components/back-button';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'Family Recipe Book',
@@ -15,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl">
-      <body className="min-h-screen bg-zinc-50 text-zinc-900 p-8">
-        <main className="flex min-h-screen flex-col items-center">
-          <div className="max-w-4xl w-full">
+      <body className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col">
+        <main className="flex-1 p-8">
+          <div className="max-w-4xl w-full mx-auto">
             <div className="flex justify-between items-center mb-4">
               <FontSizeControls />
               <BackButton />
@@ -25,6 +26,7 @@ export default function RootLayout({
             {children}
           </div>
         </main>
+        <Footer />
       </body>
     </html>
   );
