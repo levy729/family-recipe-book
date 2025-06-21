@@ -433,6 +433,130 @@ describe('Search Functionality', () => {
     });
   });
 
+  describe('Search Performance', () => {
+    it('should maintain acceptable performance with description field', () => {
+      // Create a larger dataset to test performance
+      const largeRecipeDataset: Recipe[] = Array.from(
+        { length: 100 },
+        (_, i) => ({
+          title: `Recipe ${i + 1}`,
+          slug: `recipe-${i + 1}`,
+          description: `This is a detailed description for recipe ${i + 1} with various ingredients and cooking methods`,
+          tags: [`tag${i % 10}`, `category${i % 5}`],
+          ingredients: [`ingredient${i}`, `spice${i % 8}`],
+          instructions: `Step 1: Prepare ingredients. Step 2: Cook. Step 3: Serve.`,
+          content: `Full content for recipe ${i + 1}`,
+        })
+      );
+
+      const mockFuseInstance = {
+        search: jest
+          .fn()
+          .mockReturnValue([
+            { item: largeRecipeDataset[0], score: 0.1, matches: [] },
+          ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      const startTime = performance.now();
+      initializeSearch(largeRecipeDataset);
+      const initTime = performance.now() - startTime;
+
+      const searchStartTime = performance.now();
+      searchRecipes('Recipe');
+      const searchTime = performance.now() - searchStartTime;
+
+      // Performance assertions
+      expect(initTime).toBeLessThan(100); // Initialization should be under 100ms
+      expect(searchTime).toBeLessThan(50); // Search should be under 50ms
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('Recipe');
+    });
+
+    it('should handle search with weighted fields efficiently', () => {
+      const testRecipes: Recipe[] = [
+        {
+          title: 'Test Recipe 1',
+          slug: 'test-1',
+          description:
+            'A test recipe with specific keywords for performance testing',
+          tags: ['test', 'performance'],
+          ingredients: ['test ingredient'],
+          instructions: 'Test instructions',
+          content: 'Test content',
+        },
+        {
+          title: 'Test Recipe 2',
+          slug: 'test-2',
+          description: 'Another test recipe with different keywords',
+          tags: ['test', 'different'],
+          ingredients: ['different ingredient'],
+          instructions: 'Different instructions',
+          content: 'Different content',
+        },
+      ];
+
+      const mockFuseInstance = {
+        search: jest.fn().mockReturnValue([
+          { item: testRecipes[0], score: 0.1, matches: [] },
+          { item: testRecipes[1], score: 0.2, matches: [] },
+        ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(testRecipes);
+
+      const startTime = performance.now();
+      const results = searchRecipes('keywords');
+      const searchTime = performance.now() - startTime;
+
+      expect(searchTime).toBeLessThan(10); // Should be very fast for small dataset
+      expect(results).toHaveLength(2);
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('keywords');
+    });
+
+    it('should maintain performance with Hebrew text search', () => {
+      const hebrewRecipes: Recipe[] = [
+        {
+          title: 'מתכון עברי ראשון',
+          slug: 'hebrew-1',
+          description: 'תיאור מפורט של המתכון הראשון עם מילים עבריות',
+          tags: ['עברי', 'ראשון'],
+          ingredients: ['רכיב ראשון', 'רכיב שני'],
+          instructions: 'הוראות בישול בעברית',
+          content: 'תוכן מלא בעברית',
+        },
+        {
+          title: 'מתכון עברי שני',
+          slug: 'hebrew-2',
+          description: 'תיאור של המתכון השני עם מילים שונות',
+          tags: ['עברי', 'שני'],
+          ingredients: ['רכיב שלישי', 'רכיב רביעי'],
+          instructions: 'הוראות נוספות בעברית',
+          content: 'תוכן נוסף בעברית',
+        },
+      ];
+
+      const mockFuseInstance = {
+        search: jest
+          .fn()
+          .mockReturnValue([
+            { item: hebrewRecipes[0], score: 0.15, matches: [] },
+          ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(hebrewRecipes);
+
+      const startTime = performance.now();
+      const results = searchRecipes('עברי');
+      const searchTime = performance.now() - startTime;
+
+      expect(searchTime).toBeLessThan(10); // Hebrew search should be fast
+      expect(results).toHaveLength(1);
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('עברי');
+    });
+  });
+
   describe('Error handling', () => {
     it('should handle Fuse.js search errors gracefully', () => {
       const mockFuseInstance = {
