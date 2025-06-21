@@ -105,6 +105,14 @@
   - [x] 9.6 Add borders/lines to recipe page for better UI separation
   - [x] 9.7 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
   - [ ] 9.8 Smooth transitions and micro-interactions
+    - [x] 9.8.1 Enhanced recipe card hover animations (subtle scale effect)
+    - [ ] 9.8.2 Add font size controls to all pages (not just recipe page)
+    - [ ] 9.8.3 Add back to home page button on all pages (except homepage)
+    - [ ] 9.8.4 Enhanced search bar focus animations
+    - [ ] 9.8.5 Staggered animations for search results
+    - [ ] 9.8.6 Enhanced tag hover animations
+    - [ ] 9.8.7 Enhanced ingredient checkbox animations
+    - [ ] 9.8.8 Enhanced instruction step animations
   - [ ] 9.9 Cooking time display
 
 - [ ] 10.0 Social & Sharing
