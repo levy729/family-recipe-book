@@ -1,39 +1,40 @@
 # Family Recipe Book
 
-A minimalist, publicly accessible family recipe book website with Hebrew RTL content built with Next.js, shadcn/ui, and Tailwind CSS.
+A minimalist family recipe book website built with Next.js, featuring Hebrew RTL content, real-time search, and static export for GitHub Pages hosting.
 
 ## Features
 
-- 📱 **Responsive Design** - Works on mobile, tablet, and desktop
-- 🔍 **Real-time Search** - Hebrew text search with Fuse.js
-- 🏷️ **Clickable Tags** - Navigate between recipes by tags
-- 📝 **Interactive Ingredients** - Check off ingredients as you cook
-- 📋 **Progress Tracking** - Mark recipe steps as complete
-- 🎨 **Font Size Controls** - Adjustable text size with persistence
-- 📤 **Web Share API** - Native sharing on supported devices
-- 🌐 **RTL Support** - Full Hebrew right-to-left layout support
-- 💾 **Session Storage** - Remember ingredient checkboxes and preferences
+- 📖 **Hebrew RTL Support**: Full right-to-left text direction and Hebrew typography
+- 🔍 **Real-time Search**: Instant search using Fuse.js with Hebrew text support
+- 📱 **Responsive Design**: Mobile-first design that works on all devices
+- 🏷️ **Tag-based Navigation**: Clickable tags for easy recipe discovery
+- ✅ **Interactive Ingredients**: Checkboxes with session storage persistence
+- 📋 **Copy/Share Functionality**: Copy ingredient lists and share recipes
+- 🎨 **Modern UI**: Clean, minimalist design with smooth animations
+- 📊 **Progress Tracking**: Visual progress indicators for recipe steps
+- 🔧 **Font Size Controls**: Adjustable text size with localStorage persistence
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 with TypeScript
+- **Framework**: Next.js 14 with App Router
 - **Styling**: Tailwind CSS with shadcn/ui components
 - **Search**: Fuse.js for fuzzy Hebrew text search
 - **Icons**: Lucide React
-- **Deployment**: GitHub Pages with GitHub Actions
+- **Deployment**: GitHub Pages (static export)
+- **Language**: TypeScript
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 20 or higher
+- Node.js 18+ 
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/family-recipe-book.git
+git clone https://github.com/levy729/family-recipe-book.git
 cd family-recipe-book
 ```
 
@@ -49,25 +50,22 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Building for Production
+## Adding Recipes
 
-```bash
-npm run build
-```
-
-The static files will be generated in the `out` directory.
-
-## Recipe Format
-
-Recipes are stored as Markdown files with YAML frontmatter in the `recipes/` directory:
+Recipes are stored as Markdown files in the `recipes/` directory with YAML frontmatter:
 
 ```markdown
 ---
-title: "עוגת שוקולד קלה"
-slug: "easy-chocolate-cake"
-tags: ["עוגה", "קינוח", "שוקולד"]
-ingredients: ["2 ביצים", "1 כוס סוכר", "1 כוס קקאו"]
-instructions: "1. מחממים תנור ל-180 מעלות.\n2. מערבבים את כל החומרים בקערה.\n3. יוצקים לתבנית ואופים כ-30 דקות."
+title: "Recipe Title"
+slug: "recipe-slug"
+tags: ["tag1", "tag2"]
+ingredients:
+  - "Ingredient 1"
+  - "Ingredient 2"
+instructions: |
+  1. Step one
+  2. Step two
+  3. Step three
 ---
 
 Recipe description here...
@@ -75,31 +73,27 @@ Recipe description here...
 
 ## Deployment
 
-This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+The site is automatically deployed to GitHub Pages via GitHub Actions. See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
-### Manual Deployment
+## Project Structure
 
-1. Build the project:
-```bash
-npm run build
 ```
-
-2. Deploy the `out` directory to your web server.
-
-### GitHub Pages Setup
-
-1. Enable GitHub Pages in your repository settings
-2. Set the source to "GitHub Actions"
-3. Push to the `main` branch to trigger automatic deployment
+family-recipe-book/
+├── app/                    # Next.js App Router pages
+├── components/             # React components
+├── lib/                    # Utility functions
+├── recipes/                # Recipe markdown files
+├── public/                 # Static assets
+└── .github/workflows/      # GitHub Actions workflows
+```
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run tests and linting
-5. Submit a pull request
+4. Submit a pull request
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE). 
+MIT License - see LICENSE file for details. 
