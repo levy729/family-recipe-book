@@ -98,22 +98,28 @@
   - [ ] 9.2 Redesign recipe page back button (arrow on left side)
   - [ ] 9.3 Make tags clickable on recipe pages
   - [ ] 9.4 Redesign tag styles (suggest new design)
-  - [ ] 9.5 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
-  - [ ] 9.6 Smooth transitions and micro-interactions
-  - [ ] 9.7 Cooking time display
+  - [ ] 9.5 Add borders/lines to recipe page for better UI separation
+  - [ ] 9.6 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
+  - [ ] 9.7 Smooth transitions and micro-interactions
+  - [ ] 9.8 Cooking time display
 
 - [ ] 10.0 Social & Sharing
 
   - [ ] 10.1 Web Share API integration for recipe pages
   - [ ] 10.2 Copy recipe link to clipboard
 
-- [ ] 11.0 Deployment and Polish
+- [ ] 11.0 Project Configuration
 
-  - [ ] 11.1 Set up GitHub Actions workflow for auto-deploy
-  - [ ] 11.2 Configure GitHub Pages deployment
-  - [ ] 11.3 Test responsive design across devices
-  - [ ] 11.4 Optimize performance and loading times
-  - [ ] 11.5 Final testing and bug fixes
+  - [x] 11.1 Create rules file for persistent project rules and guidelines
+  - [ ] 11.2 Document coding standards and conventions
+
+- [ ] 12.0 Deployment and Polish
+
+  - [ ] 12.1 Set up GitHub Actions workflow for auto-deploy
+  - [ ] 12.2 Configure GitHub Pages deployment
+  - [ ] 12.3 Test responsive design across devices
+  - [ ] 12.4 Optimize performance and loading times
+  - [ ] 12.5 Final testing and bug fixes
 
 ## Future Enhancements (TODOs)
 
