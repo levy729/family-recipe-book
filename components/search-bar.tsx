@@ -100,7 +100,7 @@ export function SearchBar({
   };
 
   return (
-    <div className={`w-full max-w-md relative ${className}`}>
+    <div className={`w-full max-w-lg relative ${className}`}>
       <form onSubmit={handleSubmit}>
         <div className="flex gap-2">
           <div className="relative flex-1">
@@ -112,7 +112,7 @@ export function SearchBar({
               onChange={handleInputChange}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
-              className="text-right placeholder:text-right pr-10 transition-all duration-300 ease-out hover:border-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:border-transparent"
+              className="text-right placeholder:text-right pr-10 py-3 h-12 text-base transition-all duration-300 ease-out hover:border-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:border-transparent"
               dir="rtl"
             />
             {query && (
@@ -129,7 +129,7 @@ export function SearchBar({
           <Button 
             type="submit" 
             disabled={!query.trim()}
-            className="transition-all duration-200 hover:shadow-md"
+            className="h-12 px-4 transition-all duration-200 hover:shadow-md"
           >
             <Search className="w-4 h-4" />
           </Button>

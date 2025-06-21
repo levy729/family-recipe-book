@@ -110,9 +110,9 @@
     - [x] 9.8.3 Add back to home page button on all pages (except homepage)
     - [ ] 9.8.4 Enhanced search bar focus animations
     - [ ] 9.8.5 Staggered animations for search results
-    - [ ] 9.8.6 Enhanced tag hover animations
-    - [ ] 9.8.7 Enhanced ingredient checkbox animations
-    - [ ] 9.8.8 Enhanced instruction step animations
+    - [x] 9.8.6 Enhanced tag hover animations
+    - [x] 9.8.7 Enhanced ingredient checkbox animations
+    - [x] 9.8.8 Enhanced instruction step animations
     - [ ] 9.8.9 Make search box bigger
   - [ ] 9.9 Cooking time display
 
