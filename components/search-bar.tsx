@@ -9,6 +9,7 @@ interface SearchBarProps {
   onSearch?: (query: string) => void;
   placeholder?: string;
   className?: string;
+  initialValue?: string;
 }
 
 const SEARCH_HISTORY_KEY = 'recipe-search-history';
@@ -17,9 +18,10 @@ const MAX_HISTORY_ITEMS = 5;
 export function SearchBar({ 
   onSearch, 
   placeholder = 'חפש מתכונים...', 
-  className = '' 
+  className = '',
+  initialValue = ''
 }: SearchBarProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialValue);
   const [showHistory, setShowHistory] = useState(false);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const router = useRouter();
@@ -36,6 +38,11 @@ export function SearchBar({
       }
     }
   }, []);
+
+  // Update query when initialValue changes
+  useEffect(() => {
+    setQuery(initialValue);
+  }, [initialValue]);
 
   const addToHistory = (searchTerm: string) => {
     const trimmedTerm = searchTerm.trim();
@@ -65,6 +72,13 @@ export function SearchBar({
     }
   };
 
+  const handleClear = () => {
+    setQuery('');
+    onSearch?.('');
+    setShowHistory(searchHistory.length > 0);
+    inputRef.current?.focus();
+  };
+
   const handleHistoryClick = (historyItem: string) => {
     setQuery(historyItem);
     onSearch?.(historyItem);
@@ -88,17 +102,29 @@ export function SearchBar({
     <div className={`w-full max-w-md relative ${className}`}>
       <form onSubmit={handleSubmit}>
         <div className="flex gap-2">
-          <Input
-            ref={inputRef}
-            type="text"
-            placeholder={placeholder}
-            value={query}
-            onChange={handleInputChange}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            className="text-right placeholder:text-right flex-1"
-            dir="rtl"
-          />
+          <div className="relative flex-1">
+            <Input
+              ref={inputRef}
+              type="text"
+              placeholder={placeholder}
+              value={query}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+              className="text-right placeholder:text-right pr-10"
+              dir="rtl"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
           <Button type="submit" disabled={!query.trim()}>
             חפש
           </Button>

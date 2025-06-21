@@ -82,6 +82,7 @@ export default function SearchPage() {
             className="mx-auto" 
             onSearch={handleSearch}
             placeholder="חפש מתכונים..."
+            initialValue={currentQuery}
           />
         </div>
         
