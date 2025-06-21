@@ -7,6 +7,7 @@ import { RecipeCard } from '@/components/recipe-card';
 import { SearchBar } from '@/components/search-bar';
 import { initializeSearch, searchRecipes } from '@/lib/search';
 import { LoadingSpinner } from '@/components/loading-spinner';
+import { HEBREW_TEXTS, formatHebrewText } from '@/lib/constants';
 
 interface SearchPageClientProps {
   initialRecipes: Recipe[];
@@ -57,7 +58,9 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
   return (
     <>
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-zinc-900 mb-4">תוצאות חיפוש</h1>
+        <h1 className="text-3xl font-bold text-zinc-900 mb-4">
+          {HEBREW_TEXTS.SEARCH_RESULTS_TITLE}
+        </h1>
       </div>
 
       {/* Search Bar */}
@@ -65,14 +68,17 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
         <SearchBar
           className="mx-auto"
           onSearch={handleSearch}
-          placeholder="חפש מתכונים..."
+          placeholder={HEBREW_TEXTS.SEARCH_PLACEHOLDER}
           initialValue={currentQuery}
         />
       </div>
 
       {currentQuery && (
         <p className="text-lg text-zinc-600 mb-8">
-          חיפוש עבור: "{currentQuery}"
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          {formatHebrewText(HEBREW_TEXTS.SEARCH_FOR + ' "{query}"', {
+            query: currentQuery,
+          })}
         </p>
       )}
 
@@ -80,13 +86,15 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
         <div className="text-center py-8">
           <div className="flex items-center justify-center gap-2">
             <LoadingSpinner size="sm" />
-            <p className="text-zinc-600">מחפש...</p>
+            <p className="text-zinc-600">{HEBREW_TEXTS.SEARCHING_TEXT}</p>
           </div>
         </div>
       ) : results.length > 0 ? (
         <div className="text-right">
           <p className="text-sm text-zinc-500 mb-4">
-            נמצאו {results.length} מתכונים
+            {formatHebrewText(HEBREW_TEXTS.FOUND_RECIPES, {
+              count: results.length,
+            })}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {results.map((recipe, index) => (
@@ -106,14 +114,19 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
       ) : currentQuery ? (
         <div className="text-center py-8">
           <p className="text-zinc-600 text-lg">
-            לא נמצאו מתכונים עבור "{currentQuery}"
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            {formatHebrewText(HEBREW_TEXTS.NO_RECIPES_FOUND, {
+              query: currentQuery,
+            })}
           </p>
-          <p className="text-zinc-500 mt-2">נסה לחפש עם מילים אחרות</p>
+          <p className="text-zinc-500 mt-2">
+            {HEBREW_TEXTS.TRY_DIFFERENT_WORDS}
+          </p>
         </div>
       ) : (
         <div className="text-center py-8">
           <p className="text-zinc-600 text-lg">
-            הזן מילת חיפוש כדי למצוא מתכונים
+            {HEBREW_TEXTS.ENTER_SEARCH_QUERY}
           </p>
         </div>
       )}

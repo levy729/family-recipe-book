@@ -5,6 +5,7 @@ import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
 import { IngredientHeader } from '@/components/ingredient-header';
 import { Recipe } from '@/lib/recipes';
+import { HEBREW_TEXTS } from '@/lib/constants';
 
 interface RecipeContentProps {
   recipe: Recipe;
@@ -29,12 +30,15 @@ export function RecipeContent({ recipe }: RecipeContentProps) {
         {/* Ingredients Section */}
         <div className="text-right">
           <IngredientHeader
-            onCopy={() => (window as any).copyIngredients?.()}
+            onCopy={() => {
+              if (typeof window !== 'undefined' && window.copyIngredients) {
+                window.copyIngredients();
+              }
+            }}
           />
           <IngredientList
             ingredients={recipe.ingredients}
             recipeSlug={recipe.slug}
-            recipeTitle={recipe.title}
           />
         </div>
 
@@ -42,7 +46,7 @@ export function RecipeContent({ recipe }: RecipeContentProps) {
         <div className="text-right">
           <div className="mb-6">
             <h2 className="text-2xl font-semibold text-zinc-800 mb-2">
-              הוראות הכנה
+              {HEBREW_TEXTS.INSTRUCTIONS_TITLE}
             </h2>
             <div className="w-16 h-px bg-zinc-300"></div>
           </div>

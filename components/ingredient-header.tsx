@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Copy, Check } from 'lucide-react';
 import { useState } from 'react';
+import { HEBREW_TEXTS } from '@/lib/constants';
 
 interface IngredientHeaderProps {
   onCopy: () => void;
@@ -36,7 +37,9 @@ export function IngredientHeader({ onCopy }: IngredientHeaderProps) {
             )}
           </div>
         </Button>
-        <h2 className="text-2xl font-semibold text-zinc-800 mr-2">מרכיבים</h2>
+        <h2 className="text-2xl font-semibold text-zinc-800 mr-2">
+          {HEBREW_TEXTS.INGREDIENTS_TITLE}
+        </h2>
       </div>
       <div className="w-16 h-px bg-zinc-300"></div>
     </div>

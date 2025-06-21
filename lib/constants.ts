@@ -9,6 +9,7 @@ export const HEBREW_TEXTS = {
   SEARCH_RESULTS_TITLE: 'תוצאות חיפוש',
   RECENT_RECIPES_TITLE: 'מתכונים אחרונים',
   INGREDIENTS_TITLE: 'מרכיבים',
+  INSTRUCTIONS_TITLE: 'הוראות הכנה',
 
   // Search related
   SEARCH_PLACEHOLDER: 'חפש מתכונים...',
@@ -22,6 +23,10 @@ export const HEBREW_TEXTS = {
   FOUND_RECIPES_FOR: 'נמצאו {count} מתכונים עבור "{query}"',
   NO_RECIPES_FOUND: 'לא נמצאו מתכונים עבור "{query}"',
   NO_RECIPES_FOUND_GENERAL: 'לא נמצאו מתכונים',
+
+  // Ingredient list
+  SELECT_ALL: 'סמן הכל',
+  CLEAR_ALL: 'נקה הכל',
 
   // Error pages
   PAGE_NOT_FOUND: 'עמוד לא נמצא',

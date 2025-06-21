@@ -1,27 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { ClipboardCopy, Check } from 'lucide-react';
 import { saveIngredientState, getIngredientState } from '@/lib/storage';
+import { HEBREW_TEXTS } from '@/lib/constants';
 
 interface IngredientListProps {
   recipeSlug: string;
   ingredients: string[];
-  recipeTitle?: string;
   className?: string;
+}
+
+// Extend Window interface to include copyIngredients
+declare global {
+  interface Window {
+    copyIngredients?: () => void;
+  }
 }
 
 export function IngredientList({
   recipeSlug,
   ingredients,
-  recipeTitle,
   className = '',
 }: IngredientListProps) {
   // Ensure ingredients is always an array
-  const safeIngredients = Array.isArray(ingredients) ? ingredients : [];
-  
+  const safeIngredients = useMemo(
+    () => (Array.isArray(ingredients) ? ingredients : []),
+    [ingredients]
+  );
+
   const [checkedStates, setCheckedStates] = useState<{
     [key: string]: boolean;
   }>({});
@@ -48,7 +57,6 @@ export function IngredientList({
   const allChecked =
     safeIngredients.length > 0 &&
     safeIngredients.every(ingredient => checkedStates[ingredient]);
-  const someChecked = safeIngredients.some(ingredient => checkedStates[ingredient]);
 
   const handleSelectAll = () => {
     const newStates: { [key: string]: boolean } = {};
@@ -100,7 +108,7 @@ export function IngredientList({
   // Make copy function available to parent
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).copyIngredients = copyIngredients;
+      window.copyIngredients = copyIngredients;
     }
   }, [copyIngredients]);
 
@@ -124,7 +132,9 @@ export function IngredientList({
               )}
             </div>
           </Button>
-          <h2 className="text-2xl font-semibold text-zinc-800 mr-2">מרכיבים</h2>
+          <h2 className="text-2xl font-semibold text-zinc-800 mr-2">
+            {HEBREW_TEXTS.INGREDIENTS_TITLE}
+          </h2>
         </div>
         <div className="w-16 h-px bg-zinc-300"></div>
       </div>
@@ -136,7 +146,7 @@ export function IngredientList({
             onClick={allChecked ? handleClearAll : handleSelectAll}
             className="text-xs text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto"
           >
-            {allChecked ? 'נקה הכל' : 'סמן הכל'}
+            {allChecked ? HEBREW_TEXTS.CLEAR_ALL : HEBREW_TEXTS.SELECT_ALL}
           </Button>
         </div>
       )}

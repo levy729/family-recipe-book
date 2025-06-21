@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function handleTagClick(
   tag: string,
-  router: any,
+  router: { push: (url: string) => void },
   event?: React.MouseEvent
 ) {
   event?.stopPropagation();

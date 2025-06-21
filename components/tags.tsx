@@ -1,7 +1,5 @@
 'use client';
 
-import { Recipe } from '@/lib/recipes';
-
 interface TagsProps {
   tags: string[];
   className?: string;

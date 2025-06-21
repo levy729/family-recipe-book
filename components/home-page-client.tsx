@@ -6,6 +6,7 @@ import { RecipeCard } from '@/components/recipe-card';
 import { Recipe } from '@/lib/recipes';
 import { initializeSearch, searchRecipes } from '@/lib/search';
 import { LoadingSpinner } from '@/components/loading-spinner';
+import { HEBREW_TEXTS, formatHebrewText } from '@/lib/constants';
 
 interface HomePageClientProps {
   initialRecipes: Recipe[];
@@ -15,9 +16,7 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Recipe[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [recentRecipes, setRecentRecipes] = useState<Recipe[]>(
-    initialRecipes.slice(0, 6)
-  );
+  const [recentRecipes] = useState<Recipe[]>(initialRecipes.slice(0, 6));
 
   useEffect(() => {
     // Initialize search with all recipes
@@ -43,25 +42,27 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
   return (
     <>
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-zinc-900 mb-4">ספר מתכונים</h1>
+        <h1 className="text-4xl font-bold text-zinc-900 mb-4">
+          {HEBREW_TEXTS.SITE_TITLE}
+        </h1>
       </div>
 
       <div className="flex justify-center mb-12">
         <SearchBar
           className="mx-auto"
           onSearch={handleSearch}
-          placeholder="חפש מתכונים..."
+          placeholder={HEBREW_TEXTS.SEARCH_PLACEHOLDER}
         />
       </div>
 
       <div className="text-right">
         {showRecentTitle ? (
           <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-            מתכונים אחרונים
+            {HEBREW_TEXTS.RECENT_RECIPES_TITLE}
           </h2>
         ) : (
           <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-            תוצאות חיפוש
+            {HEBREW_TEXTS.SEARCH_RESULTS_TITLE}
           </h2>
         )}
 
@@ -69,14 +70,17 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
           <div className="text-center py-8">
             <div className="flex items-center justify-center gap-2">
               <LoadingSpinner size="sm" />
-              <p className="text-zinc-600">מחפש...</p>
+              <p className="text-zinc-600">{HEBREW_TEXTS.SEARCHING_TEXT}</p>
             </div>
           </div>
         ) : displayRecipes.length > 0 ? (
           <>
             {searchQuery.trim() && (
               <p className="text-sm text-zinc-500 mb-4">
-                נמצאו {searchResults.length} מתכונים עבור "{searchQuery}"
+                {formatHebrewText(HEBREW_TEXTS.FOUND_RECIPES_FOR, {
+                  count: searchResults.length,
+                  query: searchQuery,
+                })}
               </p>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -97,9 +101,13 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
         ) : searchQuery.trim() ? (
           <div className="text-center py-8">
             <p className="text-zinc-600 text-lg">
-              לא נמצאו מתכונים עבור "{searchQuery}"
+              {formatHebrewText(HEBREW_TEXTS.NO_RECIPES_FOUND, {
+                query: searchQuery,
+              })}
             </p>
-            <p className="text-zinc-500 mt-2">נסה לחפש עם מילים אחרות</p>
+            <p className="text-zinc-500 mt-2">
+              {HEBREW_TEXTS.TRY_DIFFERENT_WORDS}
+            </p>
           </div>
         ) : null}
       </div>

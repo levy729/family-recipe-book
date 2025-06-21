@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { HEBREW_TEXTS } from '@/lib/constants';
 
 interface SearchBarProps {
   onSearch?: (query: string) => void;
@@ -18,7 +19,7 @@ const MAX_HISTORY_ITEMS = 5;
 
 export function SearchBar({
   onSearch,
-  placeholder = 'חפש מתכונים...',
+  placeholder = HEBREW_TEXTS.SEARCH_PLACEHOLDER,
   className = '',
   initialValue = '',
 }: SearchBarProps) {

@@ -4,6 +4,7 @@ import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
 import { RecipeHeader } from '@/components/recipe-header';
 import { ShareButton } from '@/components/share-button';
+import { HEBREW_TEXTS } from '@/lib/constants';
 
 interface RecipePageProps {
   params: {
@@ -45,7 +46,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
           <IngredientList
             ingredients={recipe.ingredients}
             recipeSlug={recipe.slug}
-            recipeTitle={recipe.title}
           />
         </div>
 
@@ -53,7 +53,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <div className="text-right">
           <div className="mb-6">
             <h2 className="text-2xl font-semibold text-zinc-800 mb-2">
-              הוראות הכנה
+              {HEBREW_TEXTS.INSTRUCTIONS_TITLE}
             </h2>
             <div className="w-16 h-px bg-zinc-300"></div>
           </div>
