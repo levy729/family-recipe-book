@@ -22,12 +22,15 @@
 - `lib/storage.ts` - Session storage utilities for ingredient checkboxes
 - `recipes/` - Directory containing markdown recipe files
 - `.github/workflows/deploy.yml` - GitHub Actions deployment workflow
+- `components/tags.tsx` - Shared tags component, now a client component for clickable tags
+- `app/layout.tsx` - Root layout, removed justify-center from main tag
 
 ### Notes
 
 - Unit tests should typically be placed alongside the code files they are testing (e.g., `MyComponent.tsx` and `MyComponent.test.tsx` in the same directory).
 - Use `npx jest [optional/path/to/test/file]` to run tests. Running without a path executes all tests found by the Jest configuration.
 - All styles will be component-level using Tailwind CSS classes, no global.css except for basic resets and RTL support.
+- The recipe page crash was fixed by making the Tags component a client component.
 
 ## Tasks
 
@@ -96,9 +99,9 @@
 
   - [x] 9.1 Font size controls with persistent localStorage
   - [x] 9.2 Redesign recipe page back button (arrow on left side)
-  - [ ] 9.3 Make tags clickable on recipe pages
-  - [ ] 9.4 Remove border radius from elements with backgrounds
-  - [ ] 9.5 Redesign tag styles (suggest new design)
+  - [x] 9.3 Make tags clickable on recipe pages
+  - [x] 9.4 Remove border radius from elements with backgrounds
+  - [x] 9.5 Redesign tag styles (suggest new design)
   - [ ] 9.6 Add borders/lines to recipe page for better UI separation
   - [ ] 9.7 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
   - [ ] 9.8 Smooth transitions and micro-interactions

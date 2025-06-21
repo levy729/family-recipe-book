@@ -56,6 +56,7 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
     setCheckedStates(newStates);
   };
 
+  // Expose copy functionality to parent
   const handleCopyToClipboard = async () => {
     const ingredientText = ingredients.join('\n');
     
@@ -81,25 +82,18 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
     }
   };
 
+  // Expose copy function to parent via ref
+  const copyIngredients = handleCopyToClipboard;
+  
+  // Make copy function available to parent
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).copyIngredients = copyIngredients;
+    }
+  }, [copyIngredients]);
+
   return (
     <div className={`space-y-3 ${className}`}>
-      <div className="flex items-center justify-start mb-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleCopyToClipboard}
-          className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto"
-        >
-          {copySuccess ? (
-            <Check className="w-4 h-4" />
-          ) : (
-            <Copy className="w-4 h-4" />
-          )}
-        </Button>
-        <h3 className="text-lg font-semibold text-zinc-900 mr-2">
-          מרכיבים
-        </h3>
-      </div>
       {ingredients.length > 0 && (
         <div className="flex justify-start mb-2">
           <Button

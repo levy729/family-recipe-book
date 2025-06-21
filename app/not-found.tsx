@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <div className="flex min-h-screen flex-col items-center justify-center">
       <div className="text-center max-w-md">
         <h1 className="text-6xl font-bold text-zinc-900 mb-4">
           404
@@ -20,6 +20,6 @@ export default function NotFound() {
           </Button>
         </Link>
       </div>
-    </main>
+    </div>
   );
 } 

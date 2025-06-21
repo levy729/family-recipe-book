@@ -2,6 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Search } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -126,7 +127,7 @@ export function SearchBar({
             )}
           </div>
           <Button type="submit" disabled={!query.trim()}>
-            חפש
+            <Search className="w-4 h-4" />
           </Button>
         </div>
       </form>

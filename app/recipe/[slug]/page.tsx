@@ -59,9 +59,12 @@ export default async function RecipePage({ params }: RecipePageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Ingredients Section */}
         <div className="text-right">
-          <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-            מרכיבים
-          </h2>
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold text-zinc-800 mb-2">
+              מרכיבים
+            </h2>
+            <div className="w-16 h-px bg-zinc-300"></div>
+          </div>
           <IngredientList
             ingredients={recipe.ingredients}
             recipeSlug={recipe.slug}
@@ -71,9 +74,12 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
         {/* Instructions Section */}
         <div className="text-right">
-          <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-            הוראות הכנה
-          </h2>
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold text-zinc-800 mb-2">
+              הוראות הכנה
+            </h2>
+            <div className="w-16 h-px bg-zinc-300"></div>
+          </div>
           <InstructionList
             instructions={recipe.instructions}
           />

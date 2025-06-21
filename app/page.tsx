@@ -54,63 +54,60 @@ export default function Home() {
   const showRecentTitle = !searchQuery.trim();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center max-w-4xl w-full">
+    <>
+      <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-zinc-900 mb-4">
-          ספר מתכונים משפחתי
+          ספר מתכונים
         </h1>
-        <p className="text-xl text-zinc-600 mb-8">
-          Family Recipe Book
-        </p>
-        
-        <div className="flex justify-center mb-12">
-          <SearchBar 
-            className="mx-auto" 
-            onSearch={handleSearch}
-            placeholder="חפש מתכונים..."
-          />
-        </div>
-        
-        <div className="text-right">
-          {showRecentTitle ? (
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-              מתכונים אחרונים
-            </h2>
-          ) : (
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-              תוצאות חיפוש
-            </h2>
-          )}
-          
-          {isSearching ? (
-            <div className="text-center py-8">
-              <p className="text-zinc-600">מחפש...</p>
-            </div>
-          ) : displayRecipes.length > 0 ? (
-            <>
-              {searchQuery.trim() && (
-                <p className="text-sm text-zinc-500 mb-4">
-                  נמצאו {searchResults.length} מתכונים עבור "{searchQuery}"
-                </p>
-              )}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {displayRecipes.map((recipe) => (
-                  <RecipeCard key={recipe.slug} recipe={recipe} />
-                ))}
-              </div>
-            </>
-          ) : searchQuery.trim() ? (
-            <div className="text-center py-8">
-              <p className="text-zinc-600 text-lg">
-                לא נמצאו מתכונים עבור "{searchQuery}"
-              </p>
-              <p className="text-zinc-500 mt-2">
-                נסה לחפש עם מילים אחרות
-              </p>
-            </div>
-          ) : null}
-        </div>
       </div>
-    </main>
+      
+      <div className="flex justify-center mb-12">
+        <SearchBar 
+          className="mx-auto" 
+          onSearch={handleSearch}
+          placeholder="חפש מתכונים..."
+        />
+      </div>
+      
+      <div className="text-right">
+        {showRecentTitle ? (
+          <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
+            מתכונים אחרונים
+          </h2>
+        ) : (
+          <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
+            תוצאות חיפוש
+          </h2>
+        )}
+        
+        {isSearching ? (
+          <div className="text-center py-8">
+            <p className="text-zinc-600">מחפש...</p>
+          </div>
+        ) : displayRecipes.length > 0 ? (
+          <>
+            {searchQuery.trim() && (
+              <p className="text-sm text-zinc-500 mb-4">
+                נמצאו {searchResults.length} מתכונים עבור "{searchQuery}"
+              </p>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {displayRecipes.map((recipe) => (
+                <RecipeCard key={recipe.slug} recipe={recipe} />
+              ))}
+            </div>
+          </>
+        ) : searchQuery.trim() ? (
+          <div className="text-center py-8">
+            <p className="text-zinc-600 text-lg">
+              לא נמצאו מתכונים עבור "{searchQuery}"
+            </p>
+            <p className="text-zinc-500 mt-2">
+              נסה לחפש עם מילים אחרות
+            </p>
+          </div>
+        ) : null}
+      </div>
+    </>
   );
 }
