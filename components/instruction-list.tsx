@@ -30,11 +30,11 @@ export function InstructionList({ instructions, className = '' }: InstructionLis
     <div className={`space-y-6 ${className}`}>
       {steps.map((step, index) => {
         const isCompleted = completedStates[index] || false;
-        
+
         return (
           <div key={index} className="text-right">
             {/* Step Number and Status */}
-            <div className="flex items-center justify-start space-x-2 space-x-reverse mb-2">
+            <div className="flex items-center justify-start space-x-2 space-x-reverse">
               <span className={`text-2xl font-bold transition-all duration-200 ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'}`}>
                 {index + 1}
               </span>
@@ -42,12 +42,11 @@ export function InstructionList({ instructions, className = '' }: InstructionLis
                 ✓
               </span>
             </div>
-            
+
             {/* Step Content */}
-            <div 
-              className={`cursor-pointer transition-all duration-200 hover:bg-zinc-50 p-2 rounded-md -m-2 ${
-                isCompleted ? 'text-zinc-400' : 'text-zinc-700'
-              }`}
+            <div
+              className={`cursor-pointer transition-all duration-200 hover:bg-zinc-50 p-2 rounded-md -m-2 ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'
+                }`}
               onClick={() => handleStepClick(index)}
             >
               <p className="leading-relaxed text-base">
