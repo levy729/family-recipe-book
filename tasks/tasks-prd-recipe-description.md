@@ -58,8 +58,12 @@ Based on PRD: `tasks/prd-recipe-description.md`
   - [ ] 4.5 Update search unit tests
 
 - [ ] 5.0 Update Documentation and Examples
+
   - [ ] 5.1 Add description field documentation to RECIPE_FORMAT.md
   - [ ] 5.2 Update example recipes with descriptions
   - [ ] 5.3 Add description field to field descriptions section
   - [ ] 5.4 Update validation section to include description rules
   - [ ] 5.5 Test documentation examples work correctly
+
+- [ ] 6.0 Future Improvements
+  - [ ] 6.1 Revisit and enforce code coverage thresholds in Jest config and CI/pre-push hooks once more tests are added
