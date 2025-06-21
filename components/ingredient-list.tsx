@@ -64,7 +64,7 @@ export function IngredientList({ recipeSlug, ingredients, className = '' }: Ingr
             variant="ghost"
             size="sm"
             onClick={allChecked ? handleClearAll : handleSelectAll}
-            className="text-xs text-zinc-600"
+            className="text-xs text-zinc-600 hover:text-zinc-600 hover:bg-transparent"
           >
             {allChecked ? 'נקה הכל' : 'בחר הכל'}
           </Button>
