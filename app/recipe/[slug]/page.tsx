@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
+import { FontSizeControls } from '@/components/font-size-controls';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -27,7 +28,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
     <main className="flex min-h-screen flex-col items-center p-24">
       <div className="max-w-4xl w-full">
         {/* Back to Home */}
-        <div className="mb-12">
+        <div className="mb-12 flex justify-between items-center">
+          <FontSizeControls />
           <Link href="/">
             <Button variant="outline" className="mb-4">
               ← חזרה לדף הבית

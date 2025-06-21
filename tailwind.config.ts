@@ -9,6 +9,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        'xs': ['calc(0.75rem * var(--font-size-scale))', { lineHeight: '1rem' }],
+        'sm': ['calc(0.875rem * var(--font-size-scale))', { lineHeight: '1.25rem' }],
+        'base': ['calc(1rem * var(--font-size-scale))', { lineHeight: '1.5rem' }],
+        'lg': ['calc(1.125rem * var(--font-size-scale))', { lineHeight: '1.75rem' }],
+        'xl': ['calc(1.25rem * var(--font-size-scale))', { lineHeight: '1.75rem' }],
+        '2xl': ['calc(1.5rem * var(--font-size-scale))', { lineHeight: '2rem' }],
+        '3xl': ['calc(1.875rem * var(--font-size-scale))', { lineHeight: '2.25rem' }],
+        '4xl': ['calc(2.25rem * var(--font-size-scale))', { lineHeight: '2.5rem' }],
+        '5xl': ['calc(3rem * var(--font-size-scale))', { lineHeight: '1' }],
+        '6xl': ['calc(3.75rem * var(--font-size-scale))', { lineHeight: '1' }],
+      },
       colors: {
         zinc: {
           '50': '#fafafa',
