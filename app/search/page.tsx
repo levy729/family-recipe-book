@@ -107,8 +107,17 @@ export default function SearchPage() {
             נמצאו {results.length} מתכונים
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {results.map((recipe) => (
-              <RecipeCard key={recipe.slug} recipe={recipe} />
+            {results.map((recipe, index) => (
+              <div
+                key={recipe.slug}
+                className="animate-in fade-in-0 slide-in-from-bottom-2"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  animationDuration: '500ms'
+                }}
+              >
+                <RecipeCard recipe={recipe} />
+              </div>
             ))}
           </div>
         </div>

@@ -96,8 +96,17 @@ export default function Home() {
               </p>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {displayRecipes.map((recipe) => (
-                <RecipeCard key={recipe.slug} recipe={recipe} />
+              {displayRecipes.map((recipe, index) => (
+                <div
+                  key={recipe.slug}
+                  className="animate-in fade-in-0 slide-in-from-bottom-2"
+                  style={{
+                    animationDelay: `${index * 100}ms`,
+                    animationDuration: '500ms'
+                  }}
+                >
+                  <RecipeCard recipe={recipe} />
+                </div>
               ))}
             </div>
           </>
