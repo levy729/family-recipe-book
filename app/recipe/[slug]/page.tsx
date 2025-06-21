@@ -2,9 +2,6 @@ import { notFound } from 'next/navigation';
 import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
 import { RecipeHeader } from '@/components/recipe-header';
 
 interface RecipePageProps {
@@ -27,19 +24,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
   return (
     <>
-      {/* Back to Home */}
-      <div className="mb-12 flex justify-end">
-        <Link href="/">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-10 w-10 text-zinc-600 hover:text-zinc-900 transition-colors"
-          >
-            <ArrowLeft className="h-6 w-6" />
-          </Button>
-        </Link>
-      </div>
-
       {/* Recipe Header */}
       <RecipeHeader recipe={recipe} />
 

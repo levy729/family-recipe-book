@@ -112,21 +112,25 @@ export function SearchBar({
               onChange={handleInputChange}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
-              className="text-right placeholder:text-right pr-10"
+              className="text-right placeholder:text-right pr-10 transition-all duration-300 ease-out hover:border-zinc-400 focus:ring-2 focus:ring-zinc-500 focus:border-transparent"
               dir="rtl"
             />
             {query && (
               <button
                 type="button"
                 onClick={handleClear}
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-all duration-200 p-1 rounded-md hover:bg-zinc-100"
                 aria-label="Clear search"
               >
                 ✕
               </button>
             )}
           </div>
-          <Button type="submit" disabled={!query.trim()}>
+          <Button 
+            type="submit" 
+            disabled={!query.trim()}
+            className="transition-all duration-200 hover:shadow-md"
+          >
             <Search className="w-4 h-4" />
           </Button>
         </div>
