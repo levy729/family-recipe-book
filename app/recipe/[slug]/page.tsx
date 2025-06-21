@@ -3,6 +3,7 @@ import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
 import { FontSizeControls } from '@/components/font-size-controls';
+import { Tags } from '@/components/tags';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -26,66 +27,58 @@ export default async function RecipePage({ params }: RecipePageProps) {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <div className="max-w-4xl w-full">
-        {/* Back to Home */}
-        <div className="mb-12 flex justify-between items-center">
-          <FontSizeControls />
-          <Link href="/">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              className="h-10 w-10 text-zinc-600 hover:text-zinc-900 transition-colors"
-            >
-              <ArrowLeft className="h-6 w-6" />
-            </Button>
-          </Link>
+    <>
+      {/* Back to Home */}
+      <div className="mb-12 flex justify-between items-center">
+        <FontSizeControls />
+        <Link href="/">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-10 w-10 text-zinc-600 hover:text-zinc-900 transition-colors"
+          >
+            <ArrowLeft className="h-6 w-6" />
+          </Button>
+        </Link>
+      </div>
+
+      {/* Recipe Header */}
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-zinc-900 mb-6">
+          {recipe.title}
+        </h1>
+
+        {recipe.tags && recipe.tags.length > 0 && (
+          <Tags tags={recipe.tags} />
+        )}
+      </div>
+
+      {/* Divider */}
+      <hr className="border-zinc-300 mb-8" />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Ingredients Section */}
+        <div className="text-right">
+          <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
+            מרכיבים
+          </h2>
+          <IngredientList
+            ingredients={recipe.ingredients}
+            recipeSlug={recipe.slug}
+            recipeTitle={recipe.title}
+          />
         </div>
 
-        {/* Recipe Header */}
-        <div className="text-center mb-4">
-          <h1 className="text-4xl font-bold text-zinc-900 mb-6">
-            {recipe.title}
-          </h1>
-
-          {recipe.tags && recipe.tags.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2">
-              {recipe.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-zinc-100 text-zinc-700 rounded-full text-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Ingredients Section */}
-          <div className="text-right">
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-              מרכיבים
-            </h2>
-            <IngredientList
-              ingredients={recipe.ingredients}
-              recipeSlug={recipe.slug}
-              recipeTitle={recipe.title}
-            />
-          </div>
-
-          {/* Instructions Section */}
-          <div className="text-right">
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
-              הוראות הכנה
-            </h2>
-            <InstructionList
-              instructions={recipe.instructions}
-            />
-          </div>
+        {/* Instructions Section */}
+        <div className="text-right">
+          <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
+            הוראות הכנה
+          </h2>
+          <InstructionList
+            instructions={recipe.instructions}
+          />
         </div>
       </div>
-    </main>
+    </>
   );
 } 
