@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Recipe } from '@/lib/recipes';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -10,6 +11,14 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe, className = '' }: RecipeCardProps) {
+  const router = useRouter();
+
+  const handleTagClick = (e: React.MouseEvent, tag: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/search?q=${encodeURIComponent(tag)}`);
+  };
+
   return (
     <Link href={`/recipe/${recipe.slug}`} className="block">
       <Card className={`hover:shadow-md transition-shadow cursor-pointer ${className}`}>
@@ -21,12 +30,13 @@ export function RecipeCard({ recipe, className = '' }: RecipeCardProps) {
         <CardContent className="pt-0">
           <div className="flex flex-wrap gap-1 justify-end">
             {recipe.tags.slice(0, 3).map((tag) => (
-              <span
+              <button
                 key={tag}
-                className="px-2 py-1 text-xs bg-zinc-100 text-zinc-600 rounded"
+                onClick={(e) => handleTagClick(e, tag)}
+                className="px-2 py-1 text-xs bg-zinc-100 text-zinc-600 rounded hover:bg-zinc-200 transition-colors cursor-pointer"
               >
                 {tag}
-              </span>
+              </button>
             ))}
           </div>
         </CardContent>
