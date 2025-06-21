@@ -9,7 +9,10 @@ import { saveRecipe } from '@/lib/file-operations';
 
 export default function RecipeBuilderPage() {
   const [mode, setMode] = useState<'landing' | 'create' | 'edit'>('landing');
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: 'success' | 'error';
+    text: string;
+  } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [loadedRecipe, setLoadedRecipe] = useState<RecipeFormData | null>(null);
 
@@ -28,10 +31,10 @@ export default function RecipeBuilderPage() {
 
     try {
       const result = await saveRecipe(data);
-      
+
       if (result.success) {
         setMessage({ type: 'success', text: result.message });
-        
+
         // Reset form after successful save
         setTimeout(() => {
           setMode('landing');
@@ -65,17 +68,23 @@ export default function RecipeBuilderPage() {
         <div className="bg-white rounded-lg shadow-sm border border-zinc-200 p-6">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-zinc-900 mb-2 text-center">
-              {loadedRecipe ? HEBREW_TEXTS.EDIT_RECIPE : HEBREW_TEXTS.CREATE_RECIPE}
+              {loadedRecipe
+                ? HEBREW_TEXTS.EDIT_RECIPE
+                : HEBREW_TEXTS.CREATE_RECIPE}
             </h2>
             {message && (
-              <div className={`p-3 rounded-md text-center ${
-                message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              }`}>
+              <div
+                className={`p-3 rounded-md text-center ${
+                  message.type === 'success'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                }`}
+              >
                 {message.text}
               </div>
             )}
           </div>
-          
+
           <RecipeForm
             initialData={loadedRecipe || undefined}
             onSubmit={handleFormSubmit}
@@ -95,7 +104,7 @@ export default function RecipeBuilderPage() {
               {HEBREW_TEXTS.EDIT_RECIPE}
             </h2>
           </div>
-          
+
           <FileBrowser
             onRecipeLoad={handleRecipeLoad}
             onCancel={handleCancel}
@@ -117,9 +126,13 @@ export default function RecipeBuilderPage() {
           </p>
 
           {message && (
-            <div className={`p-3 rounded-md mb-6 ${
-              message.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-            }`}>
+            <div
+              className={`p-3 rounded-md mb-6 ${
+                message.type === 'success'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
+              }`}
+            >
               {message.text}
             </div>
           )}
@@ -132,7 +145,7 @@ export default function RecipeBuilderPage() {
               <p className="text-sm text-zinc-600 mb-4">
                 צור מתכון חדש עם ממשק ידידותי לעברית
               </p>
-              <button 
+              <button
                 className="btn btn-primary w-full"
                 onClick={handleCreateRecipe}
               >
@@ -147,7 +160,7 @@ export default function RecipeBuilderPage() {
               <p className="text-sm text-zinc-600 mb-4">
                 ערוך מתכונים קיימים בקלות
               </p>
-              <button 
+              <button
                 className="btn btn-secondary w-full"
                 onClick={handleEditRecipe}
               >

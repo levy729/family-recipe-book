@@ -92,18 +92,18 @@ describe('Recipe Parser', () => {
 
     it('should escape special characters in strings', () => {
       const recipeData: RecipeFormData = {
-        title: "מתכון עם 'גרש' ו\"מרכאות\"",
+        title: 'מתכון עם \'גרש\' ו"מרכאות"',
         slug: 'special-chars',
         description: '',
         tags: [],
         ingredients: ['מרכיב עם "מרכאות"'],
-        instructions: 'הוראות עם \'גרש\'',
+        instructions: "הוראות עם 'גרש'",
       };
 
       const result = generateRecipeMarkdown(recipeData);
 
       expect(result).toContain("title: 'מתכון עם ''גרש'' ו\"מרכאות\"'");
-      expect(result).toContain("  - 'מרכיב עם \"מרכאות\"'");
+      expect(result).toContain('  - \'מרכיב עם "מרכאות"\'');
       expect(result).toContain("  הוראות עם 'גרש'");
     });
   });
@@ -133,7 +133,9 @@ instructions: |
       expect(result.description).toBe('תיאור המתכון');
       expect(result.tags).toEqual(['בשר', 'עיקרי']);
       expect(result.ingredients).toEqual(['בשר טחון', 'בצל', 'תבלינים']);
-      expect(result.instructions?.trim()).toBe('שלב 1: הכנת הבשר\nשלב 2: הוספת התבלינים');
+      expect(result.instructions?.trim()).toBe(
+        'שלב 1: הכנת הבשר\nשלב 2: הוספת התבלינים'
+      );
     });
 
     it('should parse markdown without optional fields', () => {
@@ -165,7 +167,9 @@ instructions: |
   הוראות
 ---`;
 
-      expect(() => parseRecipeMarkdown(invalidMarkdown)).toThrow('Invalid recipe format: missing YAML frontmatter');
+      expect(() => parseRecipeMarkdown(invalidMarkdown)).toThrow(
+        'Invalid recipe format: missing YAML frontmatter'
+      );
     });
 
     it('should handle empty arrays in YAML', () => {
@@ -236,12 +240,14 @@ instructions: |
       const result = validateRecipeData(invalidData);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors).toContain('מזהה URL חייב להכיל רק אותיות באנגלית, מספרים ומקפים');
+      expect(result.errors).toContain(
+        'מזהה URL חייב להכיל רק אותיות באנגלית, מספרים ומקפים'
+      );
     });
 
     it('should accept valid slug formats', () => {
       const validSlugs = ['valid-slug', 'valid123', 'valid-slug-123'];
-      
+
       validSlugs.forEach(slug => {
         const data: RecipeFormData = {
           title: 'מתכון',
@@ -282,8 +288,12 @@ instructions: |
 
     it('should handle different slug formats', () => {
       expect(generateRecipeFilename('simple')).toBe('simple.md');
-      expect(generateRecipeFilename('complex-recipe-123')).toBe('complex-recipe-123.md');
-      expect(generateRecipeFilename('recipe_with_underscores')).toBe('recipe_with_underscores.md');
+      expect(generateRecipeFilename('complex-recipe-123')).toBe(
+        'complex-recipe-123.md'
+      );
+      expect(generateRecipeFilename('recipe_with_underscores')).toBe(
+        'recipe_with_underscores.md'
+      );
     });
   });
 
@@ -326,4 +336,4 @@ instructions: |
       expect(validation.isValid).toBe(true);
     });
   });
-}); 
+});

@@ -45,7 +45,7 @@ export function generateRecipeMarkdown(data: RecipeFormData): string {
 
   // Convert frontmatter to YAML string
   const yamlLines: string[] = [];
-  
+
   for (const [key, value] of Object.entries(frontmatter)) {
     if (Array.isArray(value)) {
       yamlLines.push(`${key}:`);
@@ -99,7 +99,9 @@ export function parseRecipeMarkdown(content: string): Partial<RecipeFormData> {
     tags: parsed.tags ? clean(parsed.tags) : undefined,
     ingredients: parsed.ingredients ? clean(parsed.ingredients) : undefined,
     instructions: parsed.instructions
-      ? (typeof parsed.instructions === 'string' ? parsed.instructions : undefined)
+      ? typeof parsed.instructions === 'string'
+        ? parsed.instructions
+        : undefined
       : undefined,
   };
 
@@ -109,7 +111,10 @@ export function parseRecipeMarkdown(content: string): Partial<RecipeFormData> {
 /**
  * Validates recipe data before saving
  */
-export function validateRecipeData(data: RecipeFormData): { isValid: boolean; errors: string[] } {
+export function validateRecipeData(data: RecipeFormData): {
+  isValid: boolean;
+  errors: string[];
+} {
   const errors: string[] = [];
 
   if (!data.title || !data.title.trim()) {
@@ -122,7 +127,11 @@ export function validateRecipeData(data: RecipeFormData): { isValid: boolean; er
     errors.push('מזהה URL חייב להכיל רק אותיות באנגלית, מספרים ומקפים');
   }
 
-  if (!data.ingredients || data.ingredients.length === 0 || data.ingredients.every(i => !i.trim())) {
+  if (
+    !data.ingredients ||
+    data.ingredients.length === 0 ||
+    data.ingredients.every(i => !i.trim())
+  ) {
     errors.push('יש להוסיף לפחות מרכיב אחד');
   }
 
@@ -141,4 +150,4 @@ export function validateRecipeData(data: RecipeFormData): { isValid: boolean; er
  */
 export function generateRecipeFilename(slug: string): string {
   return `${slug}.md`;
-} 
+}
