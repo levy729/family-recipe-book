@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { Copy, Check } from 'lucide-react';
+import { ClipboardCopy, Check } from 'lucide-react';
 import { saveIngredientState, getIngredientState } from '@/lib/storage';
 
 interface IngredientListProps {
@@ -59,7 +59,7 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
   // Expose copy functionality to parent
   const handleCopyToClipboard = async () => {
     const ingredientText = ingredients.join('\n');
-    
+
     try {
       await navigator.clipboard.writeText(ingredientText);
       setCopySuccess(true);
@@ -84,7 +84,7 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
 
   // Expose copy function to parent via ref
   const copyIngredients = handleCopyToClipboard;
-  
+
   // Make copy function available to parent
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -94,24 +94,27 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
 
   return (
     <div className={`space-y-3 ${className}`}>
-      <div className="flex items-center justify-start mb-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleCopyToClipboard}
-          className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto transition-all duration-200 hover:scale-110"
-        >
-          <div className={`transition-all duration-200 ${copySuccess ? 'scale-110 text-green-600' : 'scale-100'}`}>
-            {copySuccess ? (
-              <Check className="w-4 h-4" />
-            ) : (
-              <Copy className="w-4 h-4" />
-            )}
-          </div>
-        </Button>
-        <h3 className="text-lg font-semibold text-zinc-900 mr-2">
-          מרכיבים
-        </h3>
+      <div className="mb-6">
+        <div className="flex items-center justify-start mb-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleCopyToClipboard}
+            className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto transition-all duration-200"
+          >
+            <div className={`transition-all duration-200 ${copySuccess ? 'scale-110' : 'scale-100'}`}>
+              {copySuccess ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <ClipboardCopy className="w-4 h-4" />
+              )}
+            </div>
+          </Button>
+          <h2 className="text-2xl font-semibold text-zinc-800 mr-2">
+            מרכיבים
+          </h2>
+        </div>
+        <div className="w-16 h-px bg-zinc-300"></div>
       </div>
       {ingredients.length > 0 && (
         <div className="flex justify-start mb-2">
@@ -129,23 +132,21 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
         {ingredients.map((ingredient, index) => (
           <div
             key={ingredient}
-            className={`flex items-start gap-2 p-1 rounded-md transition-all duration-200 hover:bg-zinc-50 ${
-              checkedStates[ingredient] ? 'opacity-75' : ''
-            }`}
+            className={`flex items-start gap-2 p-1 rounded-md transition-all duration-200 hover:bg-zinc-50 ${checkedStates[ingredient] ? 'opacity-75' : ''
+              }`}
           >
             <Checkbox
               id={`ingredient-${index}`}
               checked={checkedStates[ingredient] || false}
-              onCheckedChange={(checked: boolean | 'indeterminate') => 
+              onCheckedChange={(checked: boolean | 'indeterminate') =>
                 handleCheckboxChange(ingredient, checked === true)
               }
               className="mt-0.5 transition-all duration-200 hover:scale-110"
             />
             <label
               htmlFor={`ingredient-${index}`}
-              className={`text-sm leading-relaxed cursor-pointer transition-all duration-200 ${
-                checkedStates[ingredient] ? 'text-zinc-500 line-through' : 'text-zinc-700'
-              }`}
+              className={`text-sm leading-relaxed cursor-pointer transition-all duration-200 ${checkedStates[ingredient] ? 'text-zinc-500 line-through' : 'text-zinc-700'
+                }`}
             >
               {ingredient}
             </label>

@@ -3,6 +3,7 @@ import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
 import { RecipeHeader } from '@/components/recipe-header';
+import { ShareButton } from '@/components/share-button';
 
 interface RecipePageProps {
   params: {
@@ -29,6 +30,14 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
       {/* Divider */}
       <hr className="border-zinc-300 mb-8" />
+
+      {/* Share Button Row */}
+      <div className="flex justify-end mb-4">
+        <ShareButton 
+          title={recipe.title}
+          url={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://your-domain.com'}/recipe/${recipe.slug}`}
+        />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Ingredients Section */}
