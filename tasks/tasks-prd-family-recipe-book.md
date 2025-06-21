@@ -83,25 +83,26 @@
 - [ ] 7.0 Ingredient Management
 
   - [x] 7.1 Add "Clear All" and "Select All" buttons for ingredient checkboxes (interchangeable based on state)
-  - [ ] 7.2 Copy ingredient list to clipboard or share via Web Share API
-  - [ ] 7.3 Save ingredient state across browser sessions (localStorage)
+  - [x] 7.2 Copy ingredient list to clipboard or share via Web Share API
+  - [x] 7.3 Save ingredient state across browser sessions (localStorage)
 
-- [ ] 8.0 Recipe Instructions & Progress
+- [x] 8.0 Recipe Instructions & Progress
 
   - [x] 8.1 Auto-number instructions with larger font numbers
-  - [ ] 8.2 Track progress of instructions (checkboxes for each step)
-  - [ ] 8.3 Save instruction progress in session storage
+  - [x] 8.2 Track progress of instructions (clickable steps with visual feedback)
+  - [x] 8.3 Simplified instruction progress (temporary, resets on page reload)
 
 - [ ] 9.0 UI/UX Enhancements
 
-  - [ ] 9.1 Font size controls with persistent localStorage
-  - [ ] 9.2 Redesign recipe page back button (arrow on left side)
+  - [x] 9.1 Font size controls with persistent localStorage
+  - [x] 9.2 Redesign recipe page back button (arrow on left side)
   - [ ] 9.3 Make tags clickable on recipe pages
-  - [ ] 9.4 Redesign tag styles (suggest new design)
-  - [ ] 9.5 Add borders/lines to recipe page for better UI separation
-  - [ ] 9.6 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
-  - [ ] 9.7 Smooth transitions and micro-interactions
-  - [ ] 9.8 Cooking time display
+  - [ ] 9.4 Remove border radius from elements with backgrounds
+  - [ ] 9.5 Redesign tag styles (suggest new design)
+  - [ ] 9.6 Add borders/lines to recipe page for better UI separation
+  - [ ] 9.7 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
+  - [ ] 9.8 Smooth transitions and micro-interactions
+  - [ ] 9.9 Cooking time display
 
 - [ ] 10.0 Social & Sharing
 

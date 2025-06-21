@@ -4,6 +4,7 @@ import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
 import { FontSizeControls } from '@/components/font-size-controls';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 interface RecipePageProps {
@@ -31,8 +32,12 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <div className="mb-12 flex justify-between items-center">
           <FontSizeControls />
           <Link href="/">
-            <Button variant="outline" className="mb-4">
-              ← חזרה לדף הבית
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="h-10 w-10 text-zinc-600 hover:text-zinc-900 transition-colors"
+            >
+              <ArrowLeft className="h-6 w-6" />
             </Button>
           </Link>
         </div>

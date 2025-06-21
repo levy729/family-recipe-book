@@ -163,6 +163,7 @@ Before committing code:
 - [ ] Build process completes successfully
 - [ ] **ALWAYS ask for approval before committing**
 - [ ] **Show implementation summary to user before requesting commit approval**
+- [ ] **Only run npm build after major tasks, not sub-tasks**
 
 ## Maintenance Rules
 
