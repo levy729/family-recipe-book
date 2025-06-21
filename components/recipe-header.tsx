@@ -22,6 +22,12 @@ export function RecipeHeader({ recipe }: RecipeHeaderProps) {
         {recipe.title}
       </h1>
 
+      {recipe.description && (
+        <p className="text-lg text-zinc-600 mb-6 max-w-2xl mx-auto">
+          {recipe.description}
+        </p>
+      )}
+
       {recipe.tags && recipe.tags.length > 0 && (
         <Tags tags={recipe.tags} onClick={onTagClick} />
       )}

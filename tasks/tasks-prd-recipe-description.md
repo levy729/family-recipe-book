@@ -39,12 +39,12 @@ Based on PRD: `tasks/prd-recipe-description.md`
   - [x] 2.5 Verify no style changes to existing card appearance
   - [x] 2.6 Fix card height consistency with min-height container
 
-- [ ] 3.0 Update Recipe Page Component
-  - [ ] 3.1 Add description display between title and ingredients
-  - [ ] 3.2 Use existing typography classes for description styling
-  - [ ] 3.3 Handle missing description gracefully
-  - [ ] 3.4 Test page layout with and without descriptions
-  - [ ] 3.5 Verify no style changes to existing page appearance
+- [x] 3.0 Update Recipe Page Component
+  - [x] 3.1 Add description display between title and ingredients
+  - [x] 3.2 Use existing typography classes for description styling
+  - [x] 3.3 Handle missing description gracefully
+  - [x] 3.4 Test page layout with and without descriptions
+  - [x] 3.5 Verify no style changes to existing page appearance
 
 - [ ] 4.0 Update Search Functionality
   - [ ] 4.1 Add description field to search index in lib/search.ts
