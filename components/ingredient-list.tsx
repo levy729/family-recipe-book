@@ -59,14 +59,14 @@ export function IngredientList({ recipeSlug, ingredients, className = '' }: Ingr
         מרכיבים
       </h3>
       {ingredients.length > 0 && (
-        <div className="flex justify-end mb-2">
+        <div className="flex justify-start mb-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={allChecked ? handleClearAll : handleSelectAll}
             className="text-xs text-zinc-600 hover:text-zinc-600 hover:bg-transparent"
           >
-            {allChecked ? 'נקה הכל' : 'בחר הכל'}
+            {allChecked ? 'נקה הכל' : 'סמן הכל'}
           </Button>
         </div>
       )}
