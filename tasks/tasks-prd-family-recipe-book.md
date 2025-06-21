@@ -144,20 +144,20 @@
     - [ ] 13.1.5 Configure GitHub Actions to run tests on PRs
 
   - [ ] 13.2 Critical Functionality Tests
-    - [ ] 13.2.1 Test recipe parsing utilities (lib/recipes.ts)
-      - [ ] 13.2.1.1 Test YAML frontmatter parsing
-      - [ ] 13.2.1.2 Test markdown content extraction
-      - [ ] 13.2.1.3 Test getAllRecipes function
-      - [ ] 13.2.1.4 Test getRecipeBySlug function
-    - [ ] 13.2.2 Test search functionality (lib/search.ts)
-      - [ ] 13.2.2.1 Test Fuse.js initialization
-      - [ ] 13.2.2.2 Test Hebrew text search
-      - [ ] 13.2.2.3 Test search result ranking
-      - [ ] 13.2.2.4 Test empty search handling
-    - [ ] 13.2.3 Test storage utilities (lib/storage.ts)
-      - [ ] 13.2.3.1 Test ingredient checkbox persistence
-      - [ ] 13.2.3.2 Test font size preference storage
-      - [ ] 13.2.3.3 Test data cleanup and error handling
+    - [x] 13.2.1 Test recipe parsing utilities (lib/recipes.ts)
+      - [x] 13.2.1.1 Test YAML frontmatter parsing
+      - [x] 13.2.1.2 Test markdown content extraction
+      - [x] 13.2.1.3 Test getAllRecipes function
+      - [x] 13.2.1.4 Test getRecipeBySlug function
+    - [x] 13.2.2 Test search functionality (lib/search.ts)
+      - [x] 13.2.2.1 Test Fuse.js initialization
+      - [x] 13.2.2.2 Test Hebrew text search
+      - [x] 13.2.2.3 Test search result ranking
+      - [x] 13.2.2.4 Test empty search handling
+    - [x] 13.2.3 Test storage utilities (lib/storage.ts)
+      - [x] 13.2.3.1 Test ingredient checkbox persistence
+      - [x] 13.2.3.2 Test font size preference storage
+      - [x] 13.2.3.3 Test data cleanup and error handling
 
   - [ ] 13.3 Component Tests (High Priority)
     - [ ] 13.3.1 Test SearchBar component

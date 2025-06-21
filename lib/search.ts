@@ -57,4 +57,10 @@ export function searchRecipesByField(query: string, field: 'title' | 'tags' | 'i
   const fieldFuse = new Fuse(allRecipes, fieldOptions);
   const results = fieldFuse.search(query);
   return results.map(result => result.item);
+}
+
+// For testing purposes
+export function resetSearch() {
+  fuseInstance = null;
+  allRecipes = [];
 } 
