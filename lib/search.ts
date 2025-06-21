@@ -3,7 +3,12 @@ import { Recipe } from './recipes';
 
 // Configure Fuse.js for Hebrew content
 const fuseOptions = {
-  keys: ['title', 'tags', 'ingredients'],
+  keys: [
+    { name: 'title', weight: 0.5 },
+    { name: 'description', weight: 0.3 },
+    { name: 'tags', weight: 0.1 },
+    { name: 'ingredients', weight: 0.1 },
+  ],
   threshold: 0.3, // Lower threshold for more exact matches
   ignoreLocation: true,
   useExtendedSearch: false,
@@ -37,7 +42,7 @@ export function searchRecipes(query: string): Recipe[] {
 
 export function searchRecipesByField(
   query: string,
-  field: 'title' | 'tags' | 'ingredients'
+  field: 'title' | 'tags' | 'ingredients' | 'description'
 ): Recipe[] {
   if (!fuseInstance) {
     console.warn('Search not initialized. Call initializeSearch first.');

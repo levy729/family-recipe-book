@@ -16,6 +16,7 @@ describe('Search Functionality', () => {
     {
       title: 'אורז לבן פשוט',
       slug: 'simple-white-rice',
+      description: 'אורז לבן בסיסי וטעים, מושלם כתוספת לכל ארוחה',
       tags: ['אורז', 'תוספת', 'קל'],
       ingredients: [
         '1 כוס אורז לבן',
@@ -29,6 +30,7 @@ describe('Search Functionality', () => {
     {
       title: 'סלט ירקות טרי',
       slug: 'fresh-vegetable-salad',
+      description: 'סלט בריא וטעים עם ירקות טריים ועלי בזיליקום',
       tags: ['סלט', 'ירקות', 'בריא'],
       ingredients: ['עגבניות', 'מלפפונים', 'בצל אדום', 'שמן זית'],
       instructions: 'חותכים את הירקות...',
@@ -37,6 +39,7 @@ describe('Search Functionality', () => {
     {
       title: 'עוף צלוי בתנור',
       slug: 'roasted-chicken',
+      description: 'חזה עוף צלוי עם תבלינים, רך ועסיסי',
       tags: ['עוף', 'צלוי', 'עיקרי'],
       ingredients: ['חזה עוף', 'תבלינים', 'שמן זית', 'לימון'],
       instructions: 'מחממים תנור...',
@@ -65,7 +68,12 @@ describe('Search Functionality', () => {
       initializeSearch(mockRecipes);
 
       expect(MockedFuse).toHaveBeenCalledWith(mockRecipes, {
-        keys: ['title', 'tags', 'ingredients'],
+        keys: [
+          { name: 'title', weight: 0.5 },
+          { name: 'description', weight: 0.3 },
+          { name: 'tags', weight: 0.1 },
+          { name: 'ingredients', weight: 0.1 },
+        ],
         threshold: 0.3,
         ignoreLocation: true,
         useExtendedSearch: false,
@@ -180,7 +188,12 @@ describe('Search Functionality', () => {
       const results = searchRecipesByField('אורז', 'title');
 
       expect(MockedFuse).toHaveBeenCalledWith(mockRecipes, {
-        keys: ['title'],
+        keys: [
+          { name: 'title', weight: 0.5 },
+          { name: 'description', weight: 0.3 },
+          { name: 'tags', weight: 0.1 },
+          { name: 'ingredients', weight: 0.1 },
+        ],
         threshold: 0.3,
         ignoreLocation: true,
         useExtendedSearch: false,
@@ -205,7 +218,12 @@ describe('Search Functionality', () => {
       const results = searchRecipesByField('סלט', 'tags');
 
       expect(MockedFuse).toHaveBeenCalledWith(mockRecipes, {
-        keys: ['tags'],
+        keys: [
+          { name: 'title', weight: 0.5 },
+          { name: 'description', weight: 0.3 },
+          { name: 'tags', weight: 0.1 },
+          { name: 'ingredients', weight: 0.1 },
+        ],
         threshold: 0.3,
         ignoreLocation: true,
         useExtendedSearch: false,
@@ -230,7 +248,12 @@ describe('Search Functionality', () => {
       const results = searchRecipesByField('עוף', 'ingredients');
 
       expect(MockedFuse).toHaveBeenCalledWith(mockRecipes, {
-        keys: ['ingredients'],
+        keys: [
+          { name: 'title', weight: 0.5 },
+          { name: 'description', weight: 0.3 },
+          { name: 'tags', weight: 0.1 },
+          { name: 'ingredients', weight: 0.1 },
+        ],
         threshold: 0.3,
         ignoreLocation: true,
         useExtendedSearch: false,
@@ -241,6 +264,36 @@ describe('Search Functionality', () => {
       });
       expect(mockFuseInstance.search).toHaveBeenCalledWith('עוף');
       expect(results).toEqual([mockRecipes[2]]);
+    });
+
+    it('should search by description field', () => {
+      const mockFuseInstance = {
+        search: jest
+          .fn()
+          .mockReturnValue([{ item: mockRecipes[0], score: 0.1, matches: [] }]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipesByField('פשוט', 'description');
+
+      expect(MockedFuse).toHaveBeenCalledWith(mockRecipes, {
+        keys: [
+          { name: 'title', weight: 0.5 },
+          { name: 'description', weight: 0.3 },
+          { name: 'tags', weight: 0.1 },
+          { name: 'ingredients', weight: 0.1 },
+        ],
+        threshold: 0.3,
+        ignoreLocation: true,
+        useExtendedSearch: false,
+        includeScore: true,
+        includeMatches: true,
+        minMatchCharLength: 2,
+        shouldSort: true,
+      });
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('פשוט');
+      expect(results).toEqual([mockRecipes[0]]);
     });
 
     it('should handle multiple search results', () => {
@@ -256,6 +309,127 @@ describe('Search Functionality', () => {
       const results = searchRecipesByField('ירקות', 'ingredients');
 
       expect(results).toEqual([mockRecipes[0], mockRecipes[1]]);
+    });
+  });
+
+  describe('Search with Description Content', () => {
+    it('should find recipes by searching description content', () => {
+      const mockFuseInstance = {
+        search: jest
+          .fn()
+          .mockReturnValue([{ item: mockRecipes[0], score: 0.2, matches: [] }]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipes('בסיסי');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('בסיסי');
+      expect(results).toEqual([mockRecipes[0]]);
+    });
+
+    it('should find recipes by searching Hebrew words in description', () => {
+      const mockFuseInstance = {
+        search: jest
+          .fn()
+          .mockReturnValue([
+            { item: mockRecipes[1], score: 0.15, matches: [] },
+          ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipes('בזיליקום');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('בזיליקום');
+      expect(results).toEqual([mockRecipes[1]]);
+    });
+
+    it('should prioritize title matches over description matches', () => {
+      const mockFuseInstance = {
+        search: jest.fn().mockReturnValue([
+          { item: mockRecipes[0], score: 0.1, matches: [] }, // Title match (higher weight)
+          { item: mockRecipes[1], score: 0.25, matches: [] }, // Description match (lower weight)
+        ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipes('טעים');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('טעים');
+      expect(results).toEqual([mockRecipes[0], mockRecipes[1]]);
+    });
+
+    it('should handle partial word matches in descriptions', () => {
+      const mockFuseInstance = {
+        search: jest
+          .fn()
+          .mockReturnValue([
+            { item: mockRecipes[2], score: 0.18, matches: [] },
+          ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipes('עסיסי');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('עסיסי');
+      expect(results).toEqual([mockRecipes[2]]);
+    });
+
+    it('should return empty results for non-existent description content', () => {
+      const mockFuseInstance = {
+        search: jest.fn().mockReturnValue([]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipes('לא קיים');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('לא קיים');
+      expect(results).toEqual([]);
+    });
+
+    it('should handle recipes without descriptions gracefully', () => {
+      const recipesWithoutDescription = [
+        {
+          ...mockRecipes[0],
+          description: undefined,
+        },
+        {
+          ...mockRecipes[1],
+          description: undefined,
+        },
+      ];
+
+      const mockFuseInstance = {
+        search: jest.fn().mockReturnValue([]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(recipesWithoutDescription);
+      const results = searchRecipes('בסיסי');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('בסיסי');
+      expect(results).toEqual([]);
+    });
+
+    it('should search across multiple fields including description', () => {
+      const mockFuseInstance = {
+        search: jest.fn().mockReturnValue([
+          { item: mockRecipes[0], score: 0.1, matches: [] }, // Title match
+          { item: mockRecipes[1], score: 0.2, matches: [] }, // Description match
+          { item: mockRecipes[2], score: 0.3, matches: [] }, // Tags match
+        ]),
+      };
+      MockedFuse.mockImplementation(() => mockFuseInstance as any);
+
+      initializeSearch(mockRecipes);
+      const results = searchRecipes('עוף');
+
+      expect(mockFuseInstance.search).toHaveBeenCalledWith('עוף');
+      expect(results).toEqual([mockRecipes[0], mockRecipes[1], mockRecipes[2]]);
     });
   });
 
