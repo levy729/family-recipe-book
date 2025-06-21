@@ -6,7 +6,7 @@ interface TagsProps {
   tags: string[];
   className?: string;
   maxTags?: number;
-  onClick?: (tag: string) => void;
+  onClick?: (tag: string, event?: React.MouseEvent) => void;
 }
 
 export function Tags({ tags, className = '', maxTags, onClick }: TagsProps) {
@@ -20,7 +20,7 @@ export function Tags({ tags, className = '', maxTags, onClick }: TagsProps) {
           className={`px-3 py-1 bg-zinc-100 text-zinc-700 rounded-md text-sm ${
             onClick ? 'cursor-pointer hover:bg-zinc-200 transition-colors' : ''
           }`}
-          onClick={() => onClick?.(tag)}
+          onClick={(event) => onClick?.(tag, event)}
         >
           {tag}
         </span>

@@ -24,13 +24,15 @@ export function IngredientHeader({ onCopy }: IngredientHeaderProps) {
           variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto"
+          className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto transition-all duration-200 hover:scale-110"
         >
-          {copySuccess ? (
-            <Check className="w-4 h-4" />
-          ) : (
-            <Copy className="w-4 h-4" />
-          )}
+          <div className={`transition-all duration-200 ${copySuccess ? 'scale-110 text-green-600' : 'scale-100'}`}>
+            {copySuccess ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
+          </div>
         </Button>
         <h2 className="text-2xl font-semibold text-zinc-800 mr-2">
           מרכיבים

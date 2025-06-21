@@ -3,10 +3,10 @@ import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
 import { FontSizeControls } from '@/components/font-size-controls';
-import { Tags } from '@/components/tags';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { RecipeHeader } from '@/components/recipe-header';
 
 interface RecipePageProps {
   params: {
@@ -43,15 +43,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
       </div>
 
       {/* Recipe Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-zinc-900 mb-6">
-          {recipe.title}
-        </h1>
-
-        {recipe.tags && recipe.tags.length > 0 && (
-          <Tags tags={recipe.tags} />
-        )}
-      </div>
+      <RecipeHeader recipe={recipe} />
 
       {/* Divider */}
       <hr className="border-zinc-300 mb-8" />
@@ -59,12 +51,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Ingredients Section */}
         <div className="text-right">
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-2">
-              מרכיבים
-            </h2>
-            <div className="w-16 h-px bg-zinc-300"></div>
-          </div>
           <IngredientList
             ingredients={recipe.ingredients}
             recipeSlug={recipe.slug}

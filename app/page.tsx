@@ -5,6 +5,7 @@ import { SearchBar } from "@/components/search-bar";
 import { RecipeCard } from "@/components/recipe-card";
 import { Recipe } from "@/lib/recipes";
 import { initializeSearch, searchRecipes } from '@/lib/search';
+import { LoadingSpinner } from '@/components/loading-spinner';
 
 // Sample recipes data - in a real app, this would be loaded from markdown files
 const sampleRecipes: Recipe[] = [
@@ -82,7 +83,10 @@ export default function Home() {
         
         {isSearching ? (
           <div className="text-center py-8">
-            <p className="text-zinc-600">מחפש...</p>
+            <div className="flex items-center justify-center gap-2">
+              <LoadingSpinner size="sm" />
+              <p className="text-zinc-600">מחפש...</p>
+            </div>
           </div>
         ) : displayRecipes.length > 0 ? (
           <>

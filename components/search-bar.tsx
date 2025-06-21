@@ -134,7 +134,7 @@ export function SearchBar({
 
       {/* Search History Dropdown */}
       {showHistory && searchHistory.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-md shadow-lg z-10">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-md shadow-lg z-10 animate-in fade-in-0 slide-in-from-top-1 duration-200">
           <div className="py-1">
             <div className="px-3 py-2 text-xs text-zinc-500 border-b border-zinc-100">
               חיפושים אחרונים
@@ -143,7 +143,7 @@ export function SearchBar({
               <button
                 key={index}
                 onClick={() => handleHistoryClick(historyItem)}
-                className="w-full text-right px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+                className="w-full text-right px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-all duration-150 hover:translate-x-1"
               >
                 {historyItem}
               </button>

@@ -94,6 +94,25 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
 
   return (
     <div className={`space-y-3 ${className}`}>
+      <div className="flex items-center justify-start mb-4">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleCopyToClipboard}
+          className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto transition-all duration-200 hover:scale-110"
+        >
+          <div className={`transition-all duration-200 ${copySuccess ? 'scale-110 text-green-600' : 'scale-100'}`}>
+            {copySuccess ? (
+              <Check className="w-4 h-4" />
+            ) : (
+              <Copy className="w-4 h-4" />
+            )}
+          </div>
+        </Button>
+        <h3 className="text-lg font-semibold text-zinc-900 mr-2">
+          מרכיבים
+        </h3>
+      </div>
       {ingredients.length > 0 && (
         <div className="flex justify-start mb-2">
           <Button
@@ -118,8 +137,8 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
             />
             <label
               htmlFor={ingredient}
-              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
-                checkedStates[ingredient] ? 'line-through text-zinc-500' : 'text-zinc-900'
+              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 transition-all duration-200 ${
+                checkedStates[ingredient] ? 'line-through text-zinc-500 opacity-70' : 'text-zinc-900'
               }`}
             >
               {ingredient}

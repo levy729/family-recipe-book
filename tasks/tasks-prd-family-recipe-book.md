@@ -102,8 +102,8 @@
   - [x] 9.3 Make tags clickable on recipe pages
   - [x] 9.4 Remove border radius from elements with backgrounds
   - [x] 9.5 Redesign tag styles (suggest new design)
-  - [ ] 9.6 Add borders/lines to recipe page for better UI separation
-  - [ ] 9.7 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
+  - [x] 9.6 Add borders/lines to recipe page for better UI separation
+  - [x] 9.7 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
   - [ ] 9.8 Smooth transitions and micro-interactions
   - [ ] 9.9 Cooking time display
 

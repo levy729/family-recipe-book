@@ -34,18 +34,18 @@ export function InstructionList({ instructions, className = '' }: InstructionLis
         return (
           <div key={index} className="text-right">
             {/* Step Number and Status */}
-            <div className="flex items-center justify-start space-x-2 space-x-reverse">
-              <span className={`text-2xl font-bold ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'}`}>
+            <div className="flex items-center justify-start space-x-2 space-x-reverse mb-2">
+              <span className={`text-2xl font-bold transition-all duration-200 ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'}`}>
                 {index + 1}
               </span>
-              {isCompleted && (
-                <span className="text-lg text-zinc-400">✓</span>
-              )}
+              <span className={`text-lg text-zinc-400 transition-all duration-200 ${isCompleted ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+                ✓
+              </span>
             </div>
             
             {/* Step Content */}
             <div 
-              className={`cursor-pointer transition-colors ${
+              className={`cursor-pointer transition-all duration-200 hover:bg-zinc-50 p-2 rounded-md -m-2 ${
                 isCompleted ? 'text-zinc-400' : 'text-zinc-700'
               }`}
               onClick={() => handleStepClick(index)}
