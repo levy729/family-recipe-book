@@ -82,7 +82,7 @@
 
 - [ ] 7.0 Ingredient Management
 
-  - [ ] 7.1 Add "Clear All" and "Select All" buttons for ingredient checkboxes (interchangeable based on state)
+  - [x] 7.1 Add "Clear All" and "Select All" buttons for ingredient checkboxes (interchangeable based on state)
   - [ ] 7.2 Copy ingredient list to clipboard or share via Web Share API
   - [ ] 7.3 Save ingredient state across browser sessions (localStorage)
 
