@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
 import { InstructionList } from '@/components/instruction-list';
-import { FontSizeControls } from '@/components/font-size-controls';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -29,8 +28,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
   return (
     <>
       {/* Back to Home */}
-      <div className="mb-12 flex justify-between items-center">
-        <FontSizeControls />
+      <div className="mb-12 flex justify-end">
         <Link href="/">
           <Button
             variant="ghost"
