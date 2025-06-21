@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Type } from 'lucide-react';
+import { ALargeSmall } from 'lucide-react';
 
 const FONT_SIZE_KEY = 'recipe-book-font-size';
 const FONT_SCALES = [1, 1.125, 1.25]; // 1x, 1.125x, 1.25x scaling
@@ -56,7 +56,7 @@ export function FontSizeControls() {
       onClick={handleCycle}
       className="p-2 h-8 w-8 text-zinc-600 hover:text-zinc-900 transition-colors duration-200 rounded-md focus:outline-none"
     >
-      <Type className="w-4 h-4" />
+      <ALargeSmall className="w-5 h-5" />
     </button>
   );
 }
