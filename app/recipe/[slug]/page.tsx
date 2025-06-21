@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getRecipeBySlug, getAllRecipes } from '@/lib/recipes';
 import { IngredientList } from '@/components/ingredient-list';
+import { InstructionList } from '@/components/instruction-list';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -35,13 +36,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </div>
 
         {/* Recipe Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-4">
           <h1 className="text-4xl font-bold text-zinc-900 mb-6">
             {recipe.title}
           </h1>
-          
+
           {recipe.tags && recipe.tags.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
+            <div className="flex flex-wrap justify-center gap-2">
               {recipe.tags.map((tag, index) => (
                 <span
                   key={index}
@@ -60,8 +61,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
             <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
               מרכיבים
             </h2>
-            <IngredientList 
-              ingredients={recipe.ingredients} 
+            <IngredientList
+              ingredients={recipe.ingredients}
               recipeSlug={recipe.slug}
             />
           </div>
@@ -71,14 +72,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
             <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
               הוראות הכנה
             </h2>
-            <div className="prose prose-zinc max-w-none">
-              <div 
-                className="text-zinc-700 leading-relaxed whitespace-pre-line"
-                dir="rtl"
-              >
-                {recipe.instructions}
-              </div>
-            </div>
+            <InstructionList
+              instructions={recipe.instructions}
+            />
           </div>
         </div>
       </div>

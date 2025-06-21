@@ -88,7 +88,7 @@
 
 - [ ] 8.0 Recipe Instructions & Progress
 
-  - [ ] 8.1 Auto-number instructions with larger font numbers
+  - [x] 8.1 Auto-number instructions with larger font numbers
   - [ ] 8.2 Track progress of instructions (checkboxes for each step)
   - [ ] 8.3 Save instruction progress in session storage
 
@@ -134,3 +134,15 @@
 - Keyboard accessibility improvements
 - Screen reader support
 - PWA capabilities (offline support)
+
+## Code Review Checklist
+
+Before committing code:
+- [ ] TypeScript compilation passes
+- [ ] ESLint passes with no errors
+- [ ] Prettier formatting applied
+- [ ] RTL layout tested
+- [ ] Responsive design tested
+- [ ] No console errors
+- [ ] Build process completes successfully
+- [ ] Ask for approval before committing
