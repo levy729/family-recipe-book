@@ -189,6 +189,10 @@ Before committing code:
 - **Comments**: Add comments for complex logic
 - **Changelog**: Document significant changes
 
+## Git & Commit Rules
+
+- **Focused Commits**: Always try to do focused commits (conventional commits). Each commit should address a single concern or logical change, and use a conventional commit message (e.g., `fix: ...`, `feat: ...`, `refactor: ...`, `docs: ...`, `chore: ...`).
+
 ---
 
 _This document should be updated as the project evolves and new patterns emerge._
