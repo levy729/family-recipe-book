@@ -1,15 +1,13 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { saveInstructionState, getInstructionState } from '@/lib/storage';
+import { useState, useMemo } from 'react';
 
 interface InstructionListProps {
   instructions: string;
-  recipeSlug: string;
   className?: string;
 }
 
-export function InstructionList({ instructions, recipeSlug, className = '' }: InstructionListProps) {
+export function InstructionList({ instructions, className = '' }: InstructionListProps) {
   const [completedStates, setCompletedStates] = useState<{ [key: number]: boolean }>({});
 
   // Memoize steps to prevent infinite re-renders
@@ -20,22 +18,12 @@ export function InstructionList({ instructions, recipeSlug, className = '' }: In
       .filter(step => step.length > 0);
   }, [instructions]);
 
-  // Load initial states from session storage
-  useEffect(() => {
-    const states: { [key: number]: boolean } = {};
-    steps.forEach((_, index) => {
-      states[index] = getInstructionState(recipeSlug, index);
-    });
-    setCompletedStates(states);
-  }, [recipeSlug, steps]);
-
   const handleStepClick = (stepIndex: number) => {
     const newCompleted = !completedStates[stepIndex];
     setCompletedStates(prev => ({
       ...prev,
       [stepIndex]: newCompleted
     }));
-    saveInstructionState(recipeSlug, stepIndex, newCompleted);
   };
 
   return (

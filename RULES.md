@@ -161,7 +161,8 @@ Before committing code:
 - [ ] Responsive design tested
 - [ ] No console errors
 - [ ] Build process completes successfully
-- [ ] Ask for approval before commiting
+- [ ] **ALWAYS ask for approval before committing**
+- [ ] **Show implementation summary to user before requesting commit approval**
 
 ## Maintenance Rules
 
