@@ -217,3 +217,16 @@ Before committing code:
 - [ ] Build process completes successfully
 - [ ] Tests pass (when implemented)
 - [ ] Ask for approval before committing
+
+- [ ] 13.4 E2E Tests (Medium Priority)
+  - [ ] 13.4.1 Test complete user journey from homepage to recipe
+  - [ ] 13.4.2 Test search functionality end-to-end
+  - [ ] 13.4.3 Test ingredient checkbox persistence across sessions
+  - [ ] 13.4.4 Test responsive design on different screen sizes
+
+- [ ] 13.5 Future Enhancements
+  - [ ] 13.5.1 Display recipe content (markdown after YAML frontmatter)
+    - [ ] 13.5.1.1 Add content section to recipe page layout
+    - [ ] 13.5.1.2 Implement markdown rendering for recipe content
+    - [ ] 13.5.1.3 Add styling for content sections (tips, notes, etc.)
+    - [ ] 13.5.1.4 Test content display with various markdown formats
