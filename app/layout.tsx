@@ -13,7 +13,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl">
-      <body className="min-h-screen bg-zinc-50 text-zinc-900">{children}</body>
+      <body className="min-h-screen bg-zinc-50 text-zinc-900 p-8">
+        <main className="flex min-h-screen flex-col items-center">
+          <div className="max-w-4xl w-full">
+            {children}
+          </div>
+        </main>
+      </body>
     </html>
   );
 }
