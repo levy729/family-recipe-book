@@ -74,6 +74,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </h2>
             <InstructionList
               instructions={recipe.instructions}
+              recipeSlug={recipe.slug}
             />
           </div>
         </div>
