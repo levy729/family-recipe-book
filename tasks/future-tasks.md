@@ -105,6 +105,48 @@ The following files are from the AI Dev Tasks project and should not be modified
 
 These files should be moved to `docs/processes/` but their content should remain unchanged.
 
+## Development Workflow
+
+### Task: Review and Optimize NPM Scripts and Git Hooks
+
+**Problem**: The current npm scripts and git hooks may need optimization and consistency review.
+
+**Areas to Review**:
+
+1. **NPM Scripts**:
+   - Main project scripts in `package.json`
+   - Recipe builder scripts in `recipe-builder/package.json`
+   - Ensure consistent naming and functionality
+   - Check for redundant or missing scripts
+
+2. **Git Hooks**:
+   - Pre-commit hook efficiency
+   - Pre-push hook completeness
+   - Hook execution order and dependencies
+   - Performance optimization (e.g., parallel execution where possible)
+
+3. **CI/CD Integration**:
+   - Ensure hooks match CI requirements
+   - Check for any discrepancies between local and CI checks
+   - Verify all CI failures are caught locally
+
+**Specific Checks**:
+
+- [ ] Review all npm scripts for consistency
+- [ ] Optimize hook execution time
+- [ ] Ensure hooks catch all CI issues
+- [ ] Check for missing linting/formatting in hooks
+- [ ] Verify test coverage requirements
+- [ ] Review build process efficiency
+
+**Priority**: Medium - Should be done when CI issues are resolved
+
+**Benefits**:
+- Faster development workflow
+- Consistent CI/CD pipeline
+- Reduced failed builds
+- Better developer experience
+
 ### Benefits of These Tasks
 
 1. **Better Organization** - Cleaner project structure
@@ -117,5 +159,6 @@ These files should be moved to `docs/processes/` but their content should remain
 - **Documentation Organization**: When convenient, non-blocking
 - **Attribution**: Soon, for proper credit
 - **Licensing**: Soon, for legal clarity
+- **Development Workflow**: When CI issues are resolved
 
 These tasks can be completed in any order and are independent of current development work.
