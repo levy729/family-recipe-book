@@ -116,10 +116,10 @@
     - [x] 9.8.9 Make search box bigger
   - [ ] 9.9 Cooking time display
 
-- [ ] 10.0 Social & Sharing
+- [x] 10.0 Social & Sharing
 
-  - [ ] 10.1 Web Share API integration for recipe pages
-  - [ ] 10.2 Copy recipe link to clipboard
+  - [x] 10.1 Web Share API integration for recipe pages
+  - [x] 10.2 Copy recipe link to clipboard (covered by Web Share API fallback)
 
 - [ ] 11.0 Project Configuration
 
