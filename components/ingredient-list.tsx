@@ -19,6 +19,9 @@ export function IngredientList({
   recipeTitle,
   className = '',
 }: IngredientListProps) {
+  // Ensure ingredients is always an array
+  const safeIngredients = Array.isArray(ingredients) ? ingredients : [];
+  
   const [checkedStates, setCheckedStates] = useState<{
     [key: string]: boolean;
   }>({});
@@ -27,11 +30,11 @@ export function IngredientList({
   // Load initial states from session storage
   useEffect(() => {
     const states: { [key: string]: boolean } = {};
-    ingredients.forEach(ingredient => {
+    safeIngredients.forEach(ingredient => {
       states[ingredient] = getIngredientState(recipeSlug, ingredient);
     });
     setCheckedStates(states);
-  }, [recipeSlug, ingredients]);
+  }, [recipeSlug, safeIngredients]);
 
   const handleCheckboxChange = (ingredient: string, checked: boolean) => {
     setCheckedStates(prev => ({
@@ -43,13 +46,13 @@ export function IngredientList({
 
   // Calculate if all items are checked
   const allChecked =
-    ingredients.length > 0 &&
-    ingredients.every(ingredient => checkedStates[ingredient]);
-  const someChecked = ingredients.some(ingredient => checkedStates[ingredient]);
+    safeIngredients.length > 0 &&
+    safeIngredients.every(ingredient => checkedStates[ingredient]);
+  const someChecked = safeIngredients.some(ingredient => checkedStates[ingredient]);
 
   const handleSelectAll = () => {
     const newStates: { [key: string]: boolean } = {};
-    ingredients.forEach(ingredient => {
+    safeIngredients.forEach(ingredient => {
       newStates[ingredient] = true;
       saveIngredientState(recipeSlug, ingredient, true);
     });
@@ -58,7 +61,7 @@ export function IngredientList({
 
   const handleClearAll = () => {
     const newStates: { [key: string]: boolean } = {};
-    ingredients.forEach(ingredient => {
+    safeIngredients.forEach(ingredient => {
       newStates[ingredient] = false;
       saveIngredientState(recipeSlug, ingredient, false);
     });
@@ -67,7 +70,7 @@ export function IngredientList({
 
   // Expose copy functionality to parent
   const handleCopyToClipboard = async () => {
-    const ingredientText = ingredients.join('\n');
+    const ingredientText = safeIngredients.join('\n');
 
     try {
       await navigator.clipboard.writeText(ingredientText);
@@ -125,7 +128,7 @@ export function IngredientList({
         </div>
         <div className="w-16 h-px bg-zinc-300"></div>
       </div>
-      {ingredients.length > 0 && (
+      {safeIngredients.length > 0 && (
         <div className="flex justify-start mb-2">
           <Button
             variant="ghost"
@@ -138,7 +141,7 @@ export function IngredientList({
         </div>
       )}
       <div className="space-y-1">
-        {ingredients.map((ingredient, index) => (
+        {safeIngredients.map((ingredient, index) => (
           <div
             key={ingredient}
             className={`flex items-start gap-2 p-1 rounded-md transition-all duration-200 hover:bg-zinc-50 ${

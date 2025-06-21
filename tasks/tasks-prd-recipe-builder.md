@@ -71,16 +71,16 @@ Based on PRD: `prd-recipe-builder.md`
   - [x] 3.6 Add Hebrew placeholder text and labels
   - [ ] 3.7 Test Hebrew text input across different browsers
 
-- [ ] 4.0 Implement Recipe Editing and File Operations
+- [x] 4.0 Implement Recipe Editing and File Operations
 
-  - [ ] 4.1 Create file browser component for selecting existing recipes
-  - [ ] 4.2 Implement recipe loading functionality from markdown files
-  - [ ] 4.3 Add recipe parsing utilities to extract YAML frontmatter
-  - [ ] 4.4 Create file saving functionality with proper markdown generation
-  - [ ] 4.5 Implement file overwrite confirmation and error handling
-  - [ ] 4.6 Add file encoding handling for UTF-8 Hebrew text
-  - [ ] 4.7 Create backup functionality before file operations
-  - [ ] 4.8 Add file system error handling and user feedback
+  - [x] 4.1 Create file browser component for selecting existing recipes
+  - [x] 4.2 Implement recipe loading functionality from markdown files
+  - [x] 4.3 Add recipe parsing utilities to extract YAML frontmatter
+  - [x] 4.4 Create file saving functionality with proper markdown generation
+  - [x] 4.5 Implement file overwrite confirmation and error handling
+  - [x] 4.6 Add file encoding handling for UTF-8 Hebrew text
+  - [x] 4.7 Create backup functionality before file operations
+  - [x] 4.8 Add file system error handling and user feedback
 
 - [ ] 5.0 Add Preview, Validation, and Template System
 
@@ -92,6 +92,7 @@ Based on PRD: `prd-recipe-builder.md`
   - [ ] 5.6 Add custom template creation and management
   - [ ] 5.7 Create validation error display and suggestions
   - [ ] 5.8 Implement preview styling similar to main website
+  - [ ] 5.9 Sort suggested tags alphabetically for better UX
 
 - [ ] 6.0 Create Comprehensive Test Suite
   - [ ] 6.1 Write unit tests for recipe parsing utilities
