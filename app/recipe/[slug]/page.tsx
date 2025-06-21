@@ -26,7 +26,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
     <main className="flex min-h-screen flex-col items-center p-24">
       <div className="max-w-4xl w-full">
         {/* Back to Home */}
-        <div className="mb-8">
+        <div className="mb-12">
           <Link href="/">
             <Button variant="outline" className="mb-4">
               ← חזרה לדף הבית
@@ -35,13 +35,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </div>
 
         {/* Recipe Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-zinc-900 mb-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-zinc-900 mb-6">
             {recipe.title}
           </h1>
           
           {recipe.tags && recipe.tags.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2 mb-6">
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
               {recipe.tags.map((tag, index) => (
                 <span
                   key={index}
@@ -54,10 +54,10 @@ export default async function RecipePage({ params }: RecipePageProps) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Ingredients Section */}
           <div className="text-right">
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-4">
+            <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
               מרכיבים
             </h2>
             <IngredientList 
@@ -68,7 +68,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
           {/* Instructions Section */}
           <div className="text-right">
-            <h2 className="text-2xl font-semibold text-zinc-800 mb-4">
+            <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
               הוראות הכנה
             </h2>
             <div className="prose prose-zinc max-w-none">

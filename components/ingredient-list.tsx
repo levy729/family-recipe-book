@@ -55,21 +55,21 @@ export function IngredientList({ recipeSlug, ingredients, className = '' }: Ingr
 
   return (
     <div className={`space-y-3 ${className}`}>
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-zinc-900 text-right">
-          מרכיבים
-        </h3>
-        {ingredients.length > 0 && (
+      <h3 className="text-lg font-semibold text-zinc-900 text-right mb-4">
+        מרכיבים
+      </h3>
+      {ingredients.length > 0 && (
+        <div className="flex justify-end mb-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={allChecked ? handleClearAll : handleSelectAll}
-            className="text-xs text-zinc-600 hover:text-zinc-900"
+            className="text-xs text-zinc-600"
           >
             {allChecked ? 'נקה הכל' : 'בחר הכל'}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
       <div className="space-y-2">
         {ingredients.map((ingredient) => (
           <div key={ingredient} className="flex items-center space-x-3 space-x-reverse">
