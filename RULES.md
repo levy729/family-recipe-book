@@ -60,6 +60,16 @@ A minimalist, publicly accessible family recipe book website with Hebrew RTL con
 - **Component-level**: Styles should be component-specific
 - **RTL Support**: Always consider RTL layout in styling
 
+### Hebrew Text Constants
+
+- **Centralized Text**: All Hebrew hardcoded text must be in `/lib/constants.ts`
+- **HEBREW_TEXTS Object**: Use the `HEBREW_TEXTS` constant for all UI text
+- **HEBREW_TAGS Array**: Use the `HEBREW_TAGS` constant for recipe tags
+- **Format Helper**: Use `formatHebrewText()` function for dynamic text with placeholders
+- **No Hardcoded Hebrew**: Never write Hebrew text directly in components
+- **Consistent Naming**: Use descriptive keys in the constants object
+- **Type Safety**: Use `as const` for type safety and autocomplete
+
 ## Content Rules
 
 ### Recipe Format

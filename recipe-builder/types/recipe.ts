@@ -1,11 +1,23 @@
+import { HEBREW_TAGS, HebrewTag } from '../lib/constants';
+
 // Recipe data structure for the recipe builder
+export interface Recipe {
+  title: string;
+  slug: string;
+  description?: string;
+  tags?: HebrewTag[];
+  ingredients?: string[];
+  instructions?: string;
+  content?: string;
+}
+
 export interface RecipeFormData {
   title: string;
   slug: string;
-  tags: string[];
+  description: string;
+  tags: HebrewTag[];
   ingredients: string[];
-  instructions: string[];
-  description?: string;
+  instructions: string;
 }
 
 // Recipe builder specific types
@@ -33,33 +45,9 @@ export interface FileOperationResult {
 export interface RecipeTemplate {
   name: string;
   description: string;
-  tags: string[];
-  ingredients: string[];
-  instructions: string[];
+  data: Partial<RecipeFormData>;
 }
 
-// Hebrew tag options
-export const HEBREW_TAGS = [
-  'בשר',
-  'עיקרי',
-  'תוספת',
-  'קינוח',
-  'ארוחת בוקר',
-  'מסורתי',
-  'צמחוני',
-  'טבעוני',
-  'ללא גלוטן',
-  'קל',
-  'בינוני',
-  'מתקדם',
-  'קציצות',
-  'מרק',
-  'סלט',
-  'עוגה',
-  'לחם',
-  'פסטה',
-  'אורז',
-  'ירקות',
-] as const;
-
-export type HebrewTag = (typeof HEBREW_TAGS)[number];
+// Export the Hebrew tags and type from constants
+export { HEBREW_TAGS };
+export type { HebrewTag };
