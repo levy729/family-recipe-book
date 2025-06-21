@@ -125,20 +125,26 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
           </Button>
         </div>
       )}
-      <div className="space-y-2">
-        {ingredients.map((ingredient) => (
-          <div key={ingredient} className="flex items-center space-x-3 space-x-reverse">
+      <div className="space-y-1">
+        {ingredients.map((ingredient, index) => (
+          <div
+            key={ingredient}
+            className={`flex items-start gap-2 p-1 rounded-md transition-all duration-200 hover:bg-zinc-50 ${
+              checkedStates[ingredient] ? 'opacity-75' : ''
+            }`}
+          >
             <Checkbox
-              id={ingredient}
+              id={`ingredient-${index}`}
               checked={checkedStates[ingredient] || false}
               onCheckedChange={(checked: boolean | 'indeterminate') => 
                 handleCheckboxChange(ingredient, checked === true)
               }
+              className="mt-0.5 transition-all duration-200 hover:scale-110"
             />
             <label
-              htmlFor={ingredient}
-              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 transition-all duration-200 ${
-                checkedStates[ingredient] ? 'line-through text-zinc-500 opacity-70' : 'text-zinc-900'
+              htmlFor={`ingredient-${index}`}
+              className={`text-sm leading-relaxed cursor-pointer transition-all duration-200 ${
+                checkedStates[ingredient] ? 'text-zinc-500 line-through' : 'text-zinc-700'
               }`}
             >
               {ingredient}
