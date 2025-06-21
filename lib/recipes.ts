@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 export type Recipe = {
   title: string;
   slug: string;
+  description?: string;
   tags: string[];
   ingredients: string[];
   instructions: string;
@@ -12,6 +13,15 @@ export type Recipe = {
 };
 
 const RECIPES_DIR = path.join(process.cwd(), 'recipes');
+
+function validateDescription(description?: string): string | undefined {
+  if (!description) return undefined;
+  if (description.length > 200) {
+    console.warn(`Description too long (${description.length} chars), truncating to 200 chars`);
+    return description.substring(0, 200);
+  }
+  return description;
+}
 
 export async function getAllRecipes(): Promise<Recipe[]> {
   const files = await fs.readdir(RECIPES_DIR);
@@ -25,6 +35,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
     recipes.push({
       title: data.title,
       slug: data.slug,
+      description: validateDescription(data.description),
       tags: data.tags || [],
       ingredients: data.ingredients || [],
       instructions: data.instructions || '',

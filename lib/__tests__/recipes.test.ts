@@ -10,6 +10,7 @@ describe('Recipe Utilities', () => {
   const mockRecipeContent = `---
 title: "אורז לבן פשוט"
 slug: "simple-white-rice"
+description: "אורז לבן פשוט וטעים, רך ומתאים לכל ארוחה"
 tags: ["אורז", "תוספת", "קל"]
 ingredients:
   - "1 כוס אורז לבן"
@@ -30,6 +31,7 @@ instructions: |
   const mockRecipeData: Recipe = {
     title: "אורז לבן פשוט",
     slug: "simple-white-rice",
+    description: "אורז לבן פשוט וטעים, רך ומתאים לכל ארוחה",
     tags: ["אורז", "תוספת", "קל"],
     ingredients: [
       "1 כוס אורז לבן",
@@ -81,11 +83,53 @@ Recipe content here.`;
       expect(recipes[0]).toEqual({
         title: "Test Recipe",
         slug: "test-recipe",
+        description: undefined,
         tags: [],
         ingredients: [],
         instructions: '',
         content: '\nRecipe content here.'
       });
+    });
+
+    it('should handle description field correctly', async () => {
+      const contentWithDescription = `---
+title: "Test Recipe"
+slug: "test-recipe"
+description: "A test recipe description"
+tags: ["test"]
+ingredients: []
+instructions: ""
+---
+
+Recipe content here.`;
+
+      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
+      mockedFs.readFile.mockResolvedValue(contentWithDescription);
+
+      const recipes = await getAllRecipes();
+
+      expect(recipes[0].description).toBe('A test recipe description');
+    });
+
+    it('should truncate description if longer than 200 characters', async () => {
+      const longDescription = 'A'.repeat(250);
+      const contentWithLongDescription = `---
+title: "Test Recipe"
+slug: "test-recipe"
+description: "${longDescription}"
+tags: ["test"]
+ingredients: []
+instructions: ""
+---
+
+Recipe content here.`;
+
+      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
+      mockedFs.readFile.mockResolvedValue(contentWithLongDescription);
+
+      const recipes = await getAllRecipes();
+
+      expect(recipes[0].description).toBe('A'.repeat(200));
     });
 
     it('should skip non-markdown files', async () => {
