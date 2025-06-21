@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { SearchBar } from "@/components/search-bar";
-import { RecipeCard } from "@/components/recipe-card";
-import { Recipe } from "@/lib/recipes";
+import { SearchBar } from '@/components/search-bar';
+import { RecipeCard } from '@/components/recipe-card';
+import { Recipe } from '@/lib/recipes';
 import { initializeSearch, searchRecipes } from '@/lib/search';
 import { LoadingSpinner } from '@/components/loading-spinner';
 
@@ -15,7 +15,9 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Recipe[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [recentRecipes, setRecentRecipes] = useState<Recipe[]>(initialRecipes.slice(0, 6));
+  const [recentRecipes, setRecentRecipes] = useState<Recipe[]>(
+    initialRecipes.slice(0, 6)
+  );
 
   useEffect(() => {
     // Initialize search with all recipes
@@ -24,7 +26,7 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    
+
     if (query.trim()) {
       setIsSearching(true);
       const results = searchRecipes(query);
@@ -37,23 +39,21 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
 
   const displayRecipes = searchQuery.trim() ? searchResults : recentRecipes;
   const showRecentTitle = !searchQuery.trim();
-  
+
   return (
     <>
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-zinc-900 mb-4">
-          ספר מתכונים
-        </h1>
+        <h1 className="text-4xl font-bold text-zinc-900 mb-4">ספר מתכונים</h1>
       </div>
-      
+
       <div className="flex justify-center mb-12">
-        <SearchBar 
-          className="mx-auto" 
+        <SearchBar
+          className="mx-auto"
           onSearch={handleSearch}
           placeholder="חפש מתכונים..."
         />
       </div>
-      
+
       <div className="text-right">
         {showRecentTitle ? (
           <h2 className="text-2xl font-semibold text-zinc-800 mb-6">
@@ -64,7 +64,7 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
             תוצאות חיפוש
           </h2>
         )}
-        
+
         {isSearching ? (
           <div className="text-center py-8">
             <div className="flex items-center justify-center gap-2">
@@ -86,7 +86,7 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
                   className="animate-in fade-in-0 slide-in-from-bottom-2"
                   style={{
                     animationDelay: `${index * 100}ms`,
-                    animationDuration: '500ms'
+                    animationDuration: '500ms',
                   }}
                 >
                   <RecipeCard recipe={recipe} />
@@ -99,12 +99,10 @@ export function HomePageClient({ initialRecipes }: HomePageClientProps) {
             <p className="text-zinc-600 text-lg">
               לא נמצאו מתכונים עבור "{searchQuery}"
             </p>
-            <p className="text-zinc-500 mt-2">
-              נסה לחפש עם מילים אחרות
-            </p>
+            <p className="text-zinc-500 mt-2">נסה לחפש עם מילים אחרות</p>
           </div>
         ) : null}
       </div>
     </>
   );
-} 
+}

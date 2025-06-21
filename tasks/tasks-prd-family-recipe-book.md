@@ -137,6 +137,7 @@
 - [ ] 13.0 Testing Setup and Coverage
 
   - [ ] 13.1 Testing Infrastructure Setup
+
     - [ ] 13.1.1 Install Jest, React Testing Library, and testing dependencies
     - [ ] 13.1.2 Configure Jest for Next.js and TypeScript
     - [ ] 13.1.3 Set up test coverage reporting
@@ -144,6 +145,7 @@
     - [ ] 13.1.5 Configure GitHub Actions to run tests on PRs
 
   - [ ] 13.2 Critical Functionality Tests
+
     - [x] 13.2.1 Test recipe parsing utilities (lib/recipes.ts)
       - [x] 13.2.1.1 Test YAML frontmatter parsing
       - [x] 13.2.1.2 Test markdown content extraction
@@ -160,6 +162,7 @@
       - [x] 13.2.3.3 Test data cleanup and error handling
 
   - [ ] 13.3 Component Tests (High Priority)
+
     - [ ] 13.3.1 Test SearchBar component
       - [ ] 13.3.1.1 Test input handling and search triggering
       - [ ] 13.3.1.2 Test RTL input behavior
@@ -175,6 +178,7 @@
       - [ ] 13.3.3.4 Test session storage integration
 
   - [ ] 13.4 End-to-End Tests (Playwright)
+
     - [ ] 13.4.1 Install and configure Playwright
     - [ ] 13.4.2 Test critical user flows
       - [ ] 13.4.2.1 Homepage → Search → Recipe navigation
@@ -208,6 +212,7 @@
 ## Code Review Checklist
 
 Before committing code:
+
 - [ ] TypeScript compilation passes
 - [ ] ESLint passes with no errors
 - [ ] Prettier formatting applied
@@ -219,6 +224,7 @@ Before committing code:
 - [ ] Ask for approval before committing
 
 - [ ] 13.4 E2E Tests (Medium Priority)
+
   - [ ] 13.4.1 Test complete user journey from homepage to recipe
   - [ ] 13.4.2 Test search functionality end-to-end
   - [ ] 13.4.3 Test ingredient checkbox persistence across sessions

@@ -3,18 +3,14 @@ import { Recipe } from './recipes';
 
 // Configure Fuse.js for Hebrew content
 const fuseOptions = {
-  keys: [
-    'title',
-    'tags',
-    'ingredients'
-  ],
+  keys: ['title', 'tags', 'ingredients'],
   threshold: 0.3, // Lower threshold for more exact matches
   ignoreLocation: true,
   useExtendedSearch: false,
   includeScore: true,
   includeMatches: true,
   minMatchCharLength: 2,
-  shouldSort: true
+  shouldSort: true,
 };
 
 let fuseInstance: Fuse<Recipe> | null = null;
@@ -39,7 +35,10 @@ export function searchRecipes(query: string): Recipe[] {
   return results.map(result => result.item);
 }
 
-export function searchRecipesByField(query: string, field: 'title' | 'tags' | 'ingredients'): Recipe[] {
+export function searchRecipesByField(
+  query: string,
+  field: 'title' | 'tags' | 'ingredients'
+): Recipe[] {
   if (!fuseInstance) {
     console.warn('Search not initialized. Call initializeSearch first.');
     return [];
@@ -51,7 +50,7 @@ export function searchRecipesByField(query: string, field: 'title' | 'tags' | 'i
 
   const fieldOptions = {
     ...fuseOptions,
-    keys: [field]
+    keys: [field],
   };
 
   const fieldFuse = new Fuse(allRecipes, fieldOptions);
@@ -63,4 +62,4 @@ export function searchRecipesByField(query: string, field: 'title' | 'tags' | 'i
 export function resetSearch() {
   fuseInstance = null;
   allRecipes = [];
-} 
+}

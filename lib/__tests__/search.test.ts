@@ -1,5 +1,10 @@
 import Fuse from 'fuse.js';
-import { initializeSearch, searchRecipes, searchRecipesByField, resetSearch } from '../search';
+import {
+  initializeSearch,
+  searchRecipes,
+  searchRecipesByField,
+  resetSearch,
+} from '../search';
 import { Recipe } from '../recipes';
 
 // Mock Fuse.js
@@ -9,49 +14,39 @@ const MockedFuse = Fuse as jest.MockedClass<typeof Fuse>;
 describe('Search Functionality', () => {
   const mockRecipes: Recipe[] = [
     {
-      title: "אורז לבן פשוט",
-      slug: "simple-white-rice",
-      tags: ["אורז", "תוספת", "קל"],
+      title: 'אורז לבן פשוט',
+      slug: 'simple-white-rice',
+      tags: ['אורז', 'תוספת', 'קל'],
       ingredients: [
-        "1 כוס אורז לבן",
-        "1.5 כוסות מים",
-        "1 כף שמן",
-        "1/2 כפית מלח"
+        '1 כוס אורז לבן',
+        '1.5 כוסות מים',
+        '1 כף שמן',
+        '1/2 כפית מלח',
       ],
-      instructions: "שוטפים את האורז...",
-      content: "אורז לבן פשוט, רך וטעים."
+      instructions: 'שוטפים את האורז...',
+      content: 'אורז לבן פשוט, רך וטעים.',
     },
     {
-      title: "סלט ירקות טרי",
-      slug: "fresh-vegetable-salad",
-      tags: ["סלט", "ירקות", "בריא"],
-      ingredients: [
-        "עגבניות",
-        "מלפפונים",
-        "בצל אדום",
-        "שמן זית"
-      ],
-      instructions: "חותכים את הירקות...",
-      content: "סלט ירקות טרי וטעים."
+      title: 'סלט ירקות טרי',
+      slug: 'fresh-vegetable-salad',
+      tags: ['סלט', 'ירקות', 'בריא'],
+      ingredients: ['עגבניות', 'מלפפונים', 'בצל אדום', 'שמן זית'],
+      instructions: 'חותכים את הירקות...',
+      content: 'סלט ירקות טרי וטעים.',
     },
     {
-      title: "עוף צלוי בתנור",
-      slug: "roasted-chicken",
-      tags: ["עוף", "צלוי", "עיקרי"],
-      ingredients: [
-        "חזה עוף",
-        "תבלינים",
-        "שמן זית",
-        "לימון"
-      ],
-      instructions: "מחממים תנור...",
-      content: "עוף צלוי בתנור, רך וטעים."
-    }
+      title: 'עוף צלוי בתנור',
+      slug: 'roasted-chicken',
+      tags: ['עוף', 'צלוי', 'עיקרי'],
+      ingredients: ['חזה עוף', 'תבלינים', 'שמן זית', 'לימון'],
+      instructions: 'מחממים תנור...',
+      content: 'עוף צלוי בתנור, רך וטעים.',
+    },
   ];
 
   const mockSearchResults = [
     { item: mockRecipes[0], score: 0.1, matches: [] },
-    { item: mockRecipes[1], score: 0.3, matches: [] }
+    { item: mockRecipes[1], score: 0.3, matches: [] },
   ];
 
   beforeEach(() => {
@@ -63,7 +58,7 @@ describe('Search Functionality', () => {
   describe('initializeSearch', () => {
     it('should initialize Fuse.js with correct options', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([])
+        search: jest.fn().mockReturnValue([]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -77,13 +72,13 @@ describe('Search Functionality', () => {
         includeScore: true,
         includeMatches: true,
         minMatchCharLength: 2,
-        shouldSort: true
+        shouldSort: true,
       });
     });
 
     it('should store recipes for field-specific searches', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([])
+        search: jest.fn().mockReturnValue([]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -103,7 +98,7 @@ describe('Search Functionality', () => {
 
     it('should return empty array for empty query', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([])
+        search: jest.fn().mockReturnValue([]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -115,7 +110,7 @@ describe('Search Functionality', () => {
 
     it('should return empty array for whitespace-only query', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([])
+        search: jest.fn().mockReturnValue([]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -127,7 +122,7 @@ describe('Search Functionality', () => {
 
     it('should search and return recipes', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue(mockSearchResults)
+        search: jest.fn().mockReturnValue(mockSearchResults),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -140,7 +135,9 @@ describe('Search Functionality', () => {
 
     it('should handle Hebrew text correctly', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([{ item: mockRecipes[0], score: 0.1, matches: [] }])
+        search: jest
+          .fn()
+          .mockReturnValue([{ item: mockRecipes[0], score: 0.1, matches: [] }]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -161,7 +158,7 @@ describe('Search Functionality', () => {
 
     it('should return empty array for empty query', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([])
+        search: jest.fn().mockReturnValue([]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -173,7 +170,9 @@ describe('Search Functionality', () => {
 
     it('should search by title field', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([{ item: mockRecipes[0], score: 0.1, matches: [] }])
+        search: jest
+          .fn()
+          .mockReturnValue([{ item: mockRecipes[0], score: 0.1, matches: [] }]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -188,7 +187,7 @@ describe('Search Functionality', () => {
         includeScore: true,
         includeMatches: true,
         minMatchCharLength: 2,
-        shouldSort: true
+        shouldSort: true,
       });
       expect(mockFuseInstance.search).toHaveBeenCalledWith('אורז');
       expect(results).toEqual([mockRecipes[0]]);
@@ -196,7 +195,9 @@ describe('Search Functionality', () => {
 
     it('should search by tags field', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([{ item: mockRecipes[1], score: 0.2, matches: [] }])
+        search: jest
+          .fn()
+          .mockReturnValue([{ item: mockRecipes[1], score: 0.2, matches: [] }]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -211,7 +212,7 @@ describe('Search Functionality', () => {
         includeScore: true,
         includeMatches: true,
         minMatchCharLength: 2,
-        shouldSort: true
+        shouldSort: true,
       });
       expect(mockFuseInstance.search).toHaveBeenCalledWith('סלט');
       expect(results).toEqual([mockRecipes[1]]);
@@ -219,7 +220,9 @@ describe('Search Functionality', () => {
 
     it('should search by ingredients field', () => {
       const mockFuseInstance = {
-        search: jest.fn().mockReturnValue([{ item: mockRecipes[2], score: 0.1, matches: [] }])
+        search: jest
+          .fn()
+          .mockReturnValue([{ item: mockRecipes[2], score: 0.1, matches: [] }]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -234,7 +237,7 @@ describe('Search Functionality', () => {
         includeScore: true,
         includeMatches: true,
         minMatchCharLength: 2,
-        shouldSort: true
+        shouldSort: true,
       });
       expect(mockFuseInstance.search).toHaveBeenCalledWith('עוף');
       expect(results).toEqual([mockRecipes[2]]);
@@ -244,8 +247,8 @@ describe('Search Functionality', () => {
       const mockFuseInstance = {
         search: jest.fn().mockReturnValue([
           { item: mockRecipes[0], score: 0.1, matches: [] },
-          { item: mockRecipes[1], score: 0.3, matches: [] }
-        ])
+          { item: mockRecipes[1], score: 0.3, matches: [] },
+        ]),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -261,7 +264,7 @@ describe('Search Functionality', () => {
       const mockFuseInstance = {
         search: jest.fn().mockImplementation(() => {
           throw new Error('Search error');
-        })
+        }),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
@@ -274,13 +277,15 @@ describe('Search Functionality', () => {
       const mockFuseInstance = {
         search: jest.fn().mockImplementation(() => {
           throw new Error('Field search error');
-        })
+        }),
       };
       MockedFuse.mockImplementation(() => mockFuseInstance as any);
 
       initializeSearch(mockRecipes);
 
-      expect(() => searchRecipesByField('test', 'title')).toThrow('Field search error');
+      expect(() => searchRecipesByField('test', 'title')).toThrow(
+        'Field search error'
+      );
     });
   });
-}); 
+});

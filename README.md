@@ -27,23 +27,26 @@ A minimalist family recipe book website built with Next.js, featuring Hebrew RTL
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/levy729/family-recipe-book.git
 cd family-recipe-book
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -56,12 +59,12 @@ Recipes are stored as Markdown files in the `recipes/` directory with YAML front
 
 ```markdown
 ---
-title: "Recipe Title"
-slug: "recipe-slug"
-tags: ["tag1", "tag2"]
+title: 'Recipe Title'
+slug: 'recipe-slug'
+tags: ['tag1', 'tag2']
 ingredients:
-  - "Ingredient 1"
-  - "Ingredient 2"
+  - 'Ingredient 1'
+  - 'Ingredient 2'
 instructions: |
   1. Step one
   2. Step two
@@ -96,4 +99,4 @@ family-recipe-book/
 
 ## License
 
-MIT License - see LICENSE file for details. 
+MIT License - see LICENSE file for details.

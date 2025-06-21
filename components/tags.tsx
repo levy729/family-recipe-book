@@ -18,13 +18,15 @@ export function Tags({ tags, className = '', maxTags, onClick }: TagsProps) {
         <span
           key={index}
           className={`px-3 py-1 bg-zinc-100 text-zinc-700 rounded-md text-sm font-medium ${
-            onClick ? 'cursor-pointer hover:bg-zinc-300 hover:text-zinc-800 transition-all duration-200 ease-out' : ''
+            onClick
+              ? 'cursor-pointer hover:bg-zinc-300 hover:text-zinc-800 transition-all duration-200 ease-out'
+              : ''
           }`}
-          onClick={(event) => onClick?.(tag, event)}
+          onClick={event => onClick?.(tag, event)}
         >
           {tag}
         </span>
       ))}
     </div>
   );
-} 
+}

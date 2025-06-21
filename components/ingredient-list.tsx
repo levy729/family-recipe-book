@@ -13,8 +13,15 @@ interface IngredientListProps {
   className?: string;
 }
 
-export function IngredientList({ recipeSlug, ingredients, recipeTitle, className = '' }: IngredientListProps) {
-  const [checkedStates, setCheckedStates] = useState<{ [key: string]: boolean }>({});
+export function IngredientList({
+  recipeSlug,
+  ingredients,
+  recipeTitle,
+  className = '',
+}: IngredientListProps) {
+  const [checkedStates, setCheckedStates] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [copySuccess, setCopySuccess] = useState(false);
 
   // Load initial states from session storage
@@ -29,13 +36,15 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
   const handleCheckboxChange = (ingredient: string, checked: boolean) => {
     setCheckedStates(prev => ({
       ...prev,
-      [ingredient]: checked
+      [ingredient]: checked,
     }));
     saveIngredientState(recipeSlug, ingredient, checked);
   };
 
   // Calculate if all items are checked
-  const allChecked = ingredients.length > 0 && ingredients.every(ingredient => checkedStates[ingredient]);
+  const allChecked =
+    ingredients.length > 0 &&
+    ingredients.every(ingredient => checkedStates[ingredient]);
   const someChecked = ingredients.some(ingredient => checkedStates[ingredient]);
 
   const handleSelectAll = () => {
@@ -102,7 +111,9 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
             onClick={handleCopyToClipboard}
             className="text-zinc-600 hover:text-zinc-600 hover:bg-transparent p-0 h-auto transition-all duration-200"
           >
-            <div className={`transition-all duration-200 ${copySuccess ? 'scale-110' : 'scale-100'}`}>
+            <div
+              className={`transition-all duration-200 ${copySuccess ? 'scale-110' : 'scale-100'}`}
+            >
               {copySuccess ? (
                 <Check className="w-4 h-4" />
               ) : (
@@ -110,9 +121,7 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
               )}
             </div>
           </Button>
-          <h2 className="text-2xl font-semibold text-zinc-800 mr-2">
-            מרכיבים
-          </h2>
+          <h2 className="text-2xl font-semibold text-zinc-800 mr-2">מרכיבים</h2>
         </div>
         <div className="w-16 h-px bg-zinc-300"></div>
       </div>
@@ -132,8 +141,9 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
         {ingredients.map((ingredient, index) => (
           <div
             key={ingredient}
-            className={`flex items-start gap-2 p-1 rounded-md transition-all duration-200 hover:bg-zinc-50 ${checkedStates[ingredient] ? 'opacity-75' : ''
-              }`}
+            className={`flex items-start gap-2 p-1 rounded-md transition-all duration-200 hover:bg-zinc-50 ${
+              checkedStates[ingredient] ? 'opacity-75' : ''
+            }`}
           >
             <Checkbox
               id={`ingredient-${index}`}
@@ -145,8 +155,11 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
             />
             <label
               htmlFor={`ingredient-${index}`}
-              className={`text-sm leading-relaxed cursor-pointer transition-all duration-200 ${checkedStates[ingredient] ? 'text-zinc-500 line-through' : 'text-zinc-700'
-                }`}
+              className={`text-sm leading-relaxed cursor-pointer transition-all duration-200 ${
+                checkedStates[ingredient]
+                  ? 'text-zinc-500 line-through'
+                  : 'text-zinc-700'
+              }`}
             >
               {ingredient}
             </label>
@@ -155,4 +168,4 @@ export function IngredientList({ recipeSlug, ingredients, recipeTitle, className
       </div>
     </div>
   );
-} 
+}

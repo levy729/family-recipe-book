@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export function BackButton() {
   const pathname = usePathname();
-  
+
   // Don't show back button on homepage
   if (pathname === '/') {
     return null;
@@ -24,4 +24,4 @@ export function BackButton() {
       </Button>
     </Link>
   );
-} 
+}

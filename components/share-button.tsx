@@ -69,4 +69,4 @@ export function ShareButton({ title, url, className = '' }: ShareButtonProps) {
       )}
     </Button>
   );
-} 
+}

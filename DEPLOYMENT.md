@@ -54,4 +54,4 @@ npm run build
 ```bash
 npm run dev
 # Site will be available at http://localhost:3000
-``` 
+```

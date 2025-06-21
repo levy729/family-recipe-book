@@ -7,8 +7,13 @@ interface InstructionListProps {
   className?: string;
 }
 
-export function InstructionList({ instructions, className = '' }: InstructionListProps) {
-  const [completedStates, setCompletedStates] = useState<{ [key: number]: boolean }>({});
+export function InstructionList({
+  instructions,
+  className = '',
+}: InstructionListProps) {
+  const [completedStates, setCompletedStates] = useState<{
+    [key: number]: boolean;
+  }>({});
 
   // Memoize steps to prevent infinite re-renders
   const steps = useMemo(() => {
@@ -22,7 +27,7 @@ export function InstructionList({ instructions, className = '' }: InstructionLis
     const newCompleted = !completedStates[stepIndex];
     setCompletedStates(prev => ({
       ...prev,
-      [stepIndex]: newCompleted
+      [stepIndex]: newCompleted,
     }));
   };
 
@@ -35,27 +40,30 @@ export function InstructionList({ instructions, className = '' }: InstructionLis
           <div key={index} className="text-right">
             {/* Step Number and Status */}
             <div className="flex items-center justify-start space-x-2 space-x-reverse">
-              <span className={`text-2xl font-bold transition-all duration-200 ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'}`}>
+              <span
+                className={`text-2xl font-bold transition-all duration-200 ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'}`}
+              >
                 {index + 1}
               </span>
-              <span className={`text-lg text-zinc-400 transition-all duration-200 ${isCompleted ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+              <span
+                className={`text-lg text-zinc-400 transition-all duration-200 ${isCompleted ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+              >
                 ✓
               </span>
             </div>
 
             {/* Step Content */}
             <div
-              className={`cursor-pointer transition-all duration-200 hover:bg-zinc-50 p-2 rounded-md -m-2 ${isCompleted ? 'text-zinc-400' : 'text-zinc-700'
-                }`}
+              className={`cursor-pointer transition-all duration-200 hover:bg-zinc-50 p-2 rounded-md -m-2 ${
+                isCompleted ? 'text-zinc-400' : 'text-zinc-700'
+              }`}
               onClick={() => handleStepClick(index)}
             >
-              <p className="leading-relaxed text-base">
-                {step}
-              </p>
+              <p className="leading-relaxed text-base">{step}</p>
             </div>
           </div>
         );
       })}
     </div>
   );
-} 
+}

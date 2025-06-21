@@ -17,7 +17,9 @@ const RECIPES_DIR = path.join(process.cwd(), 'recipes');
 function validateDescription(description?: string): string | undefined {
   if (!description) return undefined;
   if (description.length > 200) {
-    console.warn(`Description too long (${description.length} chars), truncating to 200 chars`);
+    console.warn(
+      `Description too long (${description.length} chars), truncating to 200 chars`
+    );
     return description.substring(0, 200);
   }
   return description;
@@ -53,4 +55,4 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
 export async function getRecentRecipes(limit: number = 6): Promise<Recipe[]> {
   const recipes = await getAllRecipes();
   return recipes.slice(0, limit);
-} 
+}

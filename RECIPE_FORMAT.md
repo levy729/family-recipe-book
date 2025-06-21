@@ -16,8 +16,8 @@ Every recipe must start with YAML frontmatter enclosed by `---` markers. The fro
 
 ```yaml
 ---
-title: "Recipe Title in Hebrew"
-slug: "recipe-slug-in-english"
+title: 'Recipe Title in Hebrew'
+slug: 'recipe-slug-in-english'
 ---
 ```
 
@@ -25,13 +25,13 @@ slug: "recipe-slug-in-english"
 
 ```yaml
 ---
-title: "Recipe Title in Hebrew"
-slug: "recipe-slug-in-english"
-tags: ["tag1", "tag2", "tag3"]
+title: 'Recipe Title in Hebrew'
+slug: 'recipe-slug-in-english'
+tags: ['tag1', 'tag2', 'tag3']
 ingredients:
-  - "1 cup ingredient"
-  - "2 tablespoons ingredient"
-  - "1/2 teaspoon ingredient"
+  - '1 cup ingredient'
+  - '2 tablespoons ingredient'
+  - '1/2 teaspoon ingredient'
 instructions: |
   שוטפים את האורז היטב במסננת.
   מחממים שמן בסיר קטן, מוסיפים את האורז ומטגנים כדקה.
@@ -46,14 +46,14 @@ instructions: |
 
 ```markdown
 ---
-title: "אורז לבן פשוט"
-slug: "simple-white-rice"
-tags: ["אורז", "תוספת", "קל"]
+title: 'אורז לבן פשוט'
+slug: 'simple-white-rice'
+tags: ['אורז', 'תוספת', 'קל']
 ingredients:
-  - "1 כוס אורז לבן"
-  - "1.5 כוסות מים"
-  - "1 כף שמן"
-  - "1/2 כפית מלח"
+  - '1 כוס אורז לבן'
+  - '1.5 כוסות מים'
+  - '1 כף שמן'
+  - '1/2 כפית מלח'
 instructions: |
   שוטפים את האורז היטב במסננת.
   מחממים שמן בסיר קטן, מוסיפים את האורז ומטגנים כדקה.
@@ -66,42 +66,48 @@ instructions: |
 אורז לבן פשוט, רך וטעים שמתאים לכל ארוחה.
 
 ## טיפים להכנה
+
 - חשוב לשטוף את האורז היטב לפני הבישול
 - אל תפתחו את המכסה במהלך הבישול
 - ניתן להוסיף תבלינים נוספים לפי הטעם
 
-*Note: The content below the YAML frontmatter (like "טיפים להכנה") is just regular markdown content and can be structured however you prefer. This content is currently not displayed on the website but is planned for future implementation.*
+_Note: The content below the YAML frontmatter (like "טיפים להכנה") is just regular markdown content and can be structured however you prefer. This content is currently not displayed on the website but is planned for future implementation._
 ```
 
 ## Field Descriptions
 
 ### title
+
 - **Required**: The recipe title in Hebrew
 - **Format**: String in quotes
 - **Example**: `"אורז לבן פשוט"`
 
 ### slug
+
 - **Required**: URL-friendly identifier in English
 - **Format**: Lowercase, hyphens instead of spaces
 - **Example**: `"simple-white-rice"`
 
 ### tags
+
 - **Optional**: Categories for searching and filtering
 - **Format**: Array of strings in Hebrew
 - **Example**: `["אורז", "תוספת", "קל"]`
 
 ### ingredients
+
 - **Optional**: List of ingredients with quantities
 - **Format**: Array of strings
-- **Example**: 
+- **Example**:
   ```yaml
   ingredients:
-    - "1 כוס אורז לבן"
-    - "1.5 כוסות מים"
-    - "1 כף שמן"
+    - '1 כוס אורז לבן'
+    - '1.5 כוסות מים'
+    - '1 כף שמן'
   ```
 
 ### instructions
+
 - **Optional**: Step-by-step cooking instructions
 - **Format**: Multi-line string using `|` for line breaks
 - **Important**: Do NOT number the steps manually - they are automatically numbered
@@ -133,11 +139,13 @@ After the YAML frontmatter, you can add additional content in Markdown format. T
 ## Best Practices
 
 ### Naming Conventions
+
 - Use descriptive, clear titles in Hebrew
 - Create unique slugs that are easy to remember
 - Use consistent naming patterns across recipes
 
 ### Tags
+
 - Use relevant tags for easy searching
 - Common tag categories:
   - **Course**: `["עיקרי", "תוספת", "קינוח", "ארוחת בוקר"]`
@@ -146,12 +154,14 @@ After the YAML frontmatter, you can add additional content in Markdown format. T
   - **Dietary**: `["צמחוני", "טבעוני", "ללא גלוטן"]`
 
 ### Ingredients
+
 - List ingredients in order of use
 - Include precise measurements
 - Use consistent units (כוס, כף, כפית, גרם, קילו)
 - Specify ingredient types when relevant (e.g., "שמן זית", "קמח לבן")
 
 ### Instructions
+
 - Write each step on a separate line
 - Do NOT number the steps manually - they are automatically numbered
 - Use clear, concise language
@@ -159,6 +169,7 @@ After the YAML frontmatter, you can add additional content in Markdown format. T
 - Mention specific techniques or equipment needed
 
 ### Content
+
 - Keep descriptions concise but informative
 - Include helpful tips and variations
 - Add personal touches or family traditions
@@ -167,6 +178,7 @@ After the YAML frontmatter, you can add additional content in Markdown format. T
 ## Validation
 
 The recipe parser will validate:
+
 - Required fields (title, slug) are present
 - YAML syntax is correct
 - File has proper `.md` extension
@@ -175,12 +187,14 @@ The recipe parser will validate:
 ## Troubleshooting
 
 ### Common Issues
+
 1. **YAML syntax errors**: Ensure proper indentation and quote usage
 2. **Missing required fields**: Title and slug are mandatory
 3. **Invalid slug format**: Use only lowercase letters, numbers, and hyphens
 4. **File encoding**: Save files in UTF-8 encoding for Hebrew text
 
 ### Testing Your Recipe
+
 - Check that the recipe displays correctly on the website
 - Verify that search functionality finds your recipe
 - Test that tags work for filtering
@@ -189,14 +203,15 @@ The recipe parser will validate:
 ## Example Templates
 
 ### Simple Recipe
+
 ```markdown
 ---
-title: "שם המתכון"
-slug: "recipe-name"
-tags: ["קטגוריה"]
+title: 'שם המתכון'
+slug: 'recipe-name'
+tags: ['קטגוריה']
 ingredients:
-  - "מרכיב 1"
-  - "מרכיב 2"
+  - 'מרכיב 1'
+  - 'מרכיב 2'
 instructions: |
   שלב ראשון
   שלב שני
@@ -206,16 +221,19 @@ instructions: |
 ```
 
 ### Complex Recipe
+
 ```markdown
 ---
+
 title: "שם המתכון המורכב"
 slug: "complex-recipe-name"
 tags: ["קטגוריה1", "קטגוריה2", "קושי"]
 ingredients:
-  - "מרכיב 1 - כמות מדויקת"
-  - "מרכיב 2 - כמות מדויקת"
-  - "מרכיב 3 - כמות מדויקת"
-instructions: |
+
+- "מרכיב 1 - כמות מדויקת"
+- "מרכיב 2 - כמות מדויקת"
+- "מרכיב 3 - כמות מדויקת"
+  instructions: |
   הכנה ראשונית
   שלב בישול ראשון (10 דקות)
   שלב בישול שני (15 דקות)
@@ -224,11 +242,13 @@ instructions: |
 תיאור מפורט של המתכון.
 
 ## טיפים חשובים
+
 - טיפ 1
 - טיפ 2
 
 ## הערות
+
 מידע נוסף על המתכון או המרכיבים.
 ```
 
-This format ensures consistency across all recipes and enables the website's search, filtering, and interactive features to work properly. 
+This format ensures consistency across all recipes and enables the website's search, filtering, and interactive features to work properly.

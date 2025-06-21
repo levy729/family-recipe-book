@@ -1,6 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { getAllRecipes, getRecipeBySlug, getRecentRecipes, Recipe } from '../recipes';
+import {
+  getAllRecipes,
+  getRecipeBySlug,
+  getRecentRecipes,
+  Recipe,
+} from '../recipes';
 
 // Mock fs module
 jest.mock('fs/promises');
@@ -29,18 +34,18 @@ instructions: |
 אורז לבן פשוט, רך וטעים שמתאים לכל ארוחה.`;
 
   const mockRecipeData: Recipe = {
-    title: "אורז לבן פשוט",
-    slug: "simple-white-rice",
-    description: "אורז לבן פשוט וטעים, רך ומתאים לכל ארוחה",
-    tags: ["אורז", "תוספת", "קל"],
+    title: 'אורז לבן פשוט',
+    slug: 'simple-white-rice',
+    description: 'אורז לבן פשוט וטעים, רך ומתאים לכל ארוחה',
+    tags: ['אורז', 'תוספת', 'קל'],
     ingredients: [
-      "1 כוס אורז לבן",
-      "1.5 כוסות מים", 
-      "1 כף שמן",
-      "1/2 כפית מלח"
+      '1 כוס אורז לבן',
+      '1.5 כוסות מים',
+      '1 כף שמן',
+      '1/2 כפית מלח',
     ],
     instructions: `1. שוטפים את האורז היטב במסננת.\n2. מחממים שמן בסיר קטן, מוסיפים את האורז ומטגנים כדקה.\n3. מוסיפים מים ומלח, מביאים לרתיחה.\n4. מכסים, מנמיכים לאש נמוכה ומבשלים 18 דקות.\n5. מכבים את האש ומשאירים מכוסה 5 דקות.\n6. מפרידים בעדינות עם מזלג ומגישים.\n`,
-    content: "\nאורז לבן פשוט, רך וטעים שמתאים לכל ארוחה."
+    content: '\nאורז לבן פשוט, רך וטעים שמתאים לכל ארוחה.',
   };
 
   beforeEach(() => {
@@ -64,7 +69,9 @@ instructions: |
 
       const recipes = await getAllRecipes();
 
-      expect(recipes[0].content).toBe('\nאורז לבן פשוט, רך וטעים שמתאים לכל ארוחה.');
+      expect(recipes[0].content).toBe(
+        '\nאורז לבן פשוט, רך וטעים שמתאים לכל ארוחה.'
+      );
     });
 
     it('should handle missing optional fields', async () => {
@@ -81,13 +88,13 @@ Recipe content here.`;
       const recipes = await getAllRecipes();
 
       expect(recipes[0]).toEqual({
-        title: "Test Recipe",
-        slug: "test-recipe",
+        title: 'Test Recipe',
+        slug: 'test-recipe',
         description: undefined,
         tags: [],
         ingredients: [],
         instructions: '',
-        content: '\nRecipe content here.'
+        content: '\nRecipe content here.',
       });
     });
 
@@ -133,12 +140,19 @@ Recipe content here.`;
     });
 
     it('should skip non-markdown files', async () => {
-      mockedFs.readdir.mockResolvedValue(['recipe.md', 'image.jpg', 'text.txt'] as any);
+      mockedFs.readdir.mockResolvedValue([
+        'recipe.md',
+        'image.jpg',
+        'text.txt',
+      ] as any);
 
       const recipes = await getAllRecipes();
 
       expect(mockedFs.readFile).toHaveBeenCalledTimes(1);
-      expect(mockedFs.readFile).toHaveBeenCalledWith(expect.stringContaining('recipe.md'), 'utf8');
+      expect(mockedFs.readFile).toHaveBeenCalledWith(
+        expect.stringContaining('recipe.md'),
+        'utf8'
+      );
     });
 
     it('should handle empty recipes directory', async () => {
@@ -234,4 +248,4 @@ Second recipe content.`;
       expect(recentRecipes).toHaveLength(2);
     });
   });
-}); 
+});

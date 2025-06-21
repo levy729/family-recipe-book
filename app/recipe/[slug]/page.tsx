@@ -13,7 +13,7 @@ interface RecipePageProps {
 
 export async function generateStaticParams() {
   const recipes = await getAllRecipes();
-  return recipes.map((recipe) => ({ slug: recipe.slug }));
+  return recipes.map(recipe => ({ slug: recipe.slug }));
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
@@ -33,7 +33,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
       {/* Share Button Row */}
       <div className="flex justify-end mb-4">
-        <ShareButton 
+        <ShareButton
           title={recipe.title}
           url={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://your-domain.com'}/recipe/${recipe.slug}`}
         />
@@ -57,11 +57,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </h2>
             <div className="w-16 h-px bg-zinc-300"></div>
           </div>
-          <InstructionList
-            instructions={recipe.instructions}
-          />
+          <InstructionList instructions={recipe.instructions} />
         </div>
       </div>
     </>
   );
-} 
+}

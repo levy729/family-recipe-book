@@ -4,7 +4,7 @@ import {
   getRecipeIngredientsState,
   clearRecipeIngredientsState,
   IngredientState,
-  RecipeIngredientsState
+  RecipeIngredientsState,
 } from '../storage';
 
 // Mock localStorage
@@ -21,15 +21,25 @@ const localStorageMock = (() => {
     clear: jest.fn(() => {
       store = {};
       // Reset all mock implementations to default
-      localStorageMock.getItem.mockReset().mockImplementation((key: string) => store[key] || null);
-      localStorageMock.setItem.mockReset().mockImplementation((key: string, value: string) => { store[key] = value; });
-      localStorageMock.removeItem.mockReset().mockImplementation((key: string) => { delete store[key]; });
-    })
+      localStorageMock.getItem
+        .mockReset()
+        .mockImplementation((key: string) => store[key] || null);
+      localStorageMock.setItem
+        .mockReset()
+        .mockImplementation((key: string, value: string) => {
+          store[key] = value;
+        });
+      localStorageMock.removeItem
+        .mockReset()
+        .mockImplementation((key: string) => {
+          delete store[key];
+        });
+    }),
   };
 })();
 
 Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock
+  value: localStorageMock,
 });
 
 describe('Storage Utilities', () => {
@@ -45,14 +55,14 @@ describe('Storage Utilities', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         'recipe-ingredients-state',
         JSON.stringify({
-          'recipe-1': { flour: true }
+          'recipe-1': { flour: true },
         })
       );
     });
 
     it('should update existing recipe state', () => {
       const existingState = {
-        'recipe-1': { flour: true, sugar: false }
+        'recipe-1': { flour: true, sugar: false },
       };
       localStorageMock.getItem.mockReturnValue(JSON.stringify(existingState));
 
@@ -61,7 +71,7 @@ describe('Storage Utilities', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         'recipe-ingredients-state',
         JSON.stringify({
-          'recipe-1': { flour: true, sugar: false, eggs: true }
+          'recipe-1': { flour: true, sugar: false, eggs: true },
         })
       );
     });
@@ -72,7 +82,7 @@ describe('Storage Utilities', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         'recipe-ingredients-state',
         JSON.stringify({
-          'new-recipe': { milk: false }
+          'new-recipe': { milk: false },
         })
       );
     });
@@ -83,7 +93,9 @@ describe('Storage Utilities', () => {
         throw new Error('Storage quota exceeded');
       });
 
-      expect(() => saveIngredientState('recipe-1', 'flour', true)).not.toThrow();
+      expect(() =>
+        saveIngredientState('recipe-1', 'flour', true)
+      ).not.toThrow();
 
       localStorageMock.setItem = originalSetItem;
     });
@@ -92,7 +104,9 @@ describe('Storage Utilities', () => {
       const originalWindow = global.window;
       delete (global as any).window;
 
-      expect(() => saveIngredientState('recipe-1', 'flour', true)).not.toThrow();
+      expect(() =>
+        saveIngredientState('recipe-1', 'flour', true)
+      ).not.toThrow();
 
       global.window = originalWindow;
     });
@@ -101,7 +115,7 @@ describe('Storage Utilities', () => {
   describe('getIngredientState', () => {
     it('should return ingredient state from localStorage', () => {
       const state = {
-        'recipe-1': { flour: true, sugar: false }
+        'recipe-1': { flour: true, sugar: false },
       };
       localStorageMock.getItem.mockReturnValue(JSON.stringify(state));
 
@@ -112,7 +126,7 @@ describe('Storage Utilities', () => {
 
     it('should return false for non-existent ingredient', () => {
       const state = {
-        'recipe-1': { flour: true }
+        'recipe-1': { flour: true },
       };
       localStorageMock.getItem.mockReturnValue(JSON.stringify(state));
 
@@ -149,7 +163,7 @@ describe('Storage Utilities', () => {
     it('should return parsed state from localStorage', () => {
       const state = {
         'recipe-1': { flour: true, sugar: false },
-        'recipe-2': { eggs: true }
+        'recipe-2': { eggs: true },
       };
       localStorageMock.getItem.mockReturnValue(JSON.stringify(state));
 
@@ -201,7 +215,7 @@ describe('Storage Utilities', () => {
     it('should clear specific recipe state', () => {
       const state = {
         'recipe-1': { flour: true },
-        'recipe-2': { eggs: true }
+        'recipe-2': { eggs: true },
       };
       localStorageMock.getItem.mockReturnValue(JSON.stringify(state));
 
@@ -210,7 +224,7 @@ describe('Storage Utilities', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         'recipe-ingredients-state',
         JSON.stringify({
-          'recipe-2': { eggs: true }
+          'recipe-2': { eggs: true },
         })
       );
     });
@@ -218,12 +232,14 @@ describe('Storage Utilities', () => {
     it('should clear all state when no recipe slug provided', () => {
       clearRecipeIngredientsState();
 
-      expect(localStorageMock.removeItem).toHaveBeenCalledWith('recipe-ingredients-state');
+      expect(localStorageMock.removeItem).toHaveBeenCalledWith(
+        'recipe-ingredients-state'
+      );
     });
 
     it('should handle non-existent recipe gracefully', () => {
       const state = {
-        'recipe-1': { flour: true }
+        'recipe-1': { flour: true },
       };
       localStorageMock.getItem.mockReturnValue(JSON.stringify(state));
 
@@ -232,7 +248,7 @@ describe('Storage Utilities', () => {
       expect(localStorageMock.setItem).toHaveBeenCalledWith(
         'recipe-ingredients-state',
         JSON.stringify({
-          'recipe-1': { flour: true }
+          'recipe-1': { flour: true },
         })
       );
     });
@@ -282,12 +298,12 @@ describe('Storage Utilities', () => {
         'recipe-1': {
           '1 כוס אורז לבן': true,
           '1.5 כוסות מים': false,
-          '1 כף שמן': true
+          '1 כף שמן': true,
         },
         'recipe-2': {
-          'עגבניות': true,
-          'מלפפונים': false
-        }
+          עגבניות: true,
+          מלפפונים: false,
+        },
       };
 
       // Set up complex state
@@ -304,4 +320,4 @@ describe('Storage Utilities', () => {
       expect(retrievedState).toEqual(complexState);
     });
   });
-}); 
+});

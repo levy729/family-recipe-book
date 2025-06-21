@@ -8,16 +8,20 @@ export type RecipeIngredientsState = {
 
 const INGREDIENTS_STORAGE_KEY = 'recipe-ingredients-state';
 
-export function saveIngredientState(recipeSlug: string, ingredient: string, checked: boolean): void {
+export function saveIngredientState(
+  recipeSlug: string,
+  ingredient: string,
+  checked: boolean
+): void {
   if (typeof window === 'undefined') return;
-  
+
   const currentState = getRecipeIngredientsState();
   if (!currentState[recipeSlug]) {
     currentState[recipeSlug] = {};
   }
-  
+
   currentState[recipeSlug][ingredient] = checked;
-  
+
   try {
     localStorage.setItem(INGREDIENTS_STORAGE_KEY, JSON.stringify(currentState));
   } catch (error) {
@@ -25,16 +29,19 @@ export function saveIngredientState(recipeSlug: string, ingredient: string, chec
   }
 }
 
-export function getIngredientState(recipeSlug: string, ingredient: string): boolean {
+export function getIngredientState(
+  recipeSlug: string,
+  ingredient: string
+): boolean {
   if (typeof window === 'undefined') return false;
-  
+
   const recipeState = getRecipeIngredientsState()[recipeSlug];
   return recipeState?.[ingredient] || false;
 }
 
 export function getRecipeIngredientsState(): RecipeIngredientsState {
   if (typeof window === 'undefined') return {};
-  
+
   try {
     const stored = localStorage.getItem(INGREDIENTS_STORAGE_KEY);
     return stored ? JSON.parse(stored) : {};
@@ -46,7 +53,7 @@ export function getRecipeIngredientsState(): RecipeIngredientsState {
 
 export function clearRecipeIngredientsState(recipeSlug?: string): void {
   if (typeof window === 'undefined') return;
-  
+
   if (recipeSlug) {
     const currentState = getRecipeIngredientsState();
     delete currentState[recipeSlug];
@@ -54,4 +61,4 @@ export function clearRecipeIngredientsState(recipeSlug?: string): void {
   } else {
     localStorage.removeItem(INGREDIENTS_STORAGE_KEY);
   }
-} 
+}

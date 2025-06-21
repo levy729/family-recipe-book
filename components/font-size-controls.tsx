@@ -28,7 +28,10 @@ export function FontSizeControls() {
   }, []);
 
   const applyFontScale = (scale: number) => {
-    document.documentElement.style.setProperty('--font-size-scale', scale.toString());
+    document.documentElement.style.setProperty(
+      '--font-size-scale',
+      scale.toString()
+    );
   };
 
   const saveFontScale = (scale: number) => {
@@ -42,7 +45,7 @@ export function FontSizeControls() {
   const handleCycle = () => {
     const nextIndex = (currentIndex + 1) % FONT_SCALES.length;
     const newScale = FONT_SCALES[nextIndex];
-    
+
     setCurrentIndex(nextIndex);
     applyFontScale(newScale);
     saveFontScale(newScale);
@@ -56,4 +59,4 @@ export function FontSizeControls() {
       <Type className="w-4 h-4" />
     </button>
   );
-} 
+}

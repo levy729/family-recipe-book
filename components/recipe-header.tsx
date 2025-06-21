@@ -18,9 +18,7 @@ export function RecipeHeader({ recipe }: RecipeHeaderProps) {
 
   return (
     <div className="text-center mb-8">
-      <h1 className="text-4xl font-bold text-zinc-900 mb-6">
-        {recipe.title}
-      </h1>
+      <h1 className="text-4xl font-bold text-zinc-900 mb-6">{recipe.title}</h1>
 
       {recipe.description && (
         <p className="text-lg text-zinc-600 mb-6 max-w-2xl mx-auto">
@@ -33,4 +31,4 @@ export function RecipeHeader({ recipe }: RecipeHeaderProps) {
       )}
     </div>
   );
-} 
+}

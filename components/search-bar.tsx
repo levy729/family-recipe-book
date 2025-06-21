@@ -16,11 +16,11 @@ interface SearchBarProps {
 const SEARCH_HISTORY_KEY = 'recipe-search-history';
 const MAX_HISTORY_ITEMS = 5;
 
-export function SearchBar({ 
-  onSearch, 
-  placeholder = 'חפש מתכונים...', 
+export function SearchBar({
+  onSearch,
+  placeholder = 'חפש מתכונים...',
   className = '',
-  initialValue = ''
+  initialValue = '',
 }: SearchBarProps) {
   const [query, setQuery] = useState(initialValue);
   const [showHistory, setShowHistory] = useState(false);
@@ -51,7 +51,7 @@ export function SearchBar({
 
     const newHistory = [
       trimmedTerm,
-      ...searchHistory.filter(item => item !== trimmedTerm)
+      ...searchHistory.filter(item => item !== trimmedTerm),
     ].slice(0, MAX_HISTORY_ITEMS);
 
     setSearchHistory(newHistory);
@@ -126,8 +126,8 @@ export function SearchBar({
               </button>
             )}
           </div>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             disabled={!query.trim()}
             className="h-12 px-4 transition-all duration-200 hover:shadow-md"
           >
@@ -157,4 +157,4 @@ export function SearchBar({
       )}
     </div>
   );
-} 
+}

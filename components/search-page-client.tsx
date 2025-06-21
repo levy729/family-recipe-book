@@ -26,7 +26,7 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
       try {
         // Initialize search with real recipes
         initializeSearch(initialRecipes);
-        
+
         // Perform search
         const searchResults = searchRecipes(query);
         setResults(searchResults);
@@ -57,21 +57,19 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
   return (
     <>
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-zinc-900 mb-4">
-          תוצאות חיפוש
-        </h1>
+        <h1 className="text-3xl font-bold text-zinc-900 mb-4">תוצאות חיפוש</h1>
       </div>
-      
+
       {/* Search Bar */}
       <div className="flex justify-center mb-8">
-        <SearchBar 
-          className="mx-auto" 
+        <SearchBar
+          className="mx-auto"
           onSearch={handleSearch}
           placeholder="חפש מתכונים..."
           initialValue={currentQuery}
         />
       </div>
-      
+
       {currentQuery && (
         <p className="text-lg text-zinc-600 mb-8">
           חיפוש עבור: "{currentQuery}"
@@ -97,7 +95,7 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
                 className="animate-in fade-in-0 slide-in-from-bottom-2"
                 style={{
                   animationDelay: `${index * 100}ms`,
-                  animationDuration: '500ms'
+                  animationDuration: '500ms',
                 }}
               >
                 <RecipeCard recipe={recipe} />
@@ -110,9 +108,7 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
           <p className="text-zinc-600 text-lg">
             לא נמצאו מתכונים עבור "{currentQuery}"
           </p>
-          <p className="text-zinc-500 mt-2">
-            נסה לחפש עם מילים אחרות
-          </p>
+          <p className="text-zinc-500 mt-2">נסה לחפש עם מילים אחרות</p>
         </div>
       ) : (
         <div className="text-center py-8">
@@ -123,4 +119,4 @@ export function SearchPageClient({ initialRecipes }: SearchPageClientProps) {
       )}
     </>
   );
-} 
+}

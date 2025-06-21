@@ -18,28 +18,33 @@ Currently, recipes only have a title, but no structured description field. Users
 ## Functional Requirements
 
 ### 1. Recipe Format Enhancement
+
 - Add optional `description` field to YAML frontmatter
 - Description should be a single string in Hebrew
 - Field should be optional (backward compatibility)
 - Maximum length: 200 characters (to keep cards clean)
 
 ### 2. Recipe Card Display
+
 - Show description below the title on recipe cards
 - Limit display to 2-3 lines maximum
 - Use appropriate typography and spacing
 - Handle missing descriptions gracefully
 
 ### 3. Recipe Page Display
+
 - Show full description prominently on recipe pages
 - Position between title and ingredients
 - Use appropriate styling for readability
 
 ### 4. Search Integration
+
 - Include description text in search results
 - Weight description matches appropriately
 - Update search index to include descriptions
 
 ### 5. Backward Compatibility
+
 - Existing recipes without descriptions should work normally
 - No breaking changes to current functionality
 - Graceful handling of missing description field
@@ -47,34 +52,39 @@ Currently, recipes only have a title, but no structured description field. Users
 ## User Stories
 
 ### As a recipe creator
+
 - I want to add a brief description to my recipe so users understand what it is
 - I want the description to be searchable so users can find my recipe
 - I want the description to appear on recipe cards and pages
 
 ### As a recipe reader
+
 - I want to see a brief description of recipes so I can quickly understand what they are
 - I want to search for recipes by description content
 - I want descriptions to help me decide which recipe to cook
 
 ### As a family member
+
 - I want descriptions to help me remember what each recipe is about
 - I want descriptions to include family context or memories
 
 ## Technical Requirements
 
 ### Data Structure
+
 ```yaml
 ---
-title: "Recipe Title"
-slug: "recipe-slug"
-description: "Brief description in Hebrew"
-tags: ["tag1", "tag2"]
+title: 'Recipe Title'
+slug: 'recipe-slug'
+description: 'Brief description in Hebrew'
+tags: ['tag1', 'tag2']
 ingredients: [...]
-instructions: "..."
+instructions: '...'
 ---
 ```
 
 ### Components to Update
+
 - Recipe type definition in `lib/recipes.ts`
 - Recipe card component
 - Recipe page component
@@ -82,6 +92,7 @@ instructions: "..."
 - Recipe format documentation
 
 ### Validation
+
 - Description field is optional
 - Maximum 200 characters
 - Hebrew text support
@@ -108,4 +119,4 @@ instructions: "..."
 
 - Consider adding description to recipe exports
 - Consider adding description to recipe sharing
-- Consider adding description to recipe analytics 
+- Consider adding description to recipe analytics

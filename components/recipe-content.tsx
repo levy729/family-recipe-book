@@ -19,9 +19,7 @@ export function RecipeContent({ recipe }: RecipeContentProps) {
           {recipe.title}
         </h1>
 
-        {recipe.tags && recipe.tags.length > 0 && (
-          <Tags tags={recipe.tags} />
-        )}
+        {recipe.tags && recipe.tags.length > 0 && <Tags tags={recipe.tags} />}
       </div>
 
       {/* Divider */}
@@ -30,7 +28,9 @@ export function RecipeContent({ recipe }: RecipeContentProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Ingredients Section */}
         <div className="text-right">
-          <IngredientHeader onCopy={() => (window as any).copyIngredients?.()} />
+          <IngredientHeader
+            onCopy={() => (window as any).copyIngredients?.()}
+          />
           <IngredientList
             ingredients={recipe.ingredients}
             recipeSlug={recipe.slug}
@@ -46,11 +46,9 @@ export function RecipeContent({ recipe }: RecipeContentProps) {
             </h2>
             <div className="w-16 h-px bg-zinc-300"></div>
           </div>
-          <InstructionList
-            instructions={recipe.instructions}
-          />
+          <InstructionList instructions={recipe.instructions} />
         </div>
       </div>
     </>
   );
-} 
+}

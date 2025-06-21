@@ -182,4 +182,3 @@ Before committing code:
 ---
 
 _This document should be updated as the project evolves and new patterns emerge._
-
