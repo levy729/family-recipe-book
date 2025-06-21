@@ -1,9 +1,10 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Recipe } from '@/lib/recipes';
 import { RecipeCard } from '@/components/recipe-card';
+import { SearchBar } from '@/components/search-bar';
 import { initializeSearch, searchRecipes } from '@/lib/search';
 
 // Sample recipes data - in a real app, this would be loaded from markdown files
@@ -28,9 +29,11 @@ const sampleRecipes: Recipe[] = [
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const query = searchParams.get('q') || '';
   const [results, setResults] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentQuery, setCurrentQuery] = useState(query);
 
   useEffect(() => {
     function performSearch() {
@@ -42,6 +45,7 @@ export default function SearchPage() {
         // Perform search
         const searchResults = searchRecipes(query);
         setResults(searchResults);
+        setCurrentQuery(query);
       } catch (error) {
         console.error('Search error:', error);
         setResults([]);
@@ -54,9 +58,16 @@ export default function SearchPage() {
       performSearch();
     } else {
       setResults([]);
+      setCurrentQuery('');
       setIsLoading(false);
     }
   }, [query]);
+
+  const handleSearch = (newQuery: string) => {
+    if (newQuery.trim() && newQuery !== currentQuery) {
+      router.push(`/search?q=${encodeURIComponent(newQuery.trim())}`);
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
@@ -65,9 +76,18 @@ export default function SearchPage() {
           תוצאות חיפוש
         </h1>
         
-        {query && (
+        {/* Search Bar */}
+        <div className="flex justify-center mb-8">
+          <SearchBar 
+            className="mx-auto" 
+            onSearch={handleSearch}
+            placeholder="חפש מתכונים..."
+          />
+        </div>
+        
+        {currentQuery && (
           <p className="text-lg text-zinc-600 mb-8">
-            חיפוש עבור: "{query}"
+            חיפוש עבור: "{currentQuery}"
           </p>
         )}
 
@@ -86,10 +106,10 @@ export default function SearchPage() {
               ))}
             </div>
           </div>
-        ) : query ? (
+        ) : currentQuery ? (
           <div className="text-center py-8">
             <p className="text-zinc-600 text-lg">
-              לא נמצאו מתכונים עבור "{query}"
+              לא נמצאו מתכונים עבור "{currentQuery}"
             </p>
             <p className="text-zinc-500 mt-2">
               נסה לחפש עם מילים אחרות

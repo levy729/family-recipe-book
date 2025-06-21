@@ -73,11 +73,12 @@
   - [x] 5.4 Create custom 404 page for invalid recipe URLs
   - [x] 5.5 Implement homepage with search bar and 6 recent recipes
 
-- [ ] 6.0 Enhanced Search & Navigation
+- [x] 6.0 Enhanced Search & Navigation
 
-  - [ ] 6.1 Live search on homepage (real-time results as you type)
-  - [ ] 6.2 Clickable tags that navigate to search results
-  - [ ] 6.3 Search history/suggestions dropdown
+  - [x] 6.1 Live search on homepage (real-time results as you type)
+  - [x] 6.2 Clickable tags that navigate to search results
+  - [x] 6.3 Search history/suggestions dropdown
+  - [x] 6.4 Add search box to search results page
 
 - [ ] 7.0 Ingredient Management
 
@@ -95,9 +96,11 @@
 
   - [ ] 9.1 Font size controls with persistent localStorage
   - [ ] 9.2 Redesign recipe page back button (arrow on left side)
-  - [ ] 9.3 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
-  - [ ] 9.4 Smooth transitions and micro-interactions
-  - [ ] 9.5 Cooking time display
+  - [ ] 9.3 Make tags clickable on recipe pages
+  - [ ] 9.4 Redesign tag styles (suggest new design)
+  - [ ] 9.5 Add minimalist icons (plan and get approval first - consider Font Awesome vs other options)
+  - [ ] 9.6 Smooth transitions and micro-interactions
+  - [ ] 9.7 Cooking time display
 
 - [ ] 10.0 Social & Sharing
 
