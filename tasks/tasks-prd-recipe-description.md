@@ -1,0 +1,60 @@
+# Task List: Recipe Description Feature
+
+Based on PRD: `tasks/prd-recipe-description.md`
+
+## Relevant Files
+
+- `lib/recipes.ts` - Recipe type definition and parsing logic
+- `components/recipe-card.tsx` - Recipe card component for displaying descriptions
+- `app/recipe/[slug]/page.tsx` - Recipe page component for displaying descriptions
+- `lib/search.ts` - Search functionality to include descriptions
+- `RECIPE_FORMAT.md` - Documentation update for new description field
+- `recipes/plain-rice.md` - Example recipe to add description to
+- `recipes/persian-soup-abgosh.md` - Example recipe to add description to
+- `lib/__tests__/recipes.test.ts` - Unit tests for recipe parsing
+- `lib/__tests__/search.test.ts` - Unit tests for search functionality
+
+### Notes
+
+- Unit tests should typically be placed alongside the code files they are testing
+- Use `npx jest [optional/path/to/test/file]` to run tests
+- All changes must maintain backward compatibility with existing recipes
+- **Avoid style changes as much as possible**
+- **When style changes are unavoidable, present plan and wait for user approval**
+
+## Tasks
+
+- [ ] 1.0 Update Recipe Data Structure and Parsing
+  - [ ] 1.1 Add description field to Recipe type in lib/recipes.ts
+  - [ ] 1.2 Update getAllRecipes() to parse description field from YAML
+  - [ ] 1.3 Add validation for description field (optional, max 200 chars)
+  - [ ] 1.4 Update unit tests for recipe parsing with description field
+  - [ ] 1.5 Test backward compatibility with existing recipes
+
+- [ ] 2.0 Update Recipe Card Component
+  - [ ] 2.1 Add description prop to RecipeCard component interface
+  - [ ] 2.2 Display description below title in existing card layout
+  - [ ] 2.3 Handle missing description gracefully (no layout changes)
+  - [ ] 2.4 Test card display with and without descriptions
+  - [ ] 2.5 Verify no style changes to existing card appearance
+
+- [ ] 3.0 Update Recipe Page Component
+  - [ ] 3.1 Add description display between title and ingredients
+  - [ ] 3.2 Use existing typography classes for description styling
+  - [ ] 3.3 Handle missing description gracefully
+  - [ ] 3.4 Test page layout with and without descriptions
+  - [ ] 3.5 Verify no style changes to existing page appearance
+
+- [ ] 4.0 Update Search Functionality
+  - [ ] 4.1 Add description field to search index in lib/search.ts
+  - [ ] 4.2 Update search weights to include description matches
+  - [ ] 4.3 Test search functionality with description content
+  - [ ] 4.4 Verify search performance is not degraded
+  - [ ] 4.5 Update search unit tests
+
+- [ ] 5.0 Update Documentation and Examples
+  - [ ] 5.1 Add description field documentation to RECIPE_FORMAT.md
+  - [ ] 5.2 Update example recipes with descriptions
+  - [ ] 5.3 Add description field to field descriptions section
+  - [ ] 5.4 Update validation section to include description rules
+  - [ ] 5.5 Test documentation examples work correctly 
