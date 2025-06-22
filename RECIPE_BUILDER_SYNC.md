@@ -36,7 +36,7 @@ The sync system uses a post-install script that automatically runs after `npm in
 
 ### Content Files
 
-- `recipes/` - All recipe markdown files
+- **Recipes**: The recipe builder reads recipes directly from the main project's `/recipes/` directory (no duplication)
 
 ### Files NOT Synced (Recipe Builder Specific)
 
@@ -51,25 +51,46 @@ The sync system uses a post-install script that automatically runs after `npm in
 
 ```
 family-recipe-book/
-├── recipe-builder/           # Created by sync script
-│   ├── lib/                  # Copied from main project
-│   │   ├── recipes.ts
+├── recipes/                # Single source of truth for all recipes
+├── recipe-builder/         # Created by sync script
+│   ├── lib/               # Copied from main project
+│   │   ├── recipes.ts     # Modified to read from ../recipes/
 │   │   ├── search.ts
 │   │   ├── storage.ts
 │   │   └── utils.ts
 │   ├── components/
-│   │   └── ui/              # Copied from main project
-│   ├── recipes/             # Copied from main project
-│   ├── tailwind.config.ts   # Copied from main project
-│   ├── components.json      # Copied from main project
-│   ├── app/                 # Recipe builder specific
-│   ├── components/          # Recipe builder specific
-│   ├── lib/                 # Recipe builder specific
-│   ├── package.json         # Recipe builder specific
-│   ├── next.config.js       # Recipe builder specific
-│   └── tsconfig.json        # Recipe builder specific
+│   │   └── ui/           # Copied from main project
+│   ├── tailwind.config.ts # Copied from main project
+│   ├── components.json   # Copied from main project
+│   ├── app/              # Recipe builder specific
+│   ├── components/       # Recipe builder specific
+│   ├── lib/              # Recipe builder specific
+│   ├── package.json      # Recipe builder specific
+│   ├── next.config.js    # Recipe builder specific
+│   └── tsconfig.json     # Recipe builder specific
 └── ... (main project files)
 ```
+
+## Recipe Management
+
+### Single Source of Truth
+
+- **All recipes** are stored in the main project's `/recipes/` directory
+- **Recipe builder** reads recipes from `../recipes/` (parent directory)
+- **No duplication** - recipes exist in only one location
+- **Easy maintenance** - add/edit recipes in one place
+
+### Adding New Recipes
+
+1. **Add recipe file** to `/recipes/` directory in main project
+2. **Recipe builder** will automatically see the new recipe
+3. **No sync needed** - recipe builder reads directly from source
+
+### Editing Recipes
+
+1. **Edit recipe file** in `/recipes/` directory
+2. **Changes appear** in both main project and recipe builder
+3. **No sync needed** - both projects read from same source
 
 ## Adding New Files to Sync
 
@@ -224,7 +245,4 @@ npm install fs-extra @types/fs-extra --save-dev
 ## Related Files
 
 - `scripts/sync-recipe-builder.js` - Sync script implementation
-- `package.json` - Postinstall script configuration
-- `tasks/prd-recipe-builder.md` - Recipe builder requirements
-- `tasks/tasks-prd-recipe-builder.md` - Implementation tasks
-- `RECIPE_FORMAT.md` - Recipe file format specification
+- `

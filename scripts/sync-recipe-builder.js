@@ -20,7 +20,6 @@ async function syncRecipeBuilder() {
     'lib/storage.ts',
     'lib/utils.ts',
     'components/ui',
-    'recipes',
     'tailwind.config.ts',
     'components.json',
   ];
