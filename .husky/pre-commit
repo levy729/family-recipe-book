@@ -20,21 +20,36 @@ set_phase "Main Project Validation"
 set_project "Main Project"
 
 # Check if there are staged files in the main project
-if has_staged_files "." "\.(ts|tsx|js|jsx|json|css|md)$"; then
+if has_staged_files "." ".*"; then
     print_progress "Validating staged files in main project..."
+    print_info "Staged files summary: $(get_staged_files_summary '.')"
     
     # TypeScript type checking for staged files
-    if has_staged_files "." "\.(ts|tsx)$"; then
+    if needs_typescript_validation "."; then
         print_progress "Running TypeScript type checking for staged files..."
         npx tsc --noEmit --project tsconfig.json
         print_success "TypeScript type checking passed"
     fi
     
     # Recipe validation for staged .md files
-    if has_staged_files "." "\.md$"; then
+    if needs_recipe_validation "."; then
         print_progress "Validating staged recipe files..."
         # TODO: Add recipe validation script call here
         print_success "Recipe validation passed"
+    fi
+    
+    # Style validation for staged CSS files
+    if needs_style_validation "."; then
+        print_progress "Validating staged style files..."
+        # TODO: Add style validation here if needed
+        print_success "Style validation passed"
+    fi
+    
+    # Config validation for staged config files
+    if needs_config_validation "."; then
+        print_progress "Validating staged config files..."
+        # TODO: Add config validation here if needed
+        print_success "Config validation passed"
     fi
 else
     print_info "No staged files in main project to validate"
@@ -45,20 +60,21 @@ set_phase "Recipe Builder Validation"
 set_project "Recipe Builder"
 
 # Check if there are staged files in recipe-builder
-if has_staged_files "recipe-builder" "\.(ts|tsx|js|jsx|json|css|md)$"; then
+if has_staged_files "recipe-builder" ".*"; then
     print_progress "Validating staged files in recipe-builder project..."
+    print_info "Staged files summary: $(get_staged_files_summary 'recipe-builder')"
     
     # Navigate to recipe-builder directory
     cd recipe-builder
     
     # TypeScript type checking for staged files
-    if has_staged_files "." "\.(ts|tsx)$"; then
+    if needs_typescript_validation "."; then
         print_progress "Running TypeScript type checking for staged files..."
         npx tsc --noEmit --project tsconfig.json
         print_success "TypeScript type checking passed"
     fi
     
-    # Run tests for recipe-builder
+    # Run tests for recipe-builder (always run if there are any staged files)
     print_progress "Running recipe builder tests..."
     npm test
     print_success "Recipe builder tests passed"

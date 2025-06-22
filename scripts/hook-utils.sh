@@ -137,6 +137,95 @@ has_staged_files() {
     [ -n "$staged_files" ]
 }
 
+# Get staged files by type for efficient processing
+get_staged_files_by_type() {
+    local project_path="$1"
+    local file_type="$2"
+    
+    case "$file_type" in
+        "typescript")
+            get_staged_files "$project_path" "\.(ts|tsx)$"
+            ;;
+        "javascript")
+            get_staged_files "$project_path" "\.(js|jsx)$"
+            ;;
+        "styles")
+            get_staged_files "$project_path" "\.(css|scss|sass)$"
+            ;;
+        "recipes")
+            get_staged_files "$project_path" "\.md$"
+            ;;
+        "config")
+            get_staged_files "$project_path" "\.(json|yaml|yml|toml)$"
+            ;;
+        "all")
+            get_staged_files "$project_path" ".*"
+            ;;
+        *)
+            print_warning "Unknown file type: $file_type"
+            return 1
+            ;;
+    esac
+}
+
+# Check if there are staged files by type
+has_staged_files_by_type() {
+    local project_path="$1"
+    local file_type="$2"
+    
+    local staged_files
+    staged_files=$(get_staged_files_by_type "$project_path" "$file_type")
+    
+    [ -n "$staged_files" ]
+}
+
+# Get unique staged file extensions for a project
+get_staged_file_extensions() {
+    local project_path="$1"
+    
+    git diff --cached --name-only --diff-filter=ACM | \
+    grep "^$project_path/" | \
+    sed 's/.*\.//' | \
+    sort | \
+    uniq || true
+}
+
+# Check if staged files need specific validation
+needs_typescript_validation() {
+    has_staged_files_by_type "$1" "typescript"
+}
+
+needs_recipe_validation() {
+    has_staged_files_by_type "$1" "recipes"
+}
+
+needs_style_validation() {
+    has_staged_files_by_type "$1" "styles"
+}
+
+needs_config_validation() {
+    has_staged_files_by_type "$1" "config"
+}
+
+# Get summary of staged files for logging
+get_staged_files_summary() {
+    local project_path="$1"
+    
+    local total_files
+    local typescript_files
+    local recipe_files
+    local style_files
+    local config_files
+    
+    total_files=$(get_staged_files "$project_path" ".*" | wc -l | tr -d ' ')
+    typescript_files=$(get_staged_files_by_type "$project_path" "typescript" | wc -l | tr -d ' ')
+    recipe_files=$(get_staged_files_by_type "$project_path" "recipes" | wc -l | tr -d ' ')
+    style_files=$(get_staged_files_by_type "$project_path" "styles" | wc -l | tr -d ' ')
+    config_files=$(get_staged_files_by_type "$project_path" "config" | wc -l | tr -d ' ')
+    
+    echo "Total: $total_files, TypeScript: $typescript_files, Recipes: $recipe_files, Styles: $style_files, Config: $config_files"
+}
+
 # Initialize hook utilities
 init_hook_utils() {
     save_working_directory
