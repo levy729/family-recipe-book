@@ -13,7 +13,6 @@ export default function RecipeBuilderPage() {
     type: 'success' | 'error';
     text: string;
   } | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
   const [loadedRecipe, setLoadedRecipe] = useState<RecipeFormData | null>(null);
 
   const handleCreateRecipe = () => {
@@ -26,7 +25,6 @@ export default function RecipeBuilderPage() {
   };
 
   const handleFormSubmit = async (data: RecipeFormData) => {
-    setIsSaving(true);
     setMessage(null);
 
     try {
@@ -46,8 +44,6 @@ export default function RecipeBuilderPage() {
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'שגיאה בשמירת המתכון' });
-    } finally {
-      setIsSaving(false);
     }
   };
 

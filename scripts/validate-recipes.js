@@ -23,15 +23,11 @@ function log(message, color = 'reset') {
 }
 
 function logError(message) {
-  log(`❌ ${message}`, 'red');
+  console.error(`❌ ${message}`);
 }
 
 function logSuccess(message) {
-  log(`✅ ${message}`, 'green');
-}
-
-function logWarning(message) {
-  log(`⚠️  ${message}`, 'yellow');
+  console.log(`✅ ${message}`);
 }
 
 function logInfo(message) {

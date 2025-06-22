@@ -7,9 +7,8 @@
  * and the recipe builder project, ensuring they work together seamlessly.
  */
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
-const { execSync } = require('child_process');
 
 // ANSI color codes for output formatting
 const colors = {

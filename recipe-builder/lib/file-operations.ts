@@ -181,9 +181,10 @@ export function validateFilename(filename: string): boolean {
 /**
  * Creates a backup of an existing file before overwriting
  */
-export async function createBackup(
-  filename: string
-): Promise<{ success: boolean; message: string }> {
+export async function createBackup(): Promise<{
+  success: boolean;
+  message: string;
+}> {
   try {
     // In a real implementation, this would create a backup copy
     // For now, we'll just return success
