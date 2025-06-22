@@ -74,6 +74,11 @@ if has_staged_files "recipe-builder" ".*"; then
     # Navigate to recipe-builder directory
     cd recipe-builder
     
+    # Run lint-staged for recipe builder
+    print_progress "Running lint-staged for recipe builder staged files..."
+    npx lint-staged
+    print_success "Recipe builder lint-staged completed successfully"
+    
     # TypeScript type checking for staged files
     if needs_typescript_validation "."; then
         if check_typescript_config "." "tsconfig.json"; then
