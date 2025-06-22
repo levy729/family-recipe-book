@@ -111,6 +111,30 @@ if has_staged_files "recipe-builder" ".*"; then
         print_warning "Recipe parser file not found, skipping parser validation"
     fi
     
+    # Quick startup test to verify the application can start
+    print_progress "Testing recipe builder startup..."
+    
+    # Kill any existing process on port 3002 to avoid conflicts
+    lsof -ti:3002 | xargs kill -9 2>/dev/null || true
+    
+    # Test if the application can start without errors
+    npm start > /dev/null 2>&1 &
+    START_PID=$!
+    
+    # Wait a few seconds for the server to start
+    sleep 3
+    
+    # Check if the process is still running
+    if kill -0 $START_PID 2>/dev/null; then
+        print_success "Recipe builder startup test passed"
+        # Kill the background process
+        kill $START_PID 2>/dev/null
+        wait $START_PID 2>/dev/null
+    else
+        print_error "Recipe builder startup failed! Please check for startup issues."
+        exit 1
+    fi
+    
     # Return to original directory
     cd ..
 else
