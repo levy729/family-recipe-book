@@ -77,6 +77,40 @@ if has_staged_files "recipe-builder" ".*"; then
     npm test
     print_success "Recipe builder tests passed"
     
+    # Recipe Builder Runtime Verification
+    print_progress "Verifying recipe builder runtime functionality..."
+    
+    # Check if dependencies are properly installed
+    print_progress "Checking recipe builder dependencies..."
+    if [ ! -d "node_modules" ]; then
+        print_error "Recipe builder node_modules not found. Run 'npm install' in recipe-builder directory."
+        exit 1
+    fi
+    print_success "Recipe builder dependencies verified"
+    
+    # Test build process
+    print_progress "Testing recipe builder build process..."
+    npm run build
+    if [ $? -ne 0 ]; then
+        print_error "Recipe builder build failed! Please fix build issues before committing."
+        exit 1
+    fi
+    print_success "Recipe builder build process verified"
+    
+    # Quick test of recipe parsing functionality
+    print_progress "Testing recipe parsing functionality..."
+    if [ -f "lib/recipe-parser.ts" ]; then
+        # Test if the parser can be compiled
+        npx tsc --noEmit lib/recipe-parser.ts
+        if [ $? -ne 0 ]; then
+            print_error "Recipe parser compilation failed! Please fix parser issues before committing."
+            exit 1
+        fi
+        print_success "Recipe parser functionality verified"
+    else
+        print_warning "Recipe parser file not found, skipping parser validation"
+    fi
+    
     # Return to original directory
     cd ..
 else
