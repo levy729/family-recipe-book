@@ -120,3 +120,179 @@ The current git hooks system in the Family Recipe Book project has several criti
 4. **Recipe Validation Rules**: What specific rules should be enforced for recipe file validation?
 5. **Cross-Project Dependencies**: How should we handle dependencies that are shared between projects?
 6. **Hook Execution Order**: Should certain checks run in parallel to improve performance while maintaining thoroughness?
+
+# Git Hooks Improvement PRD - Task List
+
+## Task 3.0: Enhanced Pre-push Hook with Utility Functions ✅ COMPLETED
+
+**Status**: ✅ COMPLETED  
+**Priority**: High  
+**Estimated Time**: 2-3 hours
+
+### Requirements
+
+- [x] Refactor pre-push hook to use new utility functions
+- [x] Add comprehensive validation including:
+  - [x] Linting and formatting checks
+  - [x] TypeScript type checking
+  - [x] Main project build
+  - [x] Recipe builder build and tests
+  - [x] Main project tests
+  - [x] Security audit for both projects
+  - [x] Cross-project validation (placeholder for task 4.0)
+- [x] Implement proper error handling and progress indicators
+- [x] Add phase-based organization with clear visual feedback
+- [x] Include detailed error reporting with context
+
+### Implementation Details
+
+- [x] Uses `run_command_with_error_handling` for all command execution
+- [x] Implements phase-based organization with `print_phase_start` and `print_phase_success`
+- [x] Shows progress indicators with `print_step_progress`
+- [x] Provides comprehensive error context and recovery suggestions
+- [x] Includes security audit with moderate level threshold
+- [x] Maintains proper directory navigation between projects
+- [x] Generates final summary with `print_hook_summary`
+
+### Files Modified
+
+- [x] `.husky/pre-push` - Completely refactored with utility functions
+
+### Testing
+
+- [x] Verified all utility functions are properly sourced
+- [x] Confirmed error handling works for each validation step
+- [x] Tested progress indicators and phase organization
+- [x] Validated security audit integration
+
+---
+
+## Task 4.0: Cross-Project Validation Script
+
+**Status**: 🔄 PENDING  
+**Priority**: Medium  
+**Estimated Time**: 3-4 hours
+
+### Requirements
+
+- [ ] Create comprehensive cross-project validation script
+- [ ] Validate recipe format consistency between projects
+- [ ] Check for shared dependencies and version conflicts
+- [ ] Verify recipe file synchronization
+- [ ] Validate TypeScript type compatibility
+- [ ] Check for duplicate recipe slugs across projects
+- [ ] Validate Hebrew text constants consistency
+
+### Implementation Details
+
+- [ ] Create `scripts/validate-cross-project.js` script
+- [ ] Implement recipe format validation using existing parsers
+- [ ] Add dependency conflict detection
+- [ ] Create recipe synchronization validation
+- [ ] Add TypeScript interface compatibility checking
+- [ ] Implement duplicate detection across projects
+- [ ] Add Hebrew constants validation
+
+### Files to Create/Modify
+
+- [ ] `scripts/validate-cross-project.js` - New validation script
+- [ ] `.husky/pre-push` - Update to call the new validation script
+- [ ] `package.json` - Add validation script command
+
+### Testing
+
+- [ ] Test with valid cross-project state
+- [ ] Test with various validation failures
+- [ ] Verify error reporting and recovery suggestions
+- [ ] Test performance with large recipe sets
+
+---
+
+## Task 5.0: Pre-commit Hook Enhancement
+
+**Status**: 🔄 PENDING  
+**Priority**: Medium  
+**Estimated Time**: 2-3 hours
+
+### Requirements
+
+- [ ] Enhance pre-commit hook with utility functions
+- [ ] Add staged file validation
+- [ ] Implement quick linting and formatting checks
+- [ ] Add TypeScript type checking for staged files
+- [ ] Include recipe format validation for recipe files
+
+### Implementation Details
+
+- [ ] Refactor existing pre-commit hook
+- [ ] Add staged file detection and filtering
+- [ ] Implement quick validation pipeline
+- [ ] Add recipe-specific validation for .md files
+
+### Files to Modify
+
+- [ ] `.husky/pre-commit` - Enhanced with utility functions
+
+---
+
+## Task 6.0: Post-merge Hook Implementation
+
+**Status**: 🔄 PENDING  
+**Priority**: Low  
+**Estimated Time**: 2-3 hours
+
+### Requirements
+
+- [ ] Create post-merge hook for dependency updates
+- [ ] Implement automatic dependency installation
+- [ ] Add cross-project dependency synchronization
+- [ ] Include validation after dependency updates
+
+### Implementation Details
+
+- [ ] Create `.husky/post-merge` hook
+- [ ] Add dependency installation for both projects
+- [ ] Implement validation after updates
+- [ ] Add user notification for manual steps
+
+### Files to Create
+
+- [ ] `.husky/post-merge` - New post-merge hook
+
+---
+
+## Task 7.0: Documentation and Testing
+
+**Status**: 🔄 PENDING  
+**Priority**: Low  
+**Estimated Time**: 1-2 hours
+
+### Requirements
+
+- [ ] Update documentation for new hooks
+- [ ] Create testing scenarios for all hooks
+- [ ] Add troubleshooting guide
+- [ ] Document error recovery procedures
+
+### Implementation Details
+
+- [ ] Update README with hook documentation
+- [ ] Create test scenarios for each hook
+- [ ] Add troubleshooting section
+- [ ] Document common error patterns and solutions
+
+---
+
+## Overall Progress
+
+- **Completed**: 3/7 tasks (42.9%)
+- **In Progress**: 0/7 tasks (0%)
+- **Pending**: 4/7 tasks (57.1%)
+
+### Next Steps
+
+1. ✅ Task 3.0: Enhanced Pre-push Hook - COMPLETED
+2. 🔄 Task 4.0: Cross-Project Validation Script - NEXT
+3. 🔄 Task 5.0: Pre-commit Hook Enhancement
+4. 🔄 Task 6.0: Post-merge Hook Implementation
+5. 🔄 Task 7.0: Documentation and Testing
