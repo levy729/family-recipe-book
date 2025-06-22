@@ -6,8 +6,6 @@ import {
   clearRecipeIngredientsState,
   IngredientState,
   RecipeIngredientsState,
-  clearIngredientState,
-  getAllIngredientStates,
 } from '../storage';
 
 // Mock localStorage
