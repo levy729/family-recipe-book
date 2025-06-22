@@ -43,6 +43,16 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
+// Mock console.error to suppress expected error logs during tests
+const originalConsoleError = console.error;
+beforeEach(() => {
+  console.error = jest.fn();
+});
+
+afterEach(() => {
+  console.error = originalConsoleError;
+});
+
 describe('Storage Utilities', () => {
   beforeEach(() => {
     localStorageMock.clear();
