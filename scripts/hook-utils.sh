@@ -240,4 +240,55 @@ cleanup_hook_utils() {
 }
 
 # Trap to ensure cleanup on exit
-trap cleanup_hook_utils EXIT 
+trap cleanup_hook_utils EXIT
+
+# Run TypeScript type checking for staged files
+run_typescript_check() {
+    local project_path="$1"
+    local tsconfig_path="$2"
+    
+    print_progress "Running TypeScript type checking for staged files in $project_path..."
+    
+    # Get staged TypeScript files
+    local staged_ts_files
+    staged_ts_files=$(get_staged_files_by_type "$project_path" "typescript")
+    
+    if [ -z "$staged_ts_files" ]; then
+        print_info "No TypeScript files staged in $project_path"
+        return 0
+    fi
+    
+    print_info "Staged TypeScript files:"
+    echo "$staged_ts_files" | sed 's/^/  - /'
+    
+    # Run TypeScript compiler with specific files
+    if [ -n "$tsconfig_path" ]; then
+        # Use specific tsconfig file
+        if ! npx tsc --noEmit --project "$tsconfig_path" --listFiles | grep -E "\.(ts|tsx)$" | grep -f <(echo "$staged_ts_files") > /dev/null 2>&1; then
+            # If no specific files match, run full type check
+            npx tsc --noEmit --project "$tsconfig_path"
+        else
+            # Run type check only on staged files
+            echo "$staged_ts_files" | xargs npx tsc --noEmit --project "$tsconfig_path"
+        fi
+    else
+        # Use default tsconfig.json
+        npx tsc --noEmit
+    fi
+    
+    print_success "TypeScript type checking passed for $project_path"
+}
+
+# Check TypeScript configuration
+check_typescript_config() {
+    local project_path="$1"
+    local tsconfig_path="$2"
+    
+    if [ ! -f "$tsconfig_path" ]; then
+        print_error "TypeScript configuration not found: $tsconfig_path"
+        return 1
+    fi
+    
+    print_info "Using TypeScript config: $tsconfig_path"
+    return 0
+} 

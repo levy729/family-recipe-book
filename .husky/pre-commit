@@ -26,9 +26,9 @@ if has_staged_files "." ".*"; then
     
     # TypeScript type checking for staged files
     if needs_typescript_validation "."; then
-        print_progress "Running TypeScript type checking for staged files..."
-        npx tsc --noEmit --project tsconfig.json
-        print_success "TypeScript type checking passed"
+        if check_typescript_config "." "tsconfig.json"; then
+            run_typescript_check "." "tsconfig.json"
+        fi
     fi
     
     # Recipe validation for staged .md files
@@ -69,9 +69,9 @@ if has_staged_files "recipe-builder" ".*"; then
     
     # TypeScript type checking for staged files
     if needs_typescript_validation "."; then
-        print_progress "Running TypeScript type checking for staged files..."
-        npx tsc --noEmit --project tsconfig.json
-        print_success "TypeScript type checking passed"
+        if check_typescript_config "." "tsconfig.json"; then
+            run_typescript_check "." "tsconfig.json"
+        fi
     fi
     
     # Run tests for recipe-builder (always run if there are any staged files)

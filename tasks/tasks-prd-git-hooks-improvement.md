@@ -31,7 +31,7 @@
   - [x] 1.1 Create shared utility functions for directory management and error handling
   - [x] 1.2 Update pre-commit hook to properly handle both main and recipe-builder projects
   - [x] 1.3 Implement staged file filtering for efficient processing
-  - [ ] 1.4 Add TypeScript type checking for staged files in both projects
+  - [x] 1.4 Add TypeScript type checking for staged files in both projects
   - [ ] 1.5 Add recipe file validation for staged .md files
   - [ ] 1.6 Implement proper error messages with phase identification
   - [ ] 1.7 Add progress indicators and clear success/failure messaging
