@@ -87,9 +87,7 @@ set_phase "Cross-Project Validation"
 set_project "Both Projects"
 
 print_step_progress 10 8 "Running cross-project validation..."
-# TODO: Add cross-project validation script call here
-print_info "Cross-project validation placeholder - will be implemented in task 4.0"
-print_success "Cross-project validation passed"
+run_command_with_error_handling "npm run validate-cross-project" "Cross-project validation" "validation" "Both Projects"
 
 print_phase_success "Cross-Project Validation" "Both Projects"
 

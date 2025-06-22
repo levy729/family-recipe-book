@@ -13,6 +13,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
+    "validate-cross-project": "node scripts/validate-cross-project.js",
     "prepare": "husky",
     "postinstall": "node scripts/sync-recipe-builder.js"
   },
