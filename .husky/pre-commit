@@ -49,6 +49,15 @@ if has_staged_files "." ".*"; then
         # TODO: Add config validation here if needed
         print_success "Config validation passed"
     fi
+    
+    # Security audit for dependencies
+    print_progress "Running security audit..."
+    npm audit --audit-level=moderate
+    if [ $? -ne 0 ]; then
+        print_error "Security audit failed! Please fix vulnerabilities before committing."
+        exit 1
+    fi
+    print_success "Security audit passed"
 else
     print_info "No staged files in main project to validate"
 fi
@@ -113,6 +122,15 @@ if has_staged_files "recipe-builder" ".*"; then
     
     # Quick startup test to verify the application can start
     print_progress "Testing recipe builder startup..."
+    
+    # Security audit for recipe-builder dependencies
+    print_progress "Running security audit for recipe-builder..."
+    npm audit --audit-level=moderate
+    if [ $? -ne 0 ]; then
+        print_error "Recipe builder security audit failed! Please fix vulnerabilities before committing."
+        exit 1
+    fi
+    print_success "Recipe builder security audit passed"
     
     # Kill any existing process on port 3002 to avoid conflicts
     lsof -ti:3002 | xargs kill -9 2>/dev/null || true
