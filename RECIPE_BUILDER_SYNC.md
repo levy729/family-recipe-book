@@ -233,7 +233,7 @@ npm install fs-extra @types/fs-extra --save-dev
 1. **Incremental sync** - Only copy changed files
 2. **File watching** - Auto-sync on file changes
 3. **Conflict resolution** - Handle merge conflicts
-4. **Backup system** - Backup before overwriting
+4. **Git versioning** - Rely on git for file history and rollback
 5. **Validation** - Verify copied files are valid
 
 ### Alternative Approaches

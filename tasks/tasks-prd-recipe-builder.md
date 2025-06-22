@@ -80,7 +80,7 @@ Based on PRD: `prd-recipe-builder.md`
   - [x] 4.4 Create file saving functionality with proper markdown generation
   - [x] 4.5 Implement file overwrite confirmation and error handling
   - [x] 4.6 Add file encoding handling for UTF-8 Hebrew text
-  - [x] 4.7 Create backup functionality before file operations
+  - [x] 4.7 Remove backup functionality (rely on git versioning)
   - [x] 4.8 Add file system error handling and user feedback
 
 - [ ] 5.0 Add Preview, Validation, and Template System

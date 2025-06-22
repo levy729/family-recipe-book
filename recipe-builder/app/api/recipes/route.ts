@@ -22,7 +22,7 @@ export async function GET() {
     const recipes: { filename: string; title: string; slug: string }[] = [];
 
     for (const file of files) {
-      if (file.endsWith('.md') && !file.endsWith('.backup')) {
+      if (file.endsWith('.md')) {
         try {
           const filePath = path.join(RECIPES_DIR, file);
           const content = await fs.readFile(filePath, 'utf8');
@@ -69,16 +69,7 @@ export async function POST(request: NextRequest) {
     // Ensure recipes directory exists
     await fs.mkdir(RECIPES_DIR, { recursive: true });
 
-    // Check if file already exists and create backup
-    try {
-      await fs.access(filePath);
-      const backupPath = path.join(RECIPES_DIR, `${filename}.backup`);
-      await fs.copyFile(filePath, backupPath);
-    } catch {
-      // File doesn't exist, no backup needed
-    }
-
-    // Write the file
+    // Write the file directly (git provides versioning)
     await fs.writeFile(filePath, markdownContent, 'utf8');
 
     return NextResponse.json({

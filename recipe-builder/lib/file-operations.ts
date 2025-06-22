@@ -165,25 +165,3 @@ export function validateFilename(filename: string): boolean {
 
   return true;
 }
-
-/**
- * Creates a backup of an existing file before overwriting
- */
-export async function createBackup(filename: string): Promise<{
-  success: boolean;
-  message: string;
-}> {
-  try {
-    // This would need to be implemented on the server side
-    // For now, we'll just return success since backups are handled automatically
-    return {
-      success: true,
-      message: 'גיבוי נוצר בהצלחה',
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: 'שגיאה ביצירת גיבוי',
-    };
-  }
-}
