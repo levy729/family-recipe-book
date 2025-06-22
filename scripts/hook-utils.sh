@@ -68,6 +68,74 @@ print_progress() {
     echo -e "${BLUE}🔄 $1${NC}"
 }
 
+# Enhanced progress indicators and messaging
+print_phase_start() {
+    echo ""
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BLUE}🔄 Phase: $1${NC}"
+    echo -e "${BLUE}📦 Project: $2${NC}"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
+
+print_phase_success() {
+    echo ""
+    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${GREEN}✅ Phase Completed Successfully: $1${NC}"
+    echo -e "${GREEN}📦 Project: $2${NC}"
+    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
+
+print_phase_failure() {
+    echo ""
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${RED}❌ Phase Failed: $1${NC}"
+    echo -e "${RED}📦 Project: $2${NC}"
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
+
+print_step_progress() {
+    local step_number=$1
+    local total_steps=$2
+    local description="$3"
+    echo -e "${BLUE}📋 Step $step_number/$total_steps: $description${NC}"
+}
+
+print_step_success() {
+    local step_number=$1
+    local total_steps=$2
+    local description="$3"
+    echo -e "${GREEN}✅ Step $step_number/$total_steps: $description completed${NC}"
+}
+
+print_step_failure() {
+    local step_number=$1
+    local total_steps=$2
+    local description="$3"
+    echo -e "${RED}❌ Step $step_number/$total_steps: $description failed${NC}"
+}
+
+print_hook_summary() {
+    local hook_name="$1"
+    local total_phases="$2"
+    local successful_phases="$3"
+    local failed_phases="$4"
+    
+    echo ""
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BLUE}📊 $hook_name Summary${NC}"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BLUE}📋 Total Phases: $total_phases${NC}"
+    echo -e "${GREEN}✅ Successful: $successful_phases${NC}"
+    if [ "$failed_phases" -gt 0 ]; then
+        echo -e "${RED}❌ Failed: $failed_phases${NC}"
+    fi
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+}
+
 # Handle errors with clear messaging
 handle_error() {
     local exit_code=$1
