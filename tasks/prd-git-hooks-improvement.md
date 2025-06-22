@@ -268,22 +268,89 @@ The current git hooks system in the Family Recipe Book project has several criti
 
 ### Requirements
 
-- [ ] Enhance pre-commit hook with utility functions
-- [ ] Add staged file validation
-- [ ] Implement quick linting and formatting checks
-- [ ] Add TypeScript type checking for staged files
-- [ ] Include recipe format validation for recipe files
+- [ ] Optimize pre-commit hook performance
+- [ ] Add staged file filtering for targeted validation
+- [ ] Implement parallel execution for independent checks
+- [ ] Add caching for unchanged files
+- [ ] Improve error messages and recovery suggestions
+- [ ] Add configurable timeouts and validation levels
 
 ### Implementation Details
 
-- [ ] Refactor existing pre-commit hook
-- [ ] Add staged file detection and filtering
-- [ ] Implement quick validation pipeline
-- [ ] Add recipe-specific validation for .md files
+- [ ] Refactor pre-commit hook for parallel execution
+- [ ] Add smart file filtering based on file types
+- [ ] Implement caching strategy for build artifacts
+- [ ] Add progress indicators and better user feedback
+- [ ] Create configurable validation modes
 
 ### Files to Modify
 
-- [ ] `.husky/pre-commit` - Enhanced with utility functions
+- [ ] `.husky/pre-commit` - Enhanced with parallel execution
+- [ ] `scripts/hook-utils.sh` - Add performance optimization functions
+- [ ] `package.json` - Add new validation scripts
+
+### Testing
+
+- [ ] Test performance improvements
+- [ ] Verify parallel execution works correctly
+- [ ] Test caching and file filtering
+- [ ] Validate error handling and recovery
+
+---
+
+## Task 5.1: Recipe Builder Keyboard Navigation Enhancement
+
+**Status**: 🔄 PENDING  
+**Priority**: High  
+**Estimated Time**: 3-4 hours
+
+### Requirements
+
+- [ ] Improve keyboard navigation for ingredient input
+- [ ] Add tab-to-next functionality for ingredient fields
+- [ ] Implement auto-focus on new ingredient inputs
+- [ ] Add keyboard shortcuts for common actions
+- [ ] Improve instruction input navigation
+- [ ] Add form validation feedback via keyboard
+
+### Implementation Details
+
+- [ ] **Ingredient Input Enhancement**:
+  - [ ] Type text in ingredient field, press Tab to create new ingredient input
+  - [ ] Auto-focus on newly created ingredient field
+  - [ ] Shift+Tab to go back to previous field
+  - [ ] Enter to submit form or move to next section
+- [ ] **Instruction Input Enhancement**:
+  - [ ] Tab to create new instruction line
+  - [ ] Auto-focus on new instruction field
+  - [ ] Shift+Tab to go back to previous instruction
+- [ ] **General Navigation**:
+  - [ ] Tab navigation between form sections
+  - [ ] Escape to cancel current action
+  - [ ] Ctrl+S to save recipe
+  - [ ] Ctrl+Enter to submit form
+
+### Files to Modify
+
+- [ ] `recipe-builder/components/recipe-form.tsx` - Add keyboard navigation logic
+- [ ] `recipe-builder/components/ui/input.tsx` - Enhance input component
+- [ ] `recipe-builder/app/page.tsx` - Add keyboard event handlers
+- [ ] `recipe-builder/lib/utils.ts` - Add keyboard navigation utilities
+
+### User Experience Goals
+
+- [ ] **Efficient Recipe Creation**: Users can create recipes using only keyboard
+- [ ] **Intuitive Navigation**: Tab behavior feels natural and predictable
+- [ ] **Quick Input**: Minimal clicks required to add ingredients/instructions
+- [ ] **Accessibility**: Full keyboard navigation support for accessibility
+
+### Testing
+
+- [ ] Test tab navigation between all form fields
+- [ ] Verify auto-focus works correctly on new fields
+- [ ] Test keyboard shortcuts in different browsers
+- [ ] Validate accessibility with screen readers
+- [ ] Test form submission via keyboard
 
 ---
 
@@ -335,11 +402,101 @@ The current git hooks system in the Family Recipe Book project has several criti
 
 ---
 
+## Task 8.0: Recipe Builder Ingredient Sorting Enhancement
+
+**Status**: 🔄 PENDING  
+**Priority**: Medium  
+**Estimated Time**: 2-3 hours
+
+### Requirements
+
+- [ ] Add easy way to sort ingredients in recipe builder
+- [ ] Implement drag-and-drop reordering
+- [ ] Add sort by alphabetical order option
+- [ ] Add sort by custom categories (proteins, vegetables, etc.)
+- [ ] Maintain ingredient order in saved recipes
+
+### Implementation Details
+
+- [ ] **Drag-and-Drop Interface**:
+  - [ ] Implement drag handles for each ingredient
+  - [ ] Add visual feedback during dragging
+  - [ ] Smooth animations for reordering
+- [ ] **Sort Options**:
+  - [ ] Alphabetical sort (A-Z, Z-A)
+  - [ ] Category-based sort (proteins, vegetables, spices, etc.)
+  - [ ] Manual order preservation
+- [ ] **User Experience**:
+  - [ ] Quick sort buttons for common operations
+  - [ ] Undo/redo functionality for sorting changes
+  - [ ] Visual indicators for sorted state
+
+### Files to Modify
+
+- [ ] `recipe-builder/components/recipe-form.tsx` - Add sorting interface
+- [ ] `recipe-builder/components/ui/draggable-list.tsx` - New draggable component
+- [ ] `recipe-builder/lib/sorting.ts` - Add sorting utilities
+- [ ] `recipe-builder/types/recipe.ts` - Update types for sorting
+
+### Testing
+
+- [ ] Test drag-and-drop functionality
+- [ ] Verify sort algorithms work correctly
+- [ ] Test undo/redo functionality
+- [ ] Validate accessibility for drag-and-drop
+
+---
+
+## Task 9.0: Website Instruction Formatting Enhancement
+
+**Status**: 🔄 PENDING  
+**Priority**: Medium  
+**Estimated Time**: 2-3 hours
+
+### Requirements
+
+- [ ] Split instructions by paragraphs instead of lines
+- [ ] Improve instruction readability on website
+- [ ] Add proper spacing between instruction steps
+- [ ] Maintain Hebrew RTL formatting
+- [ ] Ensure responsive design for instruction display
+
+### Implementation Details
+
+- [ ] **Instruction Parsing**:
+  - [ ] Parse instructions by paragraph breaks instead of line breaks
+  - [ ] Handle mixed content (paragraphs and lists)
+  - [ ] Preserve formatting within paragraphs
+- [ ] **Display Enhancement**:
+  - [ ] Add proper spacing between instruction paragraphs
+  - [ ] Implement numbered or bulleted lists for steps
+  - [ ] Add visual separators between major instruction sections
+- [ ] **RTL Support**:
+  - [ ] Ensure proper RTL layout for Hebrew instructions
+  - [ ] Maintain correct text direction and alignment
+  - [ ] Test with mixed Hebrew/English content
+
+### Files to Modify
+
+- [ ] `lib/recipes.ts` - Update instruction parsing logic
+- [ ] `components/instruction-list.tsx` - Enhance instruction display
+- [ ] `app/recipe/[slug]/page.tsx` - Update recipe page layout
+- [ ] `lib/utils.ts` - Add instruction formatting utilities
+
+### Testing
+
+- [ ] Test instruction parsing with various formats
+- [ ] Verify RTL layout works correctly
+- [ ] Test responsive design on different screen sizes
+- [ ] Validate accessibility for instruction reading
+
+---
+
 ## Overall Progress
 
-- **Completed**: 5/8 tasks (62.5%)
-- **In Progress**: 0/8 tasks (0%)
-- **Pending**: 3/8 tasks (37.5%)
+- **Completed**: 5/11 tasks (45.5%)
+- **In Progress**: 0/11 tasks (0%)
+- **Pending**: 6/11 tasks (54.5%)
 
 ### Next Steps
 
@@ -347,5 +504,8 @@ The current git hooks system in the Family Recipe Book project has several criti
 2. ✅ Task 4.0: Cross-Project Validation Script - COMPLETED
 3. ✅ Task 4.1: Recipe Builder Runtime Verification in Pre-commit Hook - COMPLETED
 4. 🔄 Task 5.0: Pre-commit Hook Enhancement - NEXT
-5. 🔄 Task 6.0: Post-merge Hook Implementation
-6. 🔄 Task 7.0: Documentation and Testing
+5. 🔄 Task 5.1: Recipe Builder Keyboard Navigation Enhancement
+6. 🔄 Task 6.0: Post-merge Hook Implementation
+7. 🔄 Task 7.0: Documentation and Testing
+8. 🔄 Task 8.0: Recipe Builder Ingredient Sorting Enhancement
+9. 🔄 Task 9.0: Website Instruction Formatting Enhancement
