@@ -2,17 +2,42 @@
 // This file provides analytics tracking with privacy-first approach and production-only activation
 
 // GA4 Measurement ID - will be injected from environment variables
+// Format: G-XXXXXXXXXX (e.g., G-ABC123DEF4)
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
+// Validate GA4 Measurement ID format
+const isValidGA4Id = (id: string | undefined): boolean => {
+  if (!id) return false;
+  // GA4 Measurement ID format: G-XXXXXXXXXX (10 alphanumeric characters after G-)
+  return /^G-[A-Z0-9]{10}$/.test(id);
+};
 
 // Check if analytics should be enabled (production only)
 export const isAnalyticsEnabled = (): boolean => {
-  return process.env.NODE_ENV === 'production' && !!GA_MEASUREMENT_ID;
+  return (
+    process.env.NODE_ENV === 'production' && isValidGA4Id(GA_MEASUREMENT_ID)
+  );
+};
+
+// Get analytics status for debugging
+export const getAnalyticsStatus = (): {
+  enabled: boolean;
+  environment: string;
+  hasGA4Id: boolean;
+  ga4IdValid: boolean;
+} => {
+  return {
+    enabled: isAnalyticsEnabled(),
+    environment: process.env.NODE_ENV || 'development',
+    hasGA4Id: !!GA_MEASUREMENT_ID,
+    ga4IdValid: isValidGA4Id(GA_MEASUREMENT_ID),
+  };
 };
 
 // Initialize Google Analytics
 export const initializeAnalytics = (): void => {
   if (!isAnalyticsEnabled() || !GA_MEASUREMENT_ID) {
-    console.log('Analytics disabled - not in production or missing GA4 ID');
+    console.log('Analytics disabled:', getAnalyticsStatus());
     return;
   }
 
@@ -38,6 +63,8 @@ export const initializeAnalytics = (): void => {
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
   });
+
+  console.log('Analytics initialized with GA4 ID:', GA_MEASUREMENT_ID);
 };
 
 // Track page views
@@ -136,6 +163,7 @@ export const analytics = {
   popularRecipe: trackPopularRecipe,
   deviceInfo: trackDeviceInfo,
   isEnabled: isAnalyticsEnabled,
+  getStatus: getAnalyticsStatus,
 };
 
 export default analytics;
