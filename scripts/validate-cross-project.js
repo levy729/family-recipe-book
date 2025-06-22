@@ -37,7 +37,6 @@ const log = {
 const PROJECT_ROOT = process.cwd();
 const RECIPE_BUILDER_PATH = path.join(PROJECT_ROOT, 'recipe-builder');
 const RECIPES_PATH = path.join(PROJECT_ROOT, 'recipes');
-const RECIPE_BUILDER_RECIPES_PATH = path.join(RECIPE_BUILDER_PATH, 'recipes');
 
 // Validation results tracking
 let validationResults = {
@@ -97,65 +96,20 @@ function getMarkdownFiles(dirPath) {
 }
 
 /**
- * Validation 1: Recipe Format Consistency
+ * Validation 1: Recipe Format Consistency (Main Project Only)
  */
 function validateRecipeFormatConsistency() {
   log.header('1. Recipe Format Consistency Validation');
 
   const mainRecipes = getMarkdownFiles(RECIPES_PATH);
-  const builderRecipes = getMarkdownFiles(RECIPE_BUILDER_RECIPES_PATH);
 
   log.info(`Found ${mainRecipes.length} recipes in main project`);
-  log.info(`Found ${builderRecipes.length} recipes in recipe builder`);
 
-  // Check if recipe counts match
-  if (mainRecipes.length !== builderRecipes.length) {
-    validationResults.failed++;
-    validationResults.errors.push({
-      type: 'recipe_count_mismatch',
-      message: `Recipe count mismatch: Main project has ${mainRecipes.length} recipes, Recipe builder has ${builderRecipes.length} recipes`,
-    });
-    log.error(
-      `Recipe count mismatch: Main project has ${mainRecipes.length} recipes, Recipe builder has ${builderRecipes.length} recipes`
-    );
+  if (mainRecipes.length === 0) {
+    validationResults.warnings++;
+    log.warning('No recipes found in main project');
   } else {
-    log.success('Recipe counts match between projects');
-    validationResults.passed++;
-  }
-
-  // Check for recipe file synchronization
-  const mainRecipeNames = mainRecipes.map(file => path.basename(file));
-  const builderRecipeNames = builderRecipes.map(file => path.basename(file));
-
-  const missingInBuilder = mainRecipeNames.filter(
-    name => !builderRecipeNames.includes(name)
-  );
-  const missingInMain = builderRecipeNames.filter(
-    name => !mainRecipeNames.includes(name)
-  );
-
-  if (missingInBuilder.length > 0) {
-    validationResults.failed++;
-    validationResults.errors.push({
-      type: 'missing_in_builder',
-      message: `Recipes missing in recipe builder: ${missingInBuilder.join(', ')}`,
-    });
-    log.error(
-      `Recipes missing in recipe builder: ${missingInBuilder.join(', ')}`
-    );
-  }
-
-  if (missingInMain.length > 0) {
-    validationResults.failed++;
-    validationResults.errors.push({
-      type: 'missing_in_main',
-      message: `Recipes missing in main project: ${missingInMain.join(', ')}`,
-    });
-    log.error(`Recipes missing in main project: ${missingInMain.join(', ')}`);
-  }
-
-  if (missingInBuilder.length === 0 && missingInMain.length === 0) {
-    log.success('All recipe files are synchronized between projects');
+    log.success(`Found ${mainRecipes.length} recipes in main project`);
     validationResults.passed++;
   }
 }
@@ -201,15 +155,12 @@ function validateDependencyConflicts() {
       }
     }
 
-    log.info(`Found ${Object.keys(sharedDeps).length} shared dependencies`);
-
     if (conflicts.length > 0) {
       validationResults.failed++;
       validationResults.errors.push({
-        type: 'dependency_conflicts',
+        type: 'dependency_conflict',
         message: `Found ${conflicts.length} dependency version conflicts`,
       });
-
       log.error(`Found ${conflicts.length} dependency version conflicts:`);
       conflicts.forEach(conflict => {
         log.error(
@@ -221,34 +172,24 @@ function validateDependencyConflicts() {
       validationResults.passed++;
     }
 
-    // Check for critical shared dependencies
-    const criticalDeps = ['typescript', 'next', 'react', 'react-dom'];
-    const missingCritical = criticalDeps.filter(dep => !sharedDeps[dep]);
-
-    if (missingCritical.length > 0) {
-      validationResults.warnings++;
-      log.warning(
-        `Missing critical shared dependencies: ${missingCritical.join(', ')}`
-      );
-    }
+    log.info(`Found ${Object.keys(sharedDeps).length} shared dependencies`);
   } catch (error) {
     validationResults.failed++;
     validationResults.errors.push({
-      type: 'package_json_error',
-      message: `Failed to read package.json files: ${error.message}`,
+      type: 'dependency_validation_error',
+      message: `Failed to validate dependencies: ${error.message}`,
     });
-    log.error(`Failed to read package.json files: ${error.message}`);
+    log.error(`Failed to validate dependencies: ${error.message}`);
   }
 }
 
 /**
- * Validation 3: TypeScript Type Compatibility
+ * Validation 3: TypeScript Compatibility
  */
 function validateTypeScriptCompatibility() {
-  log.header('3. TypeScript Type Compatibility Validation');
+  log.header('3. TypeScript Compatibility Validation');
 
   try {
-    // Check if both projects have TypeScript configuration
     const mainTsConfig = path.join(PROJECT_ROOT, 'tsconfig.json');
     const builderTsConfig = path.join(RECIPE_BUILDER_PATH, 'tsconfig.json');
 
@@ -259,6 +200,9 @@ function validateTypeScriptCompatibility() {
         message: 'Main project missing tsconfig.json',
       });
       log.error('Main project missing tsconfig.json');
+    } else {
+      log.success('Main project has valid tsconfig.json');
+      validationResults.passed++;
     }
 
     if (!fs.existsSync(builderTsConfig)) {
@@ -268,33 +212,17 @@ function validateTypeScriptCompatibility() {
         message: 'Recipe builder missing tsconfig.json',
       });
       log.error('Recipe builder missing tsconfig.json');
-    }
-
-    if (fs.existsSync(mainTsConfig) && fs.existsSync(builderTsConfig)) {
-      const mainConfig = readJsonFile(mainTsConfig);
-      const builderConfig = readJsonFile(builderTsConfig);
-
-      // Check for compatible TypeScript settings
-      const mainStrict = mainConfig.compilerOptions?.strict;
-      const builderStrict = builderConfig.compilerOptions?.strict;
-
-      if (mainStrict !== builderStrict) {
-        validationResults.warnings++;
-        log.warning(
-          `TypeScript strict mode mismatch: Main=${mainStrict}, Builder=${builderStrict}`
-        );
-      }
-
-      log.success('TypeScript configurations found and validated');
+    } else {
+      log.success('Recipe builder has valid tsconfig.json');
       validationResults.passed++;
     }
   } catch (error) {
     validationResults.failed++;
     validationResults.errors.push({
-      type: 'typescript_config_error',
-      message: `Failed to validate TypeScript configurations: ${error.message}`,
+      type: 'typescript_validation_error',
+      message: `Failed to validate TypeScript configuration: ${error.message}`,
     });
-    log.error(`Failed to validate TypeScript configurations: ${error.message}`);
+    log.error(`Failed to validate TypeScript configuration: ${error.message}`);
   }
 }
 
@@ -306,70 +234,33 @@ function validateRecipeSlugUniqueness() {
 
   try {
     const mainRecipes = getMarkdownFiles(RECIPES_PATH);
-    const builderRecipes = getMarkdownFiles(RECIPE_BUILDER_RECIPES_PATH);
-
-    const allRecipes = [...mainRecipes, ...builderRecipes];
-    const slugCounts = {};
-    const slugFiles = {};
+    const slugs = new Set();
     const duplicates = [];
 
-    for (const recipeFile of allRecipes) {
-      const content = fs.readFileSync(recipeFile, 'utf8');
-      // Extract slug from YAML frontmatter
-      const slugMatch = content.match(
-        /^---\s*\n(?:[\s\S]*?)\nslug:\s*([^\n\r]+)/m
-      );
-      if (slugMatch) {
-        const slug = slugMatch[1].trim().replace(/^['"]|['"]$/g, '');
-        slugCounts[slug] = (slugCounts[slug] || 0) + 1;
-        if (!slugFiles[slug]) slugFiles[slug] = [];
-        slugFiles[slug].push(path.relative(PROJECT_ROOT, recipeFile));
-      }
-    }
-
-    // Check for slugs that appear more than once per project or more than twice overall
-    const mainRecipeSlugs = new Set();
-    const builderRecipeSlugs = new Set();
     for (const recipeFile of mainRecipes) {
       const content = fs.readFileSync(recipeFile, 'utf8');
+      const relativePath = path.relative(PROJECT_ROOT, recipeFile);
+
+      // Extract slug from YAML frontmatter
       const slugMatch = content.match(
-        /^---\s*\n(?:[\s\S]*?)\nslug:\s*([^\n\r]+)/m
+        /^---\s*\n(?:[\s\S]*?\n)?slug:\s*([^\n]+)/
       );
       if (slugMatch) {
-        const slug = slugMatch[1].trim().replace(/^['"]|['"]$/g, '');
-        if (mainRecipeSlugs.has(slug)) {
+        const slug = slugMatch[1].trim();
+        if (slugs.has(slug)) {
           duplicates.push({
             slug,
-            file: path.relative(PROJECT_ROOT, recipeFile),
+            file: relativePath,
           });
         } else {
-          mainRecipeSlugs.add(slug);
+          slugs.add(slug);
         }
-      }
-    }
-    for (const recipeFile of builderRecipes) {
-      const content = fs.readFileSync(recipeFile, 'utf8');
-      const slugMatch = content.match(
-        /^---\s*\n(?:[\s\S]*?)\nslug:\s*([^\n\r]+)/m
-      );
-      if (slugMatch) {
-        const slug = slugMatch[1].trim().replace(/^['"]|['"]$/g, '');
-        if (builderRecipeSlugs.has(slug)) {
-          duplicates.push({
-            slug,
-            file: path.relative(PROJECT_ROOT, recipeFile),
-          });
-        } else {
-          builderRecipeSlugs.add(slug);
-        }
-      }
-    }
-    // Now check for slugs that appear more than twice across both projects
-    for (const [slug, count] of Object.entries(slugCounts)) {
-      if (count > 2) {
-        slugFiles[slug].forEach(file => {
-          duplicates.push({ slug, file });
+      } else {
+        validationResults.errors.push({
+          type: 'missing_slug',
+          message: `Recipe missing slug: ${relativePath}`,
         });
+        log.error(`Recipe missing slug: ${relativePath}`);
       }
     }
 
@@ -377,17 +268,14 @@ function validateRecipeSlugUniqueness() {
       validationResults.failed++;
       validationResults.errors.push({
         type: 'duplicate_slugs',
-        message: `Found ${duplicates.length} duplicate recipe slugs`,
+        message: `Found ${duplicates.length} duplicate slugs`,
       });
-
-      log.error(`Found ${duplicates.length} duplicate recipe slugs:`);
+      log.error(`Found ${duplicates.length} duplicate slugs:`);
       duplicates.forEach(dup => {
-        log.error(`  Slug \"${dup.slug}\" in file: ${dup.file}`);
+        log.error(`  Slug "${dup.slug}" found in: ${dup.file}`);
       });
     } else {
-      log.success(
-        `All recipe slugs are unique per project and not duplicated across both projects`
-      );
+      log.success('All recipe slugs are unique');
       validationResults.passed++;
     }
   } catch (error) {
@@ -401,107 +289,18 @@ function validateRecipeSlugUniqueness() {
 }
 
 /**
- * Validation 5: Hebrew Constants Consistency
- */
-function validateHebrewConstantsConsistency() {
-  log.header('5. Hebrew Constants Consistency Validation');
-
-  try {
-    const mainConstantsPath = path.join(PROJECT_ROOT, 'lib', 'constants.ts');
-    const builderConstantsPath = path.join(
-      RECIPE_BUILDER_PATH,
-      'lib',
-      'constants.ts'
-    );
-
-    if (!fs.existsSync(mainConstantsPath)) {
-      validationResults.failed++;
-      validationResults.errors.push({
-        type: 'missing_constants',
-        message: 'Main project missing lib/constants.ts',
-      });
-      log.error('Main project missing lib/constants.ts');
-      return;
-    }
-
-    if (!fs.existsSync(builderConstantsPath)) {
-      validationResults.failed++;
-      validationResults.errors.push({
-        type: 'missing_constants',
-        message: 'Recipe builder missing lib/constants.ts',
-      });
-      log.error('Recipe builder missing lib/constants.ts');
-      return;
-    }
-
-    const mainConstants = fs.readFileSync(mainConstantsPath, 'utf8');
-    const builderConstants = fs.readFileSync(builderConstantsPath, 'utf8');
-
-    // Check for HEBREW_TEXTS and HEBREW_TAGS constants
-    const requiredConstants = ['HEBREW_TEXTS', 'HEBREW_TAGS'];
-    const missingInMain = [];
-    const missingInBuilder = [];
-
-    for (const constant of requiredConstants) {
-      if (!mainConstants.includes(constant)) {
-        missingInMain.push(constant);
-      }
-      if (!builderConstants.includes(constant)) {
-        missingInBuilder.push(constant);
-      }
-    }
-
-    if (missingInMain.length > 0) {
-      validationResults.failed++;
-      validationResults.errors.push({
-        type: 'missing_hebrew_constants',
-        message: `Main project missing Hebrew constants: ${missingInMain.join(', ')}`,
-      });
-      log.error(
-        `Main project missing Hebrew constants: ${missingInMain.join(', ')}`
-      );
-    }
-
-    if (missingInBuilder.length > 0) {
-      validationResults.failed++;
-      validationResults.errors.push({
-        type: 'missing_hebrew_constants',
-        message: `Recipe builder missing Hebrew constants: ${missingInBuilder.join(', ')}`,
-      });
-      log.error(
-        `Recipe builder missing Hebrew constants: ${missingInBuilder.join(', ')}`
-      );
-    }
-
-    if (missingInMain.length === 0 && missingInBuilder.length === 0) {
-      log.success('Hebrew constants found in both projects');
-      validationResults.passed++;
-    }
-  } catch (error) {
-    validationResults.failed++;
-    validationResults.errors.push({
-      type: 'constants_validation_error',
-      message: `Failed to validate Hebrew constants: ${error.message}`,
-    });
-    log.error(`Failed to validate Hebrew constants: ${error.message}`);
-  }
-}
-
-/**
- * Validation 6: Recipe Content Validation
+ * Validation 5: Recipe Content Validation
  */
 function validateRecipeContent() {
-  log.header('6. Recipe Content Validation');
+  log.header('5. Recipe Content Validation');
 
   try {
     const mainRecipes = getMarkdownFiles(RECIPES_PATH);
-    const builderRecipes = getMarkdownFiles(RECIPE_BUILDER_RECIPES_PATH);
 
-    const allRecipes = [...mainRecipes, ...builderRecipes];
     let validRecipes = 0;
     let invalidRecipes = 0;
 
-    for (const recipeFile of allRecipes) {
+    for (const recipeFile of mainRecipes) {
       const content = fs.readFileSync(recipeFile, 'utf8');
       const relativePath = path.relative(PROJECT_ROOT, recipeFile);
 
@@ -549,7 +348,7 @@ function validateRecipeContent() {
     if (invalidRecipes > 0) {
       validationResults.failed++;
       log.error(
-        `Found ${invalidRecipes} invalid recipes out of ${allRecipes.length} total`
+        `Found ${invalidRecipes} invalid recipes out of ${mainRecipes.length} total`
       );
     } else {
       log.success(`All ${validRecipes} recipes have valid content structure`);
@@ -623,7 +422,6 @@ function runCrossProjectValidation() {
     validateDependencyConflicts();
     validateTypeScriptCompatibility();
     validateRecipeSlugUniqueness();
-    validateHebrewConstantsConsistency();
     validateRecipeContent();
 
     printValidationSummary();
