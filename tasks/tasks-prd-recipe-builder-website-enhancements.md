@@ -65,15 +65,15 @@
   - [ ] 2.8 Integrate sorting system into recipe form
   - [ ] 2.9 Add visual indicators for sorted state
 
-- [ ] 3.0 Website Instruction Formatting Enhancement
+- [x] 3.0 Website Instruction Formatting Enhancement
 
-  - [ ] 3.1 Update instruction parsing to handle paragraph breaks
-  - [ ] 3.2 Enhance instruction display with proper spacing
-  - [ ] 3.3 Implement numbered or bulleted lists for instruction steps
-  - [ ] 3.4 Add visual separators between major instruction sections
-  - [ ] 3.5 Ensure RTL layout preservation for Hebrew instructions
-  - [ ] 3.6 Test responsive design on different screen sizes
-  - [ ] 3.7 Update existing recipes to use new formatting
+  - [x] 3.1 Update instruction parsing to handle paragraph breaks
+  - [x] 3.2 Enhance instruction display with proper spacing
+  - [x] 3.3 Implement numbered or bulleted lists for instruction steps
+  - [x] 3.4 Add visual separators between major instruction sections
+  - [x] 3.5 Ensure RTL layout preservation for Hebrew instructions
+  - [x] 3.6 Test responsive design on different screen sizes
+  - [x] 3.7 Update existing recipes to use new formatting
 
 - [ ] 4.0 Component Library and Utilities
 
