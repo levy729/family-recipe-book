@@ -2,9 +2,10 @@
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Search, BookOpen } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { HEBREW_TEXTS } from '@/lib/constants';
 
 interface SearchBarProps {
@@ -12,6 +13,7 @@ interface SearchBarProps {
   placeholder?: string;
   className?: string;
   initialValue?: string;
+  showBrowseLink?: boolean;
 }
 
 const SEARCH_HISTORY_KEY = 'recipe-search-history';
@@ -22,6 +24,7 @@ export function SearchBar({
   placeholder = HEBREW_TEXTS.SEARCH_PLACEHOLDER,
   className = '',
   initialValue = '',
+  showBrowseLink = true,
 }: SearchBarProps) {
   const [query, setQuery] = useState(initialValue);
   const [showHistory, setShowHistory] = useState(false);
@@ -136,6 +139,19 @@ export function SearchBar({
           </Button>
         </div>
       </form>
+
+      {/* Browse All Recipes Link */}
+      {showBrowseLink && (
+        <div className="text-center mt-3">
+          <Link
+            href="/recipes"
+            className="inline-flex items-center gap-2 text-zinc-600 hover:text-zinc-900 transition-colors duration-200 underline decoration-zinc-300 hover:decoration-zinc-600 text-sm"
+          >
+            <BookOpen className="w-4 h-4" />
+            {HEBREW_TEXTS.BROWSE_ALL_RECIPES}
+          </Link>
+        </div>
+      )}
 
       {/* Search History Dropdown */}
       {showHistory && searchHistory.length > 0 && (

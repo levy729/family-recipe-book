@@ -10,6 +10,8 @@ export const HEBREW_TEXTS = {
   RECENT_RECIPES_TITLE: 'מתכונים אחרונים',
   INGREDIENTS_TITLE: 'מרכיבים',
   INSTRUCTIONS_TITLE: 'הוראות הכנה',
+  RECIPES_PAGE_TITLE: 'כל המתכונים',
+  RECIPES_PAGE_SUBTITLE: 'גלה את כל המתכונים שלנו',
 
   // Search related
   SEARCH_PLACEHOLDER: 'חפש מתכונים...',
@@ -17,12 +19,20 @@ export const HEBREW_TEXTS = {
   SEARCH_FOR: 'חיפוש עבור:',
   ENTER_SEARCH_QUERY: 'הזן מילת חיפוש כדי למצוא מתכונים',
   TRY_DIFFERENT_WORDS: 'נסה לחפש עם מילים אחרות',
+  BROWSE_ALL_RECIPES: 'עיין בכל המתכונים',
 
   // Search results
   FOUND_RECIPES: 'נמצאו {count} מתכונים',
   FOUND_RECIPES_FOR: 'נמצאו {count} מתכונים עבור "{query}"',
+  RECIPES_FOUND: 'נמצאו {count} מתכונים',
+  RECIPES_FOUND_FOR_LETTER: 'נמצאו {count} מתכונים המתחילים באות "{letter}"',
   NO_RECIPES_FOUND: 'לא נמצאו מתכונים עבור "{query}"',
   NO_RECIPES_FOUND_GENERAL: 'לא נמצאו מתכונים',
+  NO_RECIPES_FOR_LETTER: 'לא נמצאו מתכונים המתחילים באות "{letter}"',
+
+  // Alphabetical filter
+  ALPHABETICAL_FILTER_TITLE: 'סינון לפי אות',
+  SHOW_ALL_RECIPES: 'הצג את כל המתכונים',
 
   // Ingredient list
   SELECT_ALL: 'סמן הכל',
