@@ -25,13 +25,15 @@ function validateDescription(description?: string): string | undefined {
   return description;
 }
 
-export async function getAllRecipes(): Promise<Recipe[]> {
-  const files = await fs.readdir(RECIPES_DIR);
+export async function getAllRecipes(
+  dir: string = RECIPES_DIR
+): Promise<Recipe[]> {
+  const files = await fs.readdir(dir);
   const recipes: Recipe[] = [];
 
   for (const file of files) {
     if (!file.endsWith('.md')) continue;
-    const filePath = path.join(RECIPES_DIR, file);
+    const filePath = path.join(dir, file);
     const raw = await fs.readFile(filePath, 'utf8');
     const { data, content } = matter(raw);
     recipes.push({
@@ -47,12 +49,18 @@ export async function getAllRecipes(): Promise<Recipe[]> {
   return recipes;
 }
 
-export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
-  const recipes = await getAllRecipes();
+export async function getRecipeBySlug(
+  slug: string,
+  dir: string = RECIPES_DIR
+): Promise<Recipe | null> {
+  const recipes = await getAllRecipes(dir);
   return recipes.find(recipe => recipe.slug === slug) || null;
 }
 
-export async function getRecentRecipes(limit: number = 6): Promise<Recipe[]> {
-  const recipes = await getAllRecipes();
+export async function getRecentRecipes(
+  limit: number = 6,
+  dir: string = RECIPES_DIR
+): Promise<Recipe[]> {
+  const recipes = await getAllRecipes(dir);
   return recipes.slice(0, limit);
 }

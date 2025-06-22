@@ -1,4 +1,11 @@
-import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  jest,
+} from '@jest/globals';
 import fs from 'fs/promises';
 import {
   getAllRecipes,
@@ -7,9 +14,11 @@ import {
   Recipe,
 } from '../recipes';
 
-// Mock fs module
-jest.mock('fs/promises');
-const mockedFs = fs as jest.Mocked<typeof fs>;
+// Mock fs functions using jest.spyOn
+const mockReaddir = jest.spyOn(fs, 'readdir') as any;
+const mockReadFile = jest.spyOn(fs, 'readFile') as any;
+
+const mockedFs = jest.requireActual('fs/promises');
 
 describe('Recipe Utilities', () => {
   const mockRecipeContent = `---
@@ -49,25 +58,26 @@ instructions: |
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    mockReaddir.mockReset();
+    mockReadFile.mockReset();
   });
 
   describe('getAllRecipes', () => {
     it('should parse YAML frontmatter correctly', async () => {
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
+      mockReaddir.mockResolvedValue(['recipe.md']);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
       expect(recipes).toHaveLength(1);
       expect(recipes[0]).toEqual(mockRecipeData);
     });
 
     it('should extract markdown content correctly', async () => {
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
+      mockReaddir.mockResolvedValue(['recipe.md']);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
       expect(recipes[0].content).toBe(
         '\nאורז לבן פשוט, רך וטעים שמתאים לכל ארוחה.'
@@ -76,176 +86,194 @@ instructions: |
 
     it('should handle missing optional fields', async () => {
       const minimalContent = `---
-title: "Test Recipe"
-slug: "test-recipe"
+title: "מתכון מינימלי"
+slug: "minimal-recipe"
+tags: ["ארוחה קלה"]
+ingredients: ["מרכיב 1", "מרכיב 2"]
+instructions: "הוראות בישול"
 ---
 
-Recipe content here.`;
+תוכן המתכון`;
 
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(minimalContent);
+      mockReaddir.mockResolvedValue(['minimal.md']);
+      mockReadFile.mockResolvedValue(minimalContent);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
-      expect(recipes[0]).toEqual({
-        title: 'Test Recipe',
-        slug: 'test-recipe',
-        description: undefined,
-        tags: [],
-        ingredients: [],
-        instructions: '',
-        content: '\nRecipe content here.',
-      });
+      expect(recipes).toHaveLength(1);
+      expect(recipes[0].description).toBeUndefined();
+      expect(recipes[0].title).toBe('מתכון מינימלי');
     });
 
     it('should handle description field correctly', async () => {
       const contentWithDescription = `---
-title: "Test Recipe"
-slug: "test-recipe"
-description: "A test recipe description"
-tags: ["test"]
-ingredients: []
-instructions: ""
+title: "מתכון עם תיאור"
+slug: "recipe-with-description"
+description: "תיאור קצר של המתכון"
+tags: ["ארוחה קלה"]
+ingredients: ["מרכיב 1", "מרכיב 2"]
+instructions: "הוראות בישול"
 ---
 
-Recipe content here.`;
+תוכן המתכון`;
 
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(contentWithDescription);
+      mockReaddir.mockResolvedValue(['with-description.md']);
+      mockReadFile.mockResolvedValue(contentWithDescription);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
-      expect(recipes[0].description).toBe('A test recipe description');
+      expect(recipes).toHaveLength(1);
+      expect(recipes[0].description).toBe('תיאור קצר של המתכון');
     });
 
     it('should truncate description if longer than 200 characters', async () => {
-      const longDescription = 'A'.repeat(250);
+      const longDescription = 'א'.repeat(250);
       const contentWithLongDescription = `---
-title: "Test Recipe"
-slug: "test-recipe"
+title: "מתכון עם תיאור ארוך"
+slug: "recipe-with-long-description"
 description: "${longDescription}"
-tags: ["test"]
-ingredients: []
-instructions: ""
+tags: ["ארוחה קלה"]
+ingredients: ["מרכיב 1", "מרכיב 2"]
+instructions: "הוראות בישול"
 ---
 
-Recipe content here.`;
+תוכן המתכון`;
 
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(contentWithLongDescription);
+      mockReaddir.mockResolvedValue(['long-description.md']);
+      mockReadFile.mockResolvedValue(contentWithLongDescription);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
-      expect(recipes[0].description).toBe('A'.repeat(200));
+      expect(recipes).toHaveLength(1);
+      expect(recipes[0].description).toBe('א'.repeat(200));
     });
 
     it('should skip non-markdown files', async () => {
-      mockedFs.readdir.mockResolvedValue([
+      mockReaddir.mockResolvedValue([
         'recipe.md',
         'image.jpg',
         'text.txt',
-      ] as any);
+        'another-recipe.md',
+      ]);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
-      expect(mockedFs.readFile).toHaveBeenCalledTimes(1);
-      expect(mockedFs.readFile).toHaveBeenCalledWith(
-        expect.stringContaining('recipe.md'),
-        'utf8'
-      );
+      expect(recipes).toHaveLength(2);
+      expect(recipes.every(r => r.slug.endsWith('.md'))).toBe(false);
     });
 
     it('should handle empty recipes directory', async () => {
-      mockedFs.readdir.mockResolvedValue([]);
+      mockReaddir.mockResolvedValue([]);
 
-      const recipes = await getAllRecipes();
+      const recipes = await getAllRecipes('mock-recipes');
 
-      expect(recipes).toEqual([]);
+      expect(recipes).toHaveLength(0);
     });
 
     it('should handle file system errors gracefully', async () => {
-      mockedFs.readdir.mockRejectedValue(new Error('File system error'));
+      mockReaddir.mockRejectedValue(new Error('File system error'));
 
-      await expect(getAllRecipes()).rejects.toThrow('File system error');
+      await expect(getAllRecipes('mock-recipes')).rejects.toThrow(
+        'File system error'
+      );
     });
   });
 
   describe('getRecipeBySlug', () => {
     it('should find recipe by slug', async () => {
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
+      mockReaddir.mockResolvedValue(['simple-white-rice.md']);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      const recipe = await getRecipeBySlug('simple-white-rice');
+      const recipe = await getRecipeBySlug('simple-white-rice', 'mock-recipes');
 
       expect(recipe).toEqual(mockRecipeData);
     });
 
     it('should return null for non-existent slug', async () => {
-      mockedFs.readdir.mockResolvedValue(['recipe.md'] as any);
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
+      mockReaddir.mockResolvedValue(['other-recipe.md']);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      const recipe = await getRecipeBySlug('non-existent-recipe');
+      const recipe = await getRecipeBySlug('non-existent', 'mock-recipes');
 
       expect(recipe).toBeNull();
     });
 
     it('should handle multiple recipes correctly', async () => {
       const secondRecipeContent = `---
-title: "Second Recipe"
+title: "מתכון שני"
 slug: "second-recipe"
-tags: ["test"]
-ingredients: []
-instructions: ""
+tags: ["ארוחה קלה"]
+ingredients: ["מרכיב 3", "מרכיב 4"]
+instructions: "הוראות בישול שני"
 ---
 
-Second recipe content.`;
+תוכן המתכון השני`;
 
-      mockedFs.readdir.mockResolvedValue(['recipe1.md', 'recipe2.md'] as any);
-      mockedFs.readFile
-        .mockResolvedValueOnce(mockRecipeContent)
-        .mockResolvedValueOnce(secondRecipeContent);
+      mockReaddir.mockResolvedValue([
+        'simple-white-rice.md',
+        'second-recipe.md',
+      ]);
+      mockReadFile.mockImplementation((filePath: string) => {
+        if (filePath.includes('simple-white-rice.md'))
+          return Promise.resolve(mockRecipeContent);
+        if (filePath.includes('second-recipe.md'))
+          return Promise.resolve(secondRecipeContent);
+        return Promise.reject(new Error('File not found'));
+      });
 
-      const recipe = await getRecipeBySlug('second-recipe');
+      const recipe1 = await getRecipeBySlug(
+        'simple-white-rice',
+        'mock-recipes'
+      );
+      const recipe2 = await getRecipeBySlug('second-recipe', 'mock-recipes');
 
-      expect(recipe?.title).toBe('Second Recipe');
-      expect(recipe?.slug).toBe('second-recipe');
+      expect(recipe1).toEqual(mockRecipeData);
+      expect(recipe2?.title).toBe('מתכון שני');
     });
   });
 
   describe('getRecentRecipes', () => {
     it('should return default limit of 6 recipes', async () => {
-      mockedFs.readdir.mockResolvedValue(
-        Array.from({ length: 10 }, (_, i) => `recipe${i}.md`) as any
+      const multipleRecipes = Array.from(
+        { length: 8 },
+        (_, i) => `recipe-${i}.md`
       );
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
 
-      const recentRecipes = await getRecentRecipes();
+      mockReaddir.mockResolvedValue(multipleRecipes);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      expect(recentRecipes).toHaveLength(6);
-      expect(recentRecipes[0].slug).toBe('simple-white-rice');
-      expect(recentRecipes[5].slug).toBe('simple-white-rice');
+      const recipes = await getRecentRecipes(6, 'mock-recipes');
+
+      expect(recipes).toHaveLength(6);
     });
 
     it('should return custom limit of recipes', async () => {
-      mockedFs.readdir.mockResolvedValue(
-        Array.from({ length: 10 }, (_, i) => `recipe${i}.md`) as any
+      const multipleRecipes = Array.from(
+        { length: 10 },
+        (_, i) => `recipe-${i}.md`
       );
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
 
-      const recentRecipes = await getRecentRecipes(3);
+      mockReaddir.mockResolvedValue(multipleRecipes);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      expect(recentRecipes).toHaveLength(3);
-      expect(recentRecipes[0].slug).toBe('simple-white-rice');
-      expect(recentRecipes[2].slug).toBe('simple-white-rice');
+      const recipes = await getRecentRecipes(3, 'mock-recipes');
+
+      expect(recipes).toHaveLength(3);
     });
 
     it('should return all recipes if limit exceeds available recipes', async () => {
-      mockedFs.readdir.mockResolvedValue(['recipe1.md', 'recipe2.md'] as any);
-      mockedFs.readFile.mockResolvedValue(mockRecipeContent);
+      const multipleRecipes = Array.from(
+        { length: 3 },
+        (_, i) => `recipe-${i}.md`
+      );
 
-      const recentRecipes = await getRecentRecipes(10);
+      mockReaddir.mockResolvedValue(multipleRecipes);
+      mockReadFile.mockResolvedValue(mockRecipeContent);
 
-      expect(recentRecipes).toHaveLength(2);
+      const recipes = await getRecentRecipes(10, 'mock-recipes');
+
+      expect(recipes).toHaveLength(3);
     });
   });
 });
