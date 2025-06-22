@@ -286,4 +286,30 @@ check_typescript_config() {
     
     print_info "Using TypeScript config: $tsconfig_path"
     return 0
+}
+
+# Run recipe validation for staged files
+run_recipe_validation() {
+    local project_path="$1"
+    
+    print_progress "Running recipe validation for staged files in $project_path..."
+    
+    # Get staged recipe files
+    local staged_recipe_files
+    staged_recipe_files=$(get_staged_files_by_type "$project_path" "recipes")
+    
+    if [ -z "$staged_recipe_files" ]; then
+        print_info "No recipe files staged in $project_path"
+        return 0
+    fi
+    
+    print_info "Staged recipe files:"
+    echo "$staged_recipe_files" | sed 's/^/  - /'
+    
+    # Run recipe validation script
+    if ! node scripts/validate-recipes.js; then
+        handle_error 1 "Recipe validation failed" "Fix the recipe format errors shown above and try again"
+    fi
+    
+    print_success "Recipe validation passed for $project_path"
 } 

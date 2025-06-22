@@ -33,9 +33,7 @@ if has_staged_files "." ".*"; then
     
     # Recipe validation for staged .md files
     if needs_recipe_validation "."; then
-        print_progress "Validating staged recipe files..."
-        # TODO: Add recipe validation script call here
-        print_success "Recipe validation passed"
+        run_recipe_validation "."
     fi
     
     # Style validation for staged CSS files
