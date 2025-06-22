@@ -1,19 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export for local tool
-  output: 'export',
+  // Explicitly override any parent configuration
+  // Force server build for local development
+  output: undefined, // Explicitly remove output export
 
-  // Disable image optimization for static export
+  // Simple local development configuration
   images: {
     unoptimized: true,
-  },
-
-  // Trailing slash for static export
-  trailingSlash: true,
-
-  // Custom webpack config if needed
-  webpack: config => {
-    return config;
   },
 };
 
