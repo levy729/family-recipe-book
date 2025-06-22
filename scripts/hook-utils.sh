@@ -86,6 +86,124 @@ handle_error() {
     exit "$exit_code"
 }
 
+# Handle specific error types with tailored messages
+handle_typescript_error() {
+    local project_path="$1"
+    local error_details="$2"
+    
+    local recovery_steps="
+1. Fix TypeScript errors in the files listed above
+2. Run 'npx tsc --noEmit' to verify fixes
+3. Stage the fixed files: 'git add <fixed-files>'
+4. Try committing again"
+    
+    handle_error 1 "TypeScript compilation failed in $project_path: $error_details" "$recovery_steps"
+}
+
+handle_lint_error() {
+    local project_path="$1"
+    local error_details="$2"
+    
+    local recovery_steps="
+1. Fix ESLint errors in the files listed above
+2. Run 'npm run lint' to verify fixes
+3. Stage the fixed files: 'git add <fixed-files>'
+4. Try committing again"
+    
+    handle_error 1 "Linting failed in $project_path: $error_details" "$recovery_steps"
+}
+
+handle_format_error() {
+    local project_path="$1"
+    local error_details="$2"
+    
+    local recovery_steps="
+1. Run 'npm run format' to auto-fix formatting issues
+2. Stage the formatted files: 'git add <formatted-files>'
+3. Try committing again"
+    
+    handle_error 1 "Code formatting failed in $project_path: $error_details" "$recovery_steps"
+}
+
+handle_recipe_error() {
+    local project_path="$1"
+    local error_details="$2"
+    
+    local recovery_steps="
+1. Fix recipe format errors shown above
+2. Ensure YAML frontmatter is properly formatted
+3. Check that title and slug fields are present and valid
+4. Verify slug contains only lowercase letters, numbers, and hyphens
+5. Stage the fixed files: 'git add <fixed-files>'
+6. Try committing again"
+    
+    handle_error 1 "Recipe validation failed in $project_path: $error_details" "$recovery_steps"
+}
+
+handle_test_error() {
+    local project_path="$1"
+    local error_details="$2"
+    
+    local recovery_steps="
+1. Fix failing tests in $project_path
+2. Run 'npm test' to verify all tests pass
+3. Stage the fixed files: 'git add <fixed-files>'
+4. Try committing again"
+    
+    handle_error 1 "Tests failed in $project_path: $error_details" "$recovery_steps"
+}
+
+handle_build_error() {
+    local project_path="$1"
+    local error_details="$2"
+    
+    local recovery_steps="
+1. Fix build errors in $project_path
+2. Run 'npm run build' to verify the build succeeds
+3. Stage the fixed files: 'git add <fixed-files>'
+4. Try committing again"
+    
+    handle_error 1 "Build failed in $project_path: $error_details" "$recovery_steps"
+}
+
+# Enhanced command runner with specific error handling
+run_command_with_error_handling() {
+    local command="$1"
+    local description="$2"
+    local error_type="$3"
+    local project_path="$4"
+    
+    print_progress "$description"
+    
+    if ! eval "$command"; then
+        case "$error_type" in
+            "typescript")
+                handle_typescript_error "$project_path" "Command failed: $command"
+                ;;
+            "lint")
+                handle_lint_error "$project_path" "Command failed: $command"
+                ;;
+            "format")
+                handle_format_error "$project_path" "Command failed: $command"
+                ;;
+            "recipe")
+                handle_recipe_error "$project_path" "Command failed: $command"
+                ;;
+            "test")
+                handle_test_error "$project_path" "Command failed: $command"
+                ;;
+            "build")
+                handle_build_error "$project_path" "Command failed: $command"
+                ;;
+            *)
+                handle_error 1 "Command failed: $command" "Fix the issue and try again"
+                ;;
+        esac
+    fi
+    
+    print_success "$description completed"
+}
+
 # Check if a command exists
 command_exists() {
     command -v "$1" >/dev/null 2>&1
