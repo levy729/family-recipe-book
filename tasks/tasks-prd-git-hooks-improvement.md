@@ -26,7 +26,7 @@
 
 ## Tasks
 
-- [ ] 1.0 Fix Pre-commit Hook Implementation
+- [x] 1.0 Fix Pre-commit Hook Implementation
 
   - [x] 1.1 Create shared utility functions for directory management and error handling
   - [x] 1.2 Update pre-commit hook to properly handle both main and recipe-builder projects
@@ -35,7 +35,7 @@
   - [x] 1.5 Add recipe file validation for staged .md files
   - [x] 1.6 Implement proper error messages with phase identification
   - [x] 1.7 Add progress indicators and clear success/failure messaging
-  - [ ] 1.8 Test pre-commit hook with various file change scenarios
+  - [x] 1.8 Test pre-commit hook with various file change scenarios
 
 - [ ] 2.0 Fix Pre-push Hook Implementation
 
