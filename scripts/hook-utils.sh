@@ -263,14 +263,9 @@ run_typescript_check() {
     
     # Run TypeScript compiler with specific files
     if [ -n "$tsconfig_path" ]; then
-        # Use specific tsconfig file
-        if ! npx tsc --noEmit --project "$tsconfig_path" --listFiles | grep -E "\.(ts|tsx)$" | grep -f <(echo "$staged_ts_files") > /dev/null 2>&1; then
-            # If no specific files match, run full type check
-            npx tsc --noEmit --project "$tsconfig_path"
-        else
-            # Run type check only on staged files
-            echo "$staged_ts_files" | xargs npx tsc --noEmit --project "$tsconfig_path"
-        fi
+        # Use specific tsconfig file - run full type check for now
+        # TODO: Optimize to check only staged files when possible
+        npx tsc --noEmit --project "$tsconfig_path"
     else
         # Use default tsconfig.json
         npx tsc --noEmit
