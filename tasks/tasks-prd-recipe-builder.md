@@ -69,7 +69,8 @@ Based on PRD: `prd-recipe-builder.md`
   - [x] 3.4 Create Hebrew textarea component for longer content
   - [x] 3.5 Implement Hebrew tag input component
   - [x] 3.6 Add Hebrew placeholder text and labels
-  - [ ] 3.7 Test Hebrew text input across different browsers
+  - [x] 3.7 Test Hebrew text input across different browsers
+    - Note: Browser support limited to latest version of Chrome for Hebrew RTL input
 
 - [x] 4.0 Implement Recipe Editing and File Operations
 
