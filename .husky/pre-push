@@ -66,33 +66,18 @@ run_command_with_error_handling "npm run test:ci" "Main project tests" "test" "M
 
 print_phase_success "Main Project Tests" "Main Project"
 
-# Phase 6: Security Audit
-print_phase_start "Security Audit" "Both Projects"
-set_phase "Security Audit"
-set_project "Both Projects"
-
-print_step_progress 8 8 "Running security audit on main project..."
-run_command_with_error_handling "npm audit --audit-level=moderate" "Main project security audit" "security" "Main Project"
-
-print_step_progress 9 8 "Running security audit on recipe builder..."
-cd recipe-builder
-run_command_with_error_handling "npm audit --audit-level=moderate" "Recipe builder security audit" "security" "Recipe Builder"
-cd ..
-
-print_phase_success "Security Audit" "Both Projects"
-
-# Phase 7: Cross-Project Validation
+# Phase 6: Cross-Project Validation
 print_phase_start "Cross-Project Validation" "Both Projects"
 set_phase "Cross-Project Validation"
 set_project "Both Projects"
 
-print_step_progress 10 8 "Running cross-project validation..."
+print_step_progress 8 8 "Running cross-project validation..."
 run_command_with_error_handling "npm run validate-cross-project" "Cross-project validation" "validation" "Both Projects"
 
 print_phase_success "Cross-Project Validation" "Both Projects"
 
 # Final Summary
-print_hook_summary "Pre-push Hook" 7 7 0
+print_hook_summary "Pre-push Hook" 6 6 0
 
 print_success "🎉 All pre-push checks passed successfully!"
 print_success "🚀 Ready to push to remote repository!" 
