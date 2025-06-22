@@ -39,7 +39,6 @@ export function generateRecipeMarkdown(data: RecipeFormData): string {
     frontmatter.instructions = `|\n  ${instructions
       .split('\n')
       .map(line => line.trim())
-      .filter(line => line.length > 0)
       .join('\n  ')}`;
   }
 
