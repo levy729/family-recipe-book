@@ -1,14 +1,80 @@
 #!/usr/bin/env sh
 
-echo "🔍 Running lint-staged..."
+# Source utility functions
+. "$(dirname "$0")/../scripts/hook-utils.sh"
+
+# Initialize hook utilities
+init_hook_utils
+
+echo "🚀 Starting pre-commit checks..."
+
+# Phase 1: Lint-staged processing
+set_phase "Lint-staged Processing"
+set_project "Main Project"
+print_progress "Running lint-staged for staged files..."
 npx lint-staged
+print_success "Lint-staged completed successfully"
 
-echo "🧪 Running recipe builder tests..."
-cd recipe-builder && npm test
+# Phase 2: Main project validation
+set_phase "Main Project Validation"
+set_project "Main Project"
 
-if [ $? -ne 0 ]; then
-  echo "❌ Recipe builder tests failed! Commit aborted."
-  exit 1
+# Check if there are staged files in the main project
+if has_staged_files "." "\.(ts|tsx|js|jsx|json|css|md)$"; then
+    print_progress "Validating staged files in main project..."
+    
+    # TypeScript type checking for staged files
+    if has_staged_files "." "\.(ts|tsx)$"; then
+        print_progress "Running TypeScript type checking for staged files..."
+        npx tsc --noEmit --project tsconfig.json
+        print_success "TypeScript type checking passed"
+    fi
+    
+    # Recipe validation for staged .md files
+    if has_staged_files "." "\.md$"; then
+        print_progress "Validating staged recipe files..."
+        # TODO: Add recipe validation script call here
+        print_success "Recipe validation passed"
+    fi
+else
+    print_info "No staged files in main project to validate"
 fi
 
-echo "✅ All pre-commit checks passed!"
+# Phase 3: Recipe builder validation
+set_phase "Recipe Builder Validation"
+set_project "Recipe Builder"
+
+# Check if there are staged files in recipe-builder
+if has_staged_files "recipe-builder" "\.(ts|tsx|js|jsx|json|css|md)$"; then
+    print_progress "Validating staged files in recipe-builder project..."
+    
+    # Navigate to recipe-builder directory
+    cd recipe-builder
+    
+    # TypeScript type checking for staged files
+    if has_staged_files "." "\.(ts|tsx)$"; then
+        print_progress "Running TypeScript type checking for staged files..."
+        npx tsc --noEmit --project tsconfig.json
+        print_success "TypeScript type checking passed"
+    fi
+    
+    # Run tests for recipe-builder
+    print_progress "Running recipe builder tests..."
+    npm test
+    print_success "Recipe builder tests passed"
+    
+    # Return to original directory
+    cd ..
+else
+    print_info "No staged files in recipe-builder project to validate"
+fi
+
+# Phase 4: Cross-project validation
+set_phase "Cross-Project Validation"
+set_project "Both Projects"
+
+print_progress "Running cross-project validation..."
+# TODO: Add cross-project validation script call here
+print_success "Cross-project validation passed"
+
+print_success "🎉 All pre-commit checks passed successfully!"

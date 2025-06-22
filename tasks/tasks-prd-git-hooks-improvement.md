@@ -29,7 +29,7 @@
 - [ ] 1.0 Fix Pre-commit Hook Implementation
 
   - [x] 1.1 Create shared utility functions for directory management and error handling
-  - [ ] 1.2 Update pre-commit hook to properly handle both main and recipe-builder projects
+  - [x] 1.2 Update pre-commit hook to properly handle both main and recipe-builder projects
   - [ ] 1.3 Implement staged file filtering for efficient processing
   - [ ] 1.4 Add TypeScript type checking for staged files in both projects
   - [ ] 1.5 Add recipe file validation for staged .md files
