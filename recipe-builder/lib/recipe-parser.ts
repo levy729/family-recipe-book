@@ -1,5 +1,5 @@
-import { RecipeFormData } from '@/types/recipe';
-import yaml from 'js-yaml';
+import { RecipeFormData } from '../types/recipe';
+import * as yaml from 'js-yaml';
 
 /**
  * Escapes single quotes in a string by doubling them for YAML compliance
