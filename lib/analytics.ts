@@ -72,7 +72,8 @@ export const trackPageView = (url: string, title?: string): void => {
   if (
     !isAnalyticsEnabled() ||
     typeof window === 'undefined' ||
-    !GA_MEASUREMENT_ID
+    !GA_MEASUREMENT_ID ||
+    typeof window.gtag !== 'function'
   )
     return;
 
@@ -92,7 +93,8 @@ export const trackEvent = (
   if (
     !isAnalyticsEnabled() ||
     typeof window === 'undefined' ||
-    !GA_MEASUREMENT_ID
+    !GA_MEASUREMENT_ID ||
+    typeof window.gtag !== 'function'
   )
     return;
 
