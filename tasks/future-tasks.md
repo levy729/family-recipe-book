@@ -178,3 +178,26 @@ These files should be moved to `docs/processes/` but their content should remain
 - **Development Workflow**: When CI issues are resolved
 
 These tasks can be completed in any order and are independent of current development work.
+
+## Future Task: Remove all 'any' type warnings in recipe-builder
+
+**Goal:**
+
+- Refactor all code in the recipe-builder project to eliminate usage of `any` types, replacing them with proper, specific TypeScript types.
+
+**Files to update:**
+
+- `recipe-builder/components/recipe-form.tsx`
+- `recipe-builder/lib/recipe-parser.ts`
+- `recipe-builder/types/recipe.ts`
+
+**Acceptance Criteria:**
+
+- No `@typescript-eslint/no-explicit-any` warnings remain in the codebase.
+- All types are explicit and as strict as possible.
+- All tests and builds pass after refactor.
+
+**Notes:**
+
+- This will improve type safety and maintainability.
+- Coordinate with linting rules to ensure compliance.
