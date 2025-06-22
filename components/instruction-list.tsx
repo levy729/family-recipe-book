@@ -18,7 +18,7 @@ export function InstructionList({
   // Memoize steps to prevent infinite re-renders
   const steps = useMemo(() => {
     return instructions
-      .split('\n')
+      .split('\n\n') // Split by double newline (paragraphs)
       .map(step => step.trim())
       .filter(step => step.length > 0);
   }, [instructions]);
@@ -59,7 +59,11 @@ export function InstructionList({
               }`}
               onClick={() => handleStepClick(index)}
             >
-              <p className="leading-relaxed text-base">{step}</p>
+              {step.split('\n').map((line, lineIndex) => (
+                <p key={lineIndex} className="leading-relaxed text-base">
+                  {line.trim()}
+                </p>
+              ))}
             </div>
           </div>
         );
