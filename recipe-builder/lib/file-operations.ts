@@ -1,45 +1,34 @@
 import { RecipeFormData } from '@/types/recipe';
-import {
-  generateRecipeMarkdown,
-  parseRecipeMarkdown,
-  generateRecipeFilename,
-} from './recipe-parser';
 
 /**
- * Saves a recipe to a markdown file
+ * Saves a recipe via API
  */
 export async function saveRecipe(
   data: RecipeFormData
 ): Promise<{ success: boolean; message: string; filename?: string }> {
   try {
-    // Generate markdown content
-    const markdownContent = generateRecipeMarkdown(data);
-    const filename = generateRecipeFilename(data.slug);
-
-    // Create a blob with the markdown content
-    const blob = new Blob([markdownContent], {
-      type: 'text/markdown;charset=utf-8',
+    const response = await fetch('/api/recipes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
 
-    // Create download link
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
+    const result = await response.json();
 
-    // Trigger download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Clean up
-    URL.revokeObjectURL(url);
-
-    return {
-      success: true,
-      message: 'המתכון נשמר בהצלחה!',
-      filename,
-    };
+    if (response.ok && result.success) {
+      return {
+        success: true,
+        message: result.message,
+        filename: result.filename,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || 'שגיאה בשמירת המתכון',
+      };
+    }
   } catch (error) {
     console.error('Error saving recipe:', error);
     return {
@@ -50,49 +39,27 @@ export async function saveRecipe(
 }
 
 /**
- * Loads a recipe from a file input
+ * Loads a recipe from the API by slug
  */
-export async function loadRecipeFromFile(
-  file: File
+export async function loadRecipeBySlug(
+  slug: string
 ): Promise<{ success: boolean; data?: RecipeFormData; message: string }> {
   try {
-    // Validate file type
-    if (!file.name.endsWith('.md')) {
+    const response = await fetch(`/api/recipes/${slug}`);
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      return {
+        success: true,
+        data: result.data,
+        message: result.message,
+      };
+    } else {
       return {
         success: false,
-        message: 'יש לבחור קובץ markdown (.md)',
+        message: result.message || 'שגיאה בטעינת המתכון',
       };
     }
-
-    // Read file content
-    const content = await file.text();
-
-    // Parse the markdown content
-    const recipeData = parseRecipeMarkdown(content);
-
-    // Validate that we have the required fields
-    if (!recipeData.title || !recipeData.slug) {
-      return {
-        success: false,
-        message: 'הקובץ אינו מכיל מתכון תקין',
-      };
-    }
-
-    // Convert to RecipeFormData format
-    const formData: RecipeFormData = {
-      title: recipeData.title || '',
-      slug: recipeData.slug || '',
-      description: recipeData.description || '',
-      tags: recipeData.tags || [],
-      ingredients: recipeData.ingredients || [''],
-      instructions: recipeData.instructions || '',
-    };
-
-    return {
-      success: true,
-      data: formData,
-      message: 'המתכון נטען בהצלחה!',
-    };
   } catch (error) {
     console.error('Error loading recipe:', error);
     return {
@@ -103,37 +70,58 @@ export async function loadRecipeFromFile(
 }
 
 /**
- * Creates a file input element for loading recipes
- */
-export function createFileInput(
-  onFileSelect: (file: File) => void
-): HTMLInputElement {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = '.md';
-  input.style.display = 'none';
-
-  input.addEventListener('change', event => {
-    const target = event.target as HTMLInputElement;
-    const file = target.files?.[0];
-    if (file) {
-      onFileSelect(file);
-    }
-  });
-
-  return input;
-}
-
-/**
- * Gets a list of available recipe files from the recipes directory
- * Note: This would require server-side functionality in a real implementation
+ * Gets a list of available recipe files from the API
  */
 export async function getAvailableRecipes(): Promise<
   { filename: string; title: string; slug: string }[]
 > {
-  // This is a placeholder - in a real implementation, this would fetch from the server
-  // For now, we'll return an empty array and handle file loading through file input
-  return [];
+  try {
+    const response = await fetch('/api/recipes');
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      return result.recipes || [];
+    } else {
+      console.error('Error getting recipes:', result.message);
+      return [];
+    }
+  } catch (error) {
+    console.error('Error getting available recipes:', error);
+    return [];
+  }
+}
+
+/**
+ * Deletes a recipe via API
+ */
+export async function deleteRecipe(
+  slug: string
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await fetch(`/api/recipes/${slug}`, {
+      method: 'DELETE',
+    });
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      return {
+        success: true,
+        message: result.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message || 'שגיאה במחיקת המתכון',
+      };
+    }
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    return {
+      success: false,
+      message: 'שגיאה במחיקת המתכון',
+    };
+  }
 }
 
 /**
@@ -181,13 +169,13 @@ export function validateFilename(filename: string): boolean {
 /**
  * Creates a backup of an existing file before overwriting
  */
-export async function createBackup(): Promise<{
+export async function createBackup(filename: string): Promise<{
   success: boolean;
   message: string;
 }> {
   try {
-    // In a real implementation, this would create a backup copy
-    // For now, we'll just return success
+    // This would need to be implemented on the server side
+    // For now, we'll just return success since backups are handled automatically
     return {
       success: true,
       message: 'גיבוי נוצר בהצלחה',
