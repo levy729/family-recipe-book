@@ -45,54 +45,54 @@ set_project() {
 
 # Print success message
 print_success() {
-    echo -e "${GREEN}✅ $1${NC}"
+    printf "${GREEN}✅ %s${NC}\n" "$1"
 }
 
 # Print warning message
 print_warning() {
-    echo -e "${YELLOW}⚠️  $1${NC}"
+    printf "${YELLOW}⚠️  %s${NC}\n" "$1"
 }
 
 # Print error message
 print_error() {
-    echo -e "${RED}❌ $1${NC}"
+    printf "${RED}❌ %s${NC}\n" "$1"
 }
 
 # Print info message
 print_info() {
-    echo -e "${BLUE}ℹ️  $1${NC}"
+    printf "${BLUE}ℹ️  %s${NC}\n" "$1"
 }
 
 # Print progress message
 print_progress() {
-    echo -e "${BLUE}🔄 $1${NC}"
+    printf "${BLUE}🔄 %s${NC}\n" "$1"
 }
 
 # Enhanced progress indicators and messaging
 print_phase_start() {
     echo ""
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${BLUE}🔄 Phase: $1${NC}"
-    echo -e "${BLUE}📦 Project: $2${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+    printf "${BLUE}🔄 Phase: %s${NC}\n" "$1"
+    printf "${BLUE}📦 Project: %s${NC}\n" "$2"
+    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
     echo ""
 }
 
 print_phase_success() {
     echo ""
-    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${GREEN}✅ Phase Completed Successfully: $1${NC}"
-    echo -e "${GREEN}📦 Project: $2${NC}"
-    echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    printf "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+    printf "${GREEN}✅ Phase Completed Successfully: %s${NC}\n" "$1"
+    printf "${GREEN}📦 Project: %s${NC}\n" "$2"
+    printf "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
     echo ""
 }
 
 print_phase_failure() {
     echo ""
-    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${RED}❌ Phase Failed: $1${NC}"
-    echo -e "${RED}📦 Project: $2${NC}"
-    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    printf "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+    printf "${RED}❌ Phase Failed: %s${NC}\n" "$1"
+    printf "${RED}📦 Project: %s${NC}\n" "$2"
+    printf "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
     echo ""
 }
 
@@ -100,21 +100,21 @@ print_step_progress() {
     local step_number=$1
     local total_steps=$2
     local description="$3"
-    echo -e "${BLUE}📋 Step $step_number/$total_steps: $description${NC}"
+    printf "${BLUE}📋 Step %s/%s: %s${NC}\n" "$step_number" "$total_steps" "$description"
 }
 
 print_step_success() {
     local step_number=$1
     local total_steps=$2
     local description="$3"
-    echo -e "${GREEN}✅ Step $step_number/$total_steps: $description completed${NC}"
+    printf "${GREEN}✅ Step %s/%s: %s completed${NC}\n" "$step_number" "$total_steps" "$description"
 }
 
 print_step_failure() {
     local step_number=$1
     local total_steps=$2
     local description="$3"
-    echo -e "${RED}❌ Step $step_number/$total_steps: $description failed${NC}"
+    printf "${RED}❌ Step %s/%s: %s failed${NC}\n" "$step_number" "$total_steps" "$description"
 }
 
 print_hook_summary() {
@@ -124,15 +124,15 @@ print_hook_summary() {
     local failed_phases="$4"
     
     echo ""
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${BLUE}📊 $hook_name Summary${NC}"
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${BLUE}📋 Total Phases: $total_phases${NC}"
-    echo -e "${GREEN}✅ Successful: $successful_phases${NC}"
+    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+    printf "${BLUE}📊 %s Summary${NC}\n" "$hook_name"
+    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+    printf "${BLUE}📋 Total Phases: %s${NC}\n" "$total_phases"
+    printf "${GREEN}✅ Successful: %s${NC}\n" "$successful_phases"
     if [ "$failed_phases" -gt 0 ]; then
-        echo -e "${RED}❌ Failed: $failed_phases${NC}"
+        printf "${RED}❌ Failed: %s${NC}\n" "$failed_phases"
     fi
-    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    printf "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
     echo ""
 }
 
