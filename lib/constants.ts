@@ -46,6 +46,24 @@ export const HEBREW_TEXTS = {
   // Footer
   ALL_RIGHTS_RESERVED: '© 2025 All rights reserved',
 
+  // SEO and metadata
+  SITE_DESCRIPTION:
+    'אוסף מתכונים משפחתיים מסורתיים עם תמיכה בעברית מימין לשמאל',
+  SITE_KEYWORDS:
+    'מתכונים משפחתיים, מתכונים בעברית, בישול מסורתי, מתכונים מימין לשמאל',
+  HOME_PAGE_TITLE: 'דף הבית',
+  HOME_PAGE_DESCRIPTION:
+    'ברוכים הבאים לספר המתכונים המשפחתי - אוסף מתכונים משפחתיים מסורתיים עם תמיכה בעברית מימין לשמאל',
+  HOME_PAGE_KEYWORDS:
+    'מתכונים משפחתיים, מתכונים בעברית, בישול מסורתי, מתכונים מימין לשמאל, בישול ביתי',
+  RECIPES_PAGE_KEYWORDS:
+    'מתכונים משפחתיים, מתכונים בעברית, בישול מסורתי, מתכונים מימין לשמאל, אוסף מתכונים',
+  SEARCH_PAGE_DESCRIPTION: 'חיפוש מתכונים באוסף המתכונים המשפחתיים שלנו',
+  SEARCH_PAGE_KEYWORDS:
+    'חיפוש מתכונים, מתכונים משפחתיים, מתכונים בעברית, בישול מסורתי',
+  RECIPE_DESCRIPTION_TEMPLATE: 'למדו איך להכין {title}, מתכון משפחתי מסורתי.',
+  RECIPE_KEYWORDS_FALLBACK: 'מתכונים משפחתיים, מתכונים בעברית, בישול מסורתי',
+
   // Recipe builder specific
   RECIPE_BUILDER: {
     TITLE: 'Recipe Builder',
