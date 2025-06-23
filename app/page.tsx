@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   description: HEBREW_TEXTS.HOME_PAGE_DESCRIPTION,
   keywords: HEBREW_TEXTS.HOME_PAGE_KEYWORDS,
   openGraph: {
-    title: `${HEBREW_TEXTS.SITE_TITLE} - מתכונים משפחתיים מסורתיים`,
+    title: `${HEBREW_TEXTS.SITE_TITLE} - ${HEBREW_TEXTS.HOME_PAGE_SUBTITLE}`,
     description: HEBREW_TEXTS.HOME_PAGE_DESCRIPTION,
     type: 'website',
     url: 'https://levy729.github.io',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${HEBREW_TEXTS.SITE_TITLE} - מתכונים משפחתיים מסורתיים`,
+    title: `${HEBREW_TEXTS.SITE_TITLE} - ${HEBREW_TEXTS.HOME_PAGE_SUBTITLE}`,
     description: HEBREW_TEXTS.HOME_PAGE_DESCRIPTION,
     creator: '@familyrecipebook',
   },
