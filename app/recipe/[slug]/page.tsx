@@ -29,7 +29,7 @@ export async function generateMetadata({
     };
   }
 
-  const recipeUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://levy729.github.io'}/recipe/${recipe.slug}`;
+  const recipeUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://levy729.github.io/family-recipe-book'}/recipe/${recipe.slug}`;
   const description =
     recipe.description ||
     formatHebrewText(HEBREW_TEXTS.RECIPE_DESCRIPTION_TEMPLATE, {
@@ -73,7 +73,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
     notFound();
   }
 
-  const recipeUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://levy729.github.io'}/recipe/${recipe.slug}`;
+  const recipeUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://levy729.github.io/family-recipe-book'}/recipe/${recipe.slug}`;
 
   return (
     <>

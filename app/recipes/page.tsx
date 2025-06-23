@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: `${HEBREW_TEXTS.RECIPES_PAGE_TITLE} - ${HEBREW_TEXTS.SITE_TITLE}`,
     description: HEBREW_TEXTS.RECIPES_PAGE_SUBTITLE,
     type: 'website',
-    url: 'https://levy729.github.io/recipes',
+    url: 'https://levy729.github.io/family-recipe-book/recipes',
   },
   twitter: {
     card: 'summary_large_image',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     creator: '@familyrecipebook',
   },
   alternates: {
-    canonical: 'https://levy729.github.io/recipes',
+    canonical: 'https://levy729.github.io/family-recipe-book/recipes',
   },
 };
 

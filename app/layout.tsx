@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://levy729.github.io'),
+  metadataBase: new URL('https://levy729.github.io/family-recipe-book'),
   alternates: {
     canonical: '/',
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description: HEBREW_TEXTS.SITE_DESCRIPTION,
     siteName: HEBREW_TEXTS.SITE_TITLE,
     locale: 'he_IL',
-    url: 'https://levy729.github.io',
+    url: 'https://levy729.github.io/family-recipe-book',
   },
   twitter: {
     card: 'summary_large_image',
