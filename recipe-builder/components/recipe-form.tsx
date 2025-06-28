@@ -1,16 +1,143 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { HEBREW_TEXTS, HEBREW_TAGS } from '@/lib/constants';
 import { RecipeFormData } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Menu } from 'lucide-react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface RecipeFormProps {
   initialData?: Partial<RecipeFormData>;
   onSubmit: (data: RecipeFormData) => void;
   onCancel?: () => void;
+}
+
+interface IngredientSortableItemProps {
+  id: string;
+  index: number;
+  ingredient: string;
+  onChange: (index: number, value: string) => void;
+  onRemove?: (index: number) => void;
+  inputRef: (el: HTMLInputElement | null) => void;
+  isLast: boolean;
+  onTabAdd: () => void;
+}
+
+function IngredientSortableItem({
+  id,
+  index,
+  ingredient,
+  onChange,
+  onRemove,
+  inputRef,
+  isLast,
+  onTabAdd,
+}: IngredientSortableItemProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    background: isDragging ? '#f3f4f6' : undefined,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex gap-2 items-center"
+      {...attributes}
+    >
+      <span
+        {...listeners}
+        className="cursor-grab text-zinc-400 hover:text-zinc-600 flex items-center"
+      >
+        <Menu />
+      </span>
+      <Input
+        type="text"
+        value={ingredient}
+        onChange={e => onChange(index, e.target.value)}
+        placeholder={HEBREW_TEXTS.INGREDIENT_PLACEHOLDER}
+        className="flex-1 text-right"
+        dir="rtl"
+        ref={(el: HTMLInputElement | null) => inputRef(el)}
+        onKeyDown={e => {
+          // Tab: add new if last and not empty
+          if (
+            e.key === 'Tab' &&
+            !e.shiftKey &&
+            ingredient.trim().length > 0 &&
+            isLast
+          ) {
+            e.preventDefault();
+            onTabAdd();
+          }
+          // Shift+Tab: move to previous field
+          if (e.key === 'Tab' && e.shiftKey && index > 0) {
+            e.preventDefault();
+            // Focus previous input if available
+            // (parent manages refs)
+          }
+          // Enter: move to next field or add new if last
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            if (!isLast) {
+              // Focus next input if available
+              // (parent manages refs)
+            } else if (ingredient.trim().length > 0) {
+              onTabAdd();
+            }
+          }
+          // Cmd+Backspace (Mac) deletes the current line
+          if (
+            (e.key === 'Backspace' || e.key === 'Delete') &&
+            e.metaKey &&
+            onRemove &&
+            typeof onRemove === 'function'
+          ) {
+            e.preventDefault();
+            onRemove(index);
+          }
+        }}
+      />
+      {onRemove && (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => onRemove(index)}
+          className="px-3"
+        >
+          {HEBREW_TEXTS.REMOVE}
+        </Button>
+      )}
+    </div>
+  );
 }
 
 export function RecipeForm({
@@ -29,6 +156,17 @@ export function RecipeForm({
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [newTag, setNewTag] = useState('');
+
+  const ingredientRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  // Focus the last ingredient input when a new one is added
+  useEffect(() => {
+    if (ingredientRefs.current.length > 0) {
+      const lastIndex = formData.ingredients.length - 1;
+      const lastRef = ingredientRefs.current[lastIndex];
+      if (lastRef) lastRef.focus();
+    }
+  }, [formData.ingredients.length]);
 
   // Tag suggestions - sorted alphabetically for better UX
   const tagSuggestions = [...HEBREW_TAGS].sort();
@@ -89,28 +227,46 @@ export function RecipeForm({
   };
 
   const handleIngredientChange = (index: number, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      ingredients: prev.ingredients.map((ingredient, i) =>
+    setFormData(prev => {
+      const updated = prev.ingredients.map((ingredient, i) =>
         i === index ? value : ingredient
-      ),
-    }));
+      );
+      // Remove empty/whitespace-only ingredients except the last (for UX)
+      const filtered = updated.filter(
+        (ing, i, arr) => ing.trim() !== '' || i === arr.length - 1
+      );
+      return {
+        ...prev,
+        ingredients: filtered,
+      };
+    });
   };
 
   const addIngredient = () => {
-    setFormData(prev => ({
-      ...prev,
-      ingredients: [...prev.ingredients, ''],
-    }));
+    setFormData(prev => {
+      // Only add if last ingredient is not empty
+      if (
+        prev.ingredients.length === 0 ||
+        prev.ingredients[prev.ingredients.length - 1].trim() !== ''
+      ) {
+        return {
+          ...prev,
+          ingredients: [...prev.ingredients, ''],
+        };
+      }
+      return prev;
+    });
   };
 
   const removeIngredient = (index: number) => {
-    if (formData.ingredients.length > 1) {
-      setFormData(prev => ({
+    setFormData(prev => {
+      const filtered = prev.ingredients.filter((_, i) => i !== index);
+      // Always keep at least one ingredient field
+      return {
         ...prev,
-        ingredients: prev.ingredients.filter((_, i) => i !== index),
-      }));
-    }
+        ingredients: filtered.length > 0 ? filtered : [''],
+      };
+    });
   };
 
   const handleInstructionsChange = (instructions: string) => {
@@ -130,10 +286,11 @@ export function RecipeForm({
       newErrors.slug = HEBREW_TEXTS.SLUG_INVALID;
     }
 
-    if (
-      formData.ingredients.length === 0 ||
-      formData.ingredients.every(i => !i.trim())
-    ) {
+    // Require at least one non-empty ingredient
+    const nonEmptyIngredients = formData.ingredients.filter(
+      i => i.trim().length > 0
+    );
+    if (nonEmptyIngredients.length === 0) {
       newErrors.ingredients = HEBREW_TEXTS.AT_LEAST_ONE_INGREDIENT;
     }
 
@@ -152,11 +309,48 @@ export function RecipeForm({
       // Clean up empty ingredients
       const cleanedData = {
         ...formData,
-        ingredients: formData.ingredients.filter(ingredient =>
-          ingredient.trim()
-        ),
+        ingredients: formData.ingredients
+          .map(ingredient => ingredient.trim())
+          .filter(ingredient => ingredient.length > 0),
       };
       onSubmit(cleanedData);
+    }
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor)
+  );
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (!over) return; // No drop target
+    const oldIndex = formData.ingredients.findIndex(
+      (_, i) => i.toString() === active.id
+    );
+    const newIndex = formData.ingredients.findIndex(
+      (_, i) => i.toString() === over.id
+    );
+    if (
+      active.id !== over.id &&
+      oldIndex !== -1 &&
+      newIndex !== -1 &&
+      oldIndex >= 0 &&
+      oldIndex < formData.ingredients.length &&
+      newIndex >= 0 &&
+      newIndex < formData.ingredients.length
+    ) {
+      setFormData(prev => {
+        const moved = arrayMove(prev.ingredients, oldIndex, newIndex);
+        // Remove empty/whitespace-only ingredients except the last
+        const filtered = moved.filter(
+          (ing, i, arr) => ing.trim() !== '' || i === arr.length - 1
+        );
+        return {
+          ...prev,
+          ingredients: filtered,
+        };
+      });
     }
   };
 
@@ -332,28 +526,36 @@ export function RecipeForm({
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {formData.ingredients.map((ingredient, index) => (
-              <div key={index} className="flex gap-2">
-                <Input
-                  type="text"
-                  value={ingredient}
-                  onChange={e => handleIngredientChange(index, e.target.value)}
-                  placeholder={HEBREW_TEXTS.INGREDIENT_PLACEHOLDER}
-                  className="flex-1 text-right"
-                  dir="rtl"
-                />
-                {formData.ingredients.length > 1 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => removeIngredient(index)}
-                    className="px-3"
-                  >
-                    {HEBREW_TEXTS.REMOVE}
-                  </Button>
-                )}
-              </div>
-            ))}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={formData.ingredients.map((_, i) => i.toString())}
+                strategy={verticalListSortingStrategy}
+              >
+                {formData.ingredients.map((ingredient, index) => (
+                  <IngredientSortableItem
+                    key={index}
+                    id={index.toString()}
+                    index={index}
+                    ingredient={ingredient}
+                    onChange={handleIngredientChange}
+                    onRemove={
+                      formData.ingredients.length > 1
+                        ? removeIngredient
+                        : undefined
+                    }
+                    inputRef={el => {
+                      ingredientRefs.current[index] = el;
+                    }}
+                    isLast={index === formData.ingredients.length - 1}
+                    onTabAdd={addIngredient}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
             <Button
               type="button"
               variant="outline"
