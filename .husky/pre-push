@@ -8,6 +8,18 @@ init_hook_utils
 
 echo "🚀 Starting pre-push validation..."
 
+# --- FORMAT CODE FIRST ---
+print_phase_start "Formatting" "Main Project"
+run_command_with_error_handling "npm run format" "Auto-formatting main project" "format" "Main Project"
+print_phase_success "Formatting" "Main Project"
+
+print_phase_start "Formatting" "Recipe Builder"
+cd recipe-builder
+run_command_with_error_handling "npm run format" "Auto-formatting recipe builder" "format" "Recipe Builder"
+cd ..
+print_phase_success "Formatting" "Recipe Builder"
+# --- END FORMAT CODE FIRST ---
+
 # Phase 1: Linting and Formatting
 print_phase_start "Linting and Formatting" "Main Project"
 set_phase "Linting and Formatting"
