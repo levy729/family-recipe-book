@@ -41,7 +41,9 @@ export async function getAllRecipes(
       slug: data.slug,
       description: validateDescription(data.description),
       tags: data.tags || [],
-      ingredients: data.ingredients || [],
+      ingredients: (data.ingredients || []).filter(
+        (i: string) => i && i.trim().length > 0
+      ),
       instructions: data.instructions || '',
       content,
     });
@@ -54,7 +56,13 @@ export async function getRecipeBySlug(
   dir: string = RECIPES_DIR
 ): Promise<Recipe | null> {
   const recipes = await getAllRecipes(dir);
-  return recipes.find(recipe => recipe.slug === slug) || null;
+  const recipe = recipes.find(recipe => recipe.slug === slug) || null;
+  if (recipe) {
+    recipe.ingredients = recipe.ingredients.filter(
+      i => i && i.trim().length > 0
+    );
+  }
+  return recipe;
 }
 
 export async function getRecentRecipes(
