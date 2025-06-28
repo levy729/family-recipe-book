@@ -178,6 +178,48 @@ instructions: "הוראות בישול"
         'File system error'
       );
     });
+
+    it('should return an empty array if all ingredients are empty/whitespace', async () => {
+      const contentWithOnlyEmptyIngredients = `---
+title: "מתכון ריק"
+slug: "empty-ingredients-recipe"
+tags: ["בדיקה"]
+ingredients:
+  - "   "
+  - ""
+  - "\t"
+instructions: "הוראות"
+---
+
+תוכן המתכון`;
+      mockReaddir.mockResolvedValue(['only-empty-ingredients.md']);
+      mockReadFile.mockResolvedValue(contentWithOnlyEmptyIngredients);
+
+      const recipes = await getAllRecipes('mock-recipes');
+      expect(recipes).toHaveLength(1);
+      expect(recipes[0].ingredients).toEqual([]);
+    });
+
+    it('should not modify valid ingredients', async () => {
+      const contentWithValidIngredients = `---
+title: "מתכון תקין"
+slug: "valid-ingredients-recipe"
+tags: ["בדיקה"]
+ingredients:
+  - "מרכיב 1"
+  - "מרכיב 2"
+  - "מרכיב 3"
+instructions: "הוראות"
+---
+
+תוכן המתכון`;
+      mockReaddir.mockResolvedValue(['valid-ingredients.md']);
+      mockReadFile.mockResolvedValue(contentWithValidIngredients);
+
+      const recipes = await getAllRecipes('mock-recipes');
+      expect(recipes).toHaveLength(1);
+      expect(recipes[0].ingredients).toEqual(['מרכיב 1', 'מרכיב 2', 'מרכיב 3']);
+    });
   });
 
   describe('getRecipeBySlug', () => {
@@ -274,6 +316,57 @@ instructions: "הוראות בישול שני"
       const recipes = await getRecentRecipes(10, 'mock-recipes');
 
       expect(recipes).toHaveLength(3);
+    });
+  });
+
+  describe('Ingredient Parsing and Validation', () => {
+    it('should filter out empty and whitespace-only ingredients', async () => {
+      const contentWithEmptyIngredients = `---
+title: "מתכון עם מרכיבים ריקים"
+slug: "recipe-with-empty-ingredients"
+tags: ["בדיקה"]
+ingredients:
+  - "מרכיב 1"
+  - "   "
+  - ""
+  - "מרכיב 2"
+  - "\t"
+instructions: "הוראות"
+---
+
+תוכן המתכון`;
+      mockReaddir.mockResolvedValue(['empty-ingredients.md']);
+      mockReadFile.mockResolvedValue(contentWithEmptyIngredients);
+
+      const recipes = await getAllRecipes('mock-recipes');
+      expect(recipes).toHaveLength(1);
+      expect(recipes[0].ingredients).toEqual(['מרכיב 1', 'מרכיב 2']);
+    });
+
+    it('should filter out empty and whitespace-only ingredients in getRecipeBySlug', async () => {
+      const contentWithEmptyIngredients = `---
+title: "מתכון עם מרכיבים ריקים"
+slug: "recipe-with-empty-ingredients"
+tags: ["בדיקה"]
+ingredients:
+  - "מרכיב 1"
+  - "   "
+  - ""
+  - "מרכיב 2"
+  - "\t"
+instructions: "הוראות"
+---
+
+תוכן המתכון`;
+      mockReaddir.mockResolvedValue(['empty-ingredients.md']);
+      mockReadFile.mockResolvedValue(contentWithEmptyIngredients);
+
+      const recipe = await getRecipeBySlug(
+        'recipe-with-empty-ingredients',
+        'mock-recipes'
+      );
+      expect(recipe).not.toBeNull();
+      expect(recipe?.ingredients).toEqual(['מרכיב 1', 'מרכיב 2']);
     });
   });
 });
