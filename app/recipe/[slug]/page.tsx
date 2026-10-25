@@ -8,9 +8,9 @@ import { HEBREW_TEXTS, formatHebrewText } from '@/lib/constants';
 import type { Metadata } from 'next';
 
 interface RecipePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: RecipePageProps): Promise<Metadata> {
-  const recipe = await getRecipeBySlug(params.slug);
+  const recipe = await getRecipeBySlug((await params).slug);
 
   if (!recipe) {
     return {
@@ -67,7 +67,7 @@ export async function generateMetadata({
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  const recipe = await getRecipeBySlug(params.slug);
+  const recipe = await getRecipeBySlug((await params).slug);
 
   if (!recipe) {
     notFound();
