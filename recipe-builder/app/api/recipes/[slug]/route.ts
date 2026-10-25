@@ -13,10 +13,10 @@ const RECIPES_DIR = path.join(process.cwd(), '..', 'recipes');
 // GET /api/recipes/[slug] - Get a specific recipe by slug
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     const filename = generateRecipeFilename(slug);
     const filePath = path.join(RECIPES_DIR, filename);
 
@@ -64,10 +64,10 @@ export async function GET(
 // DELETE /api/recipes/[slug] - Delete a recipe
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const { slug } = params;
+    const { slug } = await params;
     const filename = generateRecipeFilename(slug);
     const filePath = path.join(RECIPES_DIR, filename);
 
