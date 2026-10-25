@@ -158,6 +158,15 @@ export function RecipeForm({
   const [newTag, setNewTag] = useState('');
 
   const ingredientRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const instructionsRef = useRef<HTMLTextAreaElement>(null);
+
+  // Grow the instructions textarea to fit its content (no inner scrolling)
+  useEffect(() => {
+    const el = instructionsRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }, [formData.instructions]);
 
   // Focus the last ingredient input when a new one is added
   useEffect(() => {
@@ -582,10 +591,11 @@ export function RecipeForm({
         </CardHeader>
         <CardContent>
           <textarea
+            ref={instructionsRef}
             value={formData.instructions}
             onChange={e => handleInstructionsChange(e.target.value)}
             placeholder={HEBREW_TEXTS.INSTRUCTION_PLACEHOLDER}
-            className="w-full p-3 border border-zinc-300 rounded-md resize-none text-right"
+            className="w-full p-3 border border-zinc-300 rounded-md resize-none overflow-hidden text-right"
             dir="rtl"
             rows={8}
           />

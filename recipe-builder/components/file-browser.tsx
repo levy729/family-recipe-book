@@ -134,7 +134,10 @@ export function FileBrowser({ onRecipeLoad, onCancel }: FileBrowserProps) {
                 {recipes.map(recipe => (
                   <div
                     key={recipe.slug}
-                    className="flex items-center justify-between p-3 border border-zinc-200 rounded-lg hover:bg-zinc-50"
+                    onClick={() =>
+                      !isLoading && handleRecipeSelect(recipe.slug)
+                    }
+                    className="flex items-center justify-between p-3 border border-zinc-200 rounded-lg hover:bg-zinc-50 cursor-pointer"
                   >
                     <div className="flex-1 text-right">
                       <h3 className="font-medium text-zinc-900">
@@ -144,16 +147,20 @@ export function FileBrowser({ onRecipeLoad, onCancel }: FileBrowserProps) {
                     </div>
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => handleRecipeSelect(recipe.slug)}
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleRecipeSelect(recipe.slug);
+                        }}
                         disabled={isLoading}
                         size="sm"
                       >
                         ערוך
                       </Button>
                       <Button
-                        onClick={() =>
-                          handleDeleteRecipe(recipe.slug, recipe.title)
-                        }
+                        onClick={e => {
+                          e.stopPropagation();
+                          handleDeleteRecipe(recipe.slug, recipe.title);
+                        }}
                         disabled={isLoading}
                         variant="outline"
                         size="sm"
